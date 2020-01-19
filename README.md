@@ -1,11 +1,14 @@
 # Hanabi
 A Deob-freed mixin-based injection hacked client for Minecraft using Minecraft Forge.
 Version : 1.4.2-hotfix 
+some methods in this source are missing try decomp yourself with fernflower/cfr insteaded with [Deob remapped Unrunnable jar ](https://github.com/OpenHanabi/Hanabi/releases/download/1.4.2/Original_Deobfued_jar_Unrunnable.jar)
 
 ### DOWNLOAD
 
-* Runnable Jar [Runnable](https://maven.apache.org/download.html)
-* Deob remapped Unrunnable jar [Mapped](https://maven.apache.org/download.html)
+* Runnable Jar [Runnable](https://github.com/OpenHanabi/Hanabi/releases/download/1.4.2/Hanabi_Freed.jar)
+* Deob remapped Unrunnable jar [Mapped](https://github.com/OpenHanabi/Hanabi/releases/download/1.4.2/Original_Deobfued_jar_Unrunnable.jar)
+** Warnning !If you want to fix the method/field call form like `mc.field_xxxx` or `mc.func_xxxx`
+** Try use [MCPMAPPINGVIEW](https://github.com/bspkrs/MCPMappingViewer)
 
 this project entirely or partially for free and even commercially. However, please consider the following:
 
