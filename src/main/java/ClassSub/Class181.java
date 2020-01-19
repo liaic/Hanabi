@@ -1,0 +1,31 @@
+package ClassSub;
+
+public class Class181
+{
+    private int chunkX;
+    private int chunkZ;
+    private byte[] topLayerData;
+    public static final boolean Cracked_By_Somebody_Dumped_BY_Ganga_SupportedbySucen;
+    
+    public Class181(final byte[] topLayerData, final int n, final int n2) {
+        super();
+        this.topLayerData = new byte[256];
+        this.topLayerData = topLayerData;
+    }
+    
+    public int getChunkX() {
+        return this.chunkX;
+    }
+    
+    public int getChunkZ() {
+        return this.chunkZ;
+    }
+    
+    public byte[] getTopLayerData() {
+        return this.topLayerData;
+    }
+    
+    public void setTopLayerData(final byte[] topLayerData) {
+        this.topLayerData = topLayerData;
+    }
+}
