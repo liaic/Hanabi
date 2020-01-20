@@ -1,14 +1,17 @@
 # Hanabi
 A Deob-freed mixin-based injection hacked client for Minecraft using Minecraft Forge.
 Version : 1.5.1 (1.4.2 could be downloaded at OpenHanabi/Hanabi/Jars)
-some methods in this source are missing try decomp yourself with fernflower/cfr insteaded with [Deob remapped Unrunnable jar ](https://github.com/OpenHanabi/Hanabi/releases/download/1.4.2/Original_Deobfued_jar_Unrunnable.jar)
+some methods in this source are missing try decomp yourself with fernflower/cfr insteaded with [1.4.1Remapped](https://github.com/OpenHanabi/Hanabi/releases/download/1.4.2/Original_Deobfued_jar_Unrunnable.jar)
 
 ### DOWNLOAD
 
-* Runnable Jar [Runnable](https://github.com/OpenHanabi/Hanabi/releases/download/1.4.2/Hanabi_Freed.jar)
-* Deob remapped Unrunnable jar [Mapped](https://github.com/OpenHanabi/Hanabi/releases/download/1.4.2/Original_Deobfued_jar_Unrunnable.jar)
+* Runnable Jar [Runnable1.5.1](https://github.com/OpenHanabi/Hanabi/releases/download/1.5.1/Hanabi_1.5.1_Freed_Fixed_Checked2.jar)
+* Deob remapped Unrunnable jar [Mapped1.5.1](https://github.com/OpenHanabi/Hanabi/releases/download/1.5.1/Remapped1.5.1.jar)
+* History ([1.4.1](https://github.com/OpenHanabi/Hanabi/releases))
 ** Warnning !If you want to fix the method/field call form like `mc.field_xxxx` or `mc.func_xxxx` <br> Try use [MCPMAPPINGVIEW](https://github.com/bspkrs/MCPMappingViewer)
-* Backup Link: [here](https://git.liquidbounce.net/Hanabi/hanabi_backup/tree/master)
+* Backup Link : [Here](https://gitee.com/theCooolmann/Hanabi/)
+* Backup Link (Untrusted): [here](https://git.liquidbounce.net/Hanabi/hanabi_backup/tree/master)
+* The downloads in the Backuplink are in (OpenHanabi/Hanabi/Jars)
 
 this project entirely or partially for free and even commercially. However, please consider the following:
 
