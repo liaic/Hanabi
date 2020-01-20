@@ -22,7 +22,7 @@ public class CaveFinder extends Mod
     }
     
     public void onEnable() {
-        CaveFinder.mc.field_71438_f.func_72712_a();
+        CaveFinder.mc.renderGlobal.loadRenderers();
         this.list.clear();
     }
     
@@ -37,11 +37,11 @@ public class CaveFinder extends Mod
     @EventTarget
     public void onRender(final EventRender eventRender) {
         for (final BlockPos blockPos : this.list) {
-            final IBlockState func_180495_p = CaveFinder.mc.field_71441_e.func_180495_p(blockPos);
-            if (!(func_180495_p.func_177230_c() instanceof BlockLiquid)) {
+            final IBlockState getBlockState = CaveFinder.mc.theWorld.getBlockState(blockPos);
+            if (!(getBlockState.getBlock() instanceof BlockLiquid)) {
                 this.list.remove(blockPos);
             }
-            Class284.drawSolidBlockESP((double)blockPos.func_177958_n() - ((IRenderManager)CaveFinder.mc.func_175598_ae()).getRenderPosX(), (double)blockPos.func_177956_o() - ((IRenderManager)CaveFinder.mc.func_175598_ae()).getRenderPosY(), (double)blockPos.func_177952_p() - ((IRenderManager)CaveFinder.mc.func_175598_ae()).getRenderPosZ(), (func_180495_p.func_177230_c().func_149688_o() == Material.field_151587_i) ? 1.0f : 0.0f, 0.0f, (func_180495_p.func_177230_c().func_149688_o() == Material.field_151586_h) ? 1.0f : 0.0f, 0.2f);
+            Class246.drawSolidBlockESP(blockPos.getX() - ((IRenderManager)CaveFinder.mc.getRenderManager()).getRenderPosX(), blockPos.getY() - ((IRenderManager)CaveFinder.mc.getRenderManager()).getRenderPosY(), blockPos.getZ() - ((IRenderManager)CaveFinder.mc.getRenderManager()).getRenderPosZ(), (getBlockState.getBlock().getMaterial() == Material.lava) ? 1.0f : 0.0f, 0.0f, (getBlockState.getBlock().getMaterial() == Material.water) ? 1.0f : 0.0f, 0.2f);
         }
     }
 }

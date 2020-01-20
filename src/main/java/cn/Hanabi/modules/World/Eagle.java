@@ -17,32 +17,32 @@ public class Eagle extends Mod
     }
     
     public Block getBlock(final BlockPos blockPos) {
-        return Eagle.mc.field_71441_e.func_180495_p(blockPos).func_177230_c();
+        return Eagle.mc.theWorld.getBlockState(blockPos).getBlock();
     }
     
     public Block getBlockUnderPlayer(final EntityPlayer entityPlayer) {
-        return this.getBlock(new BlockPos(entityPlayer.field_70165_t, entityPlayer.field_70163_u - 1.0, entityPlayer.field_70161_v));
+        return this.getBlock(new BlockPos(entityPlayer.posX, entityPlayer.posY - 1.0, entityPlayer.posZ));
     }
     
     @EventTarget
     public void onUpdate(final EventUpdate eventUpdate) {
-        if (this.getBlockUnderPlayer((EntityPlayer)Eagle.mc.field_71439_g) instanceof BlockAir) {
-            if (Eagle.mc.field_71439_g.field_70122_E) {
-                KeyBinding.func_74510_a(Eagle.mc.field_71474_y.field_74311_E.func_151463_i(), true);
+        if (this.getBlockUnderPlayer((EntityPlayer)Eagle.mc.thePlayer) instanceof BlockAir) {
+            if (Eagle.mc.thePlayer.onGround) {
+                KeyBinding.setKeyBindState(Eagle.mc.gameSettings.keyBindSneak.getKeyCode(), true);
             }
         }
-        else if (Eagle.mc.field_71439_g.field_70122_E) {
-            KeyBinding.func_74510_a(Eagle.mc.field_71474_y.field_74311_E.func_151463_i(), false);
+        else if (Eagle.mc.thePlayer.onGround) {
+            KeyBinding.setKeyBindState(Eagle.mc.gameSettings.keyBindSneak.getKeyCode(), false);
         }
     }
     
     public void onEnable() {
-        Eagle.mc.field_71439_g.func_70095_a(false);
+        Eagle.mc.thePlayer.setSneaking(false);
         super.onEnable();
     }
     
     public void onDisable() {
-        KeyBinding.func_74510_a(Eagle.mc.field_71474_y.field_74311_E.func_151463_i(), false);
+        KeyBinding.setKeyBindState(Eagle.mc.gameSettings.keyBindSneak.getKeyCode(), false);
         super.onDisable();
     }
 }

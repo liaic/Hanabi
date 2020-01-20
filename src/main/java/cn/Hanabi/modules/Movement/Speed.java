@@ -11,19 +11,19 @@ public class Speed extends Mod
 {
     public static Value mode;
     public Value<Boolean> lagback;
-    Class282 GlobalHypixel;
-    Class318 Hypixel;
-    Class297 GudHop;
-    Class56 AAC;
+    Class187 GlobalHypixel;
+    Class113 Hypixel;
+    Class110 GudHop;
+    Class152 AAC;
     public static final boolean Cracked_By_Somebody_Dumped_BY_Ganga_SupportedbySucen;
     
     public Speed() {
         super("Speed", Category.MOVEMENT);
         this.lagback = new Value<Boolean>("Speed_LagBackChecks", true);
-        this.GlobalHypixel = new Class282();
-        this.Hypixel = new Class318();
-        this.GudHop = new Class297();
-        this.AAC = new Class56();
+        this.GlobalHypixel = new Class187();
+        this.Hypixel = new Class113();
+        this.GudHop = new Class110();
+        this.AAC = new Class152();
         Speed.mode.addValue("AAC");
         Speed.mode.addValue("GudHop");
         Speed.mode.addValue("Hypixel");
@@ -44,8 +44,8 @@ public class Speed extends Mod
     
     @EventTarget
     public void onPullback(final EventPullback eventPullback) {
-        if ((boolean)this.lagback.getValueState()) {
-            Class128.sendClientMessage("(LagBackCheck) Speed Disabled", Class67.Class124.WARNING);
+        if (this.lagback.getValueState()) {
+            Class120.sendClientMessage("(LagBackCheck) Speed Disabled", Class84.Class307.WARNING);
             this.set(false);
         }
         if (Speed.mode.isCurrentMode("HypixelGlobal")) {

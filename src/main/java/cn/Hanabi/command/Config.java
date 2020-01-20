@@ -25,16 +25,16 @@ public class Config extends Command
                 Hanabi.INSTANCE.fileManager.load();
             }
             else {
-                Class128.sendClientMessage("We do not have this config!", Class67.Class124.INFO);
+                Class120.sendClientMessage("We do not have this config!", Class84.Class307.INFO);
             }
         }
         else {
-            Class128.sendClientMessage(".config [server]", Class67.Class124.INFO);
+            Class120.sendClientMessage(".config [server]", Class84.Class307.INFO);
         }
     }
     
     public static void writeValue(final String s) {
-        final File file = new File(Minecraft.func_71410_x().field_71412_D.getAbsolutePath() + "/Hanabi" + "/values.txt");
+        final File file = new File(Minecraft.getMinecraft().mcDataDir.getAbsolutePath() + "/Hanabi" + "/values.txt");
         try {
             if (!file.exists()) {
                 file.createNewFile();
@@ -49,7 +49,7 @@ public class Config extends Command
     }
     
     public static void writeMods(final String s) {
-        final File file = new File(Minecraft.func_71410_x().field_71412_D.getAbsolutePath() + "/Hanabi" + "/mods.txt");
+        final File file = new File(Minecraft.getMinecraft().mcDataDir.getAbsolutePath() + "/Hanabi" + "/mods.txt");
         try {
             if (!file.exists()) {
                 file.createNewFile();

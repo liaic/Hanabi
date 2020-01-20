@@ -17,7 +17,6 @@ public class EventRenderLivingEntity implements Event, Cancellable
     public boolean cancelled;
     
     public EventRenderLivingEntity(final EntityLivingBase entity, final boolean pre, final float limbSwing, final float limbSwingAmount, final float ageInTicks, final float rotationYawHead, final float rotationPitch, final float chestRot, final float offset) {
-        super();
         this.entity = entity;
         this.pre = pre;
         this.limbSwing = limbSwing;
@@ -31,7 +30,6 @@ public class EventRenderLivingEntity implements Event, Cancellable
     }
     
     public EventRenderLivingEntity(final EntityLivingBase entity, final boolean pre) {
-        super();
         this.entity = entity;
         this.pre = pre;
     }
@@ -104,10 +102,12 @@ public class EventRenderLivingEntity implements Event, Cancellable
         this.chestRot = rotationChest;
     }
     
+    @Override
     public boolean isCancelled() {
         return this.cancelled;
     }
     
+    @Override
     public void setCancelled(final boolean state) {
         this.cancelled = state;
     }

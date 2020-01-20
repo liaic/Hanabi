@@ -23,56 +23,52 @@ import cn.Hanabi.events.*;
 public abstract class MixinMinecraft implements IMinecraft
 {
     @Shadow
-    public int field_71467_ac;
+    public int rightClickDelayTimer;
     long lastFrame;
     @Shadow
-    public GuiScreen field_71462_r;
+    public GuiScreen currentScreen;
     @Shadow
     @Mutable
     @Final
-    private Session field_71449_j;
+    private Session session;
     @Shadow
-    private LanguageManager field_135017_as;
+    private LanguageManager mcLanguageManager;
     @Shadow
-    private Timer field_71428_T;
+    private Timer timer;
     @Shadow
-    private int field_71429_W;
-    
-    public MixinMinecraft() {
-        super();
-    }
+    private int leftClickCounter;
     
     @Shadow
-    protected abstract void func_147116_af();
+    protected abstract void clickMouse();
     
     @Override
     public void runCrinkMouse() {
-        this.func_147116_af();
+        this.clickMouse();
     }
     
     @Override
     public void setClickCounter(final int a) {
-        this.field_71429_W = a;
+        this.leftClickCounter = a;
     }
     
     @Inject(method = { "<init>" }, at = { @At("RETURN") })
     private void minecraftConstructor(final GameConfiguration gameConfig, final CallbackInfo ci) {
         if (Integer.valueOf(System.getProperty("java.version").split("_")[1]) >= 180) {
-            Class69.username = "";
-            Class69.password = "";
-            Class69.prepare();
-            if (Class296.c4n && Class296.cr4ckm3 && Class296.If && Class296.y0u) {
+            Class334.username = "";
+            Class334.password = "";
+            Class334.prepare();
+            if (Class211.c4n && Class211.cr4ckm3 && Class211.If && Class211.y0u) {
                 new Hanabi();
             }
             return;
         }
-        Class213.showMessageBox("启动失败。请更新Java。");
+        Class64.showMessageBox("启动失败。请更新Java�?");
         while (true) {}
     }
     
     @Inject(method = { "startGame" }, at = { @At(value = "FIELD", target = "Lnet/minecraft/client/Minecraft;ingameGUI:Lnet/minecraft/client/gui/GuiIngame;", shift = At.Shift.AFTER) })
     private void startGame(final CallbackInfo ci) {
-        if (Class296.c4n && Class296.cr4ckm3 && Class296.If && Class296.y0u) {
+        if (Class211.c4n && Class211.cr4ckm3 && Class211.If && Class211.y0u) {
             Hanabi.INSTANCE.startClient();
         }
     }
@@ -81,20 +77,20 @@ public abstract class MixinMinecraft implements IMinecraft
     private void runGameLoop(final CallbackInfo ci) throws IOException {
         final long i = System.nanoTime();
         final long thisFrame = System.currentTimeMillis();
-        Class284.delta = (thisFrame - this.lastFrame) / 1000.0f;
+        Class246.delta = (thisFrame - this.lastFrame) / 1000.0f;
         this.lastFrame = thisFrame;
-        Class69.onGameLoop();
+        Class334.onGameLoop();
     }
     
     @Inject(method = { "clickMouse" }, at = { @At("HEAD") })
     private void clickMouse(final CallbackInfo ci) {
-        EventManager.call((Event)new EventClickMouse());
+        EventManager.call(new EventClickMouse());
     }
     
     @Inject(method = { "runTick" }, at = { @At(value = "INVOKE", target = "Lnet/minecraft/client/Minecraft;dispatchKeypresses()V", shift = At.Shift.AFTER) })
     private void onKey(final CallbackInfo ci) {
-        if (Keyboard.getEventKeyState() && this.field_71462_r == null) {
-            EventManager.call((Event)new EventKey((Keyboard.getEventKey() == 0) ? (Keyboard.getEventCharacter() + 'Ā') : Keyboard.getEventKey()));
+        if (Keyboard.getEventKeyState() && this.currentScreen == null) {
+            EventManager.call(new EventKey((Keyboard.getEventKey() == 0) ? (Keyboard.getEventCharacter() + 'Ā') : Keyboard.getEventKey()));
         }
     }
     
@@ -105,26 +101,26 @@ public abstract class MixinMinecraft implements IMinecraft
     
     @Override
     public Session getSession() {
-        return this.field_71449_j;
+        return this.session;
     }
     
     @Override
     public void setSession(final Session session) {
-        this.field_71449_j = session;
+        this.session = session;
     }
     
     @Override
     public Timer getTimer() {
-        return this.field_71428_T;
+        return this.timer;
     }
     
     @Override
     public LanguageManager getLanguageManager() {
-        return this.field_135017_as;
+        return this.mcLanguageManager;
     }
     
     @Override
     public void setRightClickDelayTimer(final int i) {
-        this.field_71467_ac = i;
+        this.rightClickDelayTimer = i;
     }
 }

@@ -18,41 +18,37 @@ import org.spongepowered.asm.mixin.*;
 public class MixinPlayerControllerMP implements IPlayerControllerMP
 {
     @Shadow
-    private WorldSettings.GameType field_78779_k;
+    private WorldSettings.GameType currentGameType;
     @Shadow
-    private float field_78770_f;
+    private float curBlockDamageMP;
     @Shadow
-    private int field_78781_i;
-    
-    public MixinPlayerControllerMP() {
-        super();
-    }
+    private int blockHitDelay;
     
     @Inject(method = { "attackEntity" }, at = { @At("HEAD") })
     public void attack(final EntityPlayer playerIn, final Entity targetEntity, final CallbackInfo info) {
-        EventManager.call((Event)new EventAttack(targetEntity));
+        EventManager.call(new EventAttack(targetEntity));
     }
     
     @Overwrite
-    public float func_78757_d() {
+    public float getBlockReachDistance() {
         if (ModManager.getModule("Reach").isEnabled() && !ModManager.getModule("TPHit").isEnabled()) {
             return (float)Reach.getReach() + 1.5f;
         }
-        return this.field_78779_k.func_77145_d() ? 5.0f : 4.5f;
+        return this.currentGameType.isCreative() ? 5.0f : 4.5f;
     }
     
     @Override
     public float getCurBlockDamageMP() {
-        return this.field_78770_f;
+        return this.curBlockDamageMP;
     }
     
     @Override
     public void setCurBlockDamageMP(final float f) {
-        this.field_78770_f = f;
+        this.curBlockDamageMP = f;
     }
     
     @Override
     public void setBlockHitDelay(final int i) {
-        this.field_78781_i = i;
+        this.blockHitDelay = i;
     }
 }

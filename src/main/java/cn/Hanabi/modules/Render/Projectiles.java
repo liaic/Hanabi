@@ -28,17 +28,17 @@ public class Projectiles extends Mod
     
     @EventTarget
     public void onRender(final EventRender eventRender) {
-        if (Projectiles.mc.field_71439_g.field_71071_by.func_70448_g() != null) {
-            final EntityPlayerSP field_71439_g = Projectiles.mc.field_71439_g;
-            final ItemStack func_70448_g = field_71439_g.field_71071_by.func_70448_g();
-            final int func_150891_b = Item.func_150891_b(Projectiles.mc.field_71439_g.func_70694_bm().func_77973_b());
-            if (func_150891_b == 261 || func_150891_b == 368 || func_150891_b == 332 || func_150891_b == 344) {
-                double n = field_71439_g.field_70142_S + (field_71439_g.field_70165_t - field_71439_g.field_70142_S) * Class296.getTimer().field_74281_c - Math.cos(Math.toRadians((double)field_71439_g.field_70177_z)) * 0.1599999964237213;
-                double n2 = field_71439_g.field_70137_T + (field_71439_g.field_70163_u - field_71439_g.field_70137_T) * Class296.getTimer().field_74281_c + field_71439_g.func_70047_e() - 0.1;
-                double n3 = field_71439_g.field_70136_U + (field_71439_g.field_70161_v - field_71439_g.field_70136_U) * Class296.getTimer().field_74281_c - Math.sin(Math.toRadians((double)field_71439_g.field_70177_z)) * 0.1599999964237213;
-                final double n4 = (func_70448_g.func_77973_b() instanceof ItemBow) ? 1.0 : 0.4000000059604645;
-                final double radians = Math.toRadians(field_71439_g.field_70177_z);
-                final double radians2 = Math.toRadians(field_71439_g.field_70125_A);
+        if (Projectiles.mc.thePlayer.inventory.getCurrentItem() != null) {
+            final EntityPlayerSP thePlayer = Projectiles.mc.thePlayer;
+            final ItemStack getCurrentItem = thePlayer.inventory.getCurrentItem();
+            final int getIdFromItem = Item.getIdFromItem(Projectiles.mc.thePlayer.getHeldItem().getItem());
+            if (getIdFromItem == 261 || getIdFromItem == 368 || getIdFromItem == 332 || getIdFromItem == 344) {
+                double n = thePlayer.lastTickPosX + (thePlayer.posX - thePlayer.lastTickPosX) * Class211.getTimer().renderPartialTicks - Math.cos(Math.toRadians(thePlayer.rotationYaw)) * 0.1599999964237213;
+                double n2 = thePlayer.lastTickPosY + (thePlayer.posY - thePlayer.lastTickPosY) * Class211.getTimer().renderPartialTicks + thePlayer.getEyeHeight() - 0.1;
+                double n3 = thePlayer.lastTickPosZ + (thePlayer.posZ - thePlayer.lastTickPosZ) * Class211.getTimer().renderPartialTicks - Math.sin(Math.toRadians(thePlayer.rotationYaw)) * 0.1599999964237213;
+                final double n4 = (getCurrentItem.getItem() instanceof ItemBow) ? 1.0 : 0.4000000059604645;
+                final double radians = Math.toRadians(thePlayer.rotationYaw);
+                final double radians2 = Math.toRadians(thePlayer.rotationPitch);
                 final double n5 = -Math.sin(radians) * Math.cos(radians2) * n4;
                 final double n6 = -Math.sin(radians2) * n4;
                 final double n7 = Math.cos(radians) * Math.cos(radians2) * n4;
@@ -49,8 +49,8 @@ public class Projectiles extends Mod
                 double n14;
                 double n15;
                 double n16;
-                if (func_70448_g.func_77973_b() instanceof ItemBow) {
-                    final float n11 = (72000 - field_71439_g.func_71052_bv()) / 20.0f;
+                if (getCurrentItem.getItem() instanceof ItemBow) {
+                    final float n11 = (72000 - thePlayer.getItemInUseCount()) / 20.0f;
                     float n12 = (n11 * n11 + n11 * 2.0f) / 3.0f;
                     if (n12 > 1.0f) {
                         n12 = 1.0f;
@@ -73,11 +73,11 @@ public class Projectiles extends Mod
                 GL11.glDepthMask(false);
                 GL11.glEnable(2848);
                 GL11.glLineWidth(2.0f);
-                final double n17 = (func_70448_g.func_77973_b() instanceof ItemBow) ? 0.05 : 0.03;
+                final double n17 = (getCurrentItem.getItem() instanceof ItemBow) ? 0.05 : 0.03;
                 GL11.glColor4f(0.0f, 1.0f, 0.2f, 0.5f);
                 GL11.glBegin(3);
                 for (int i = 0; i < 2000; ++i) {
-                    GL11.glVertex3d(n - ((IRenderManager)Projectiles.mc.func_175598_ae()).getRenderPosX(), n2 - ((IRenderManager)Projectiles.mc.func_175598_ae()).getRenderPosY(), n3 - ((IRenderManager)Projectiles.mc.func_175598_ae()).getRenderPosZ());
+                    GL11.glVertex3d(n - ((IRenderManager)Projectiles.mc.getRenderManager()).getRenderPosX(), n2 - ((IRenderManager)Projectiles.mc.getRenderManager()).getRenderPosY(), n3 - ((IRenderManager)Projectiles.mc.getRenderManager()).getRenderPosZ());
                     n += n14 * 0.1;
                     n2 += n15 * 0.1;
                     n3 += n16 * 0.1;
@@ -85,12 +85,12 @@ public class Projectiles extends Mod
                     final double n18 = n15 * 0.999;
                     n16 *= 0.999;
                     n15 = n18 - n17 * 0.1;
-                    final Vec3 vec3 = new Vec3(field_71439_g.field_70165_t, field_71439_g.field_70163_u + field_71439_g.func_70047_e(), field_71439_g.field_70161_v);
-                    this.blockCollision = Projectiles.mc.field_71441_e.func_72933_a(vec3, new Vec3(n, n2, n3));
-                    for (final Entity entity : Projectiles.mc.field_71441_e.func_72910_y()) {
+                    final Vec3 vec3 = new Vec3(thePlayer.posX, thePlayer.posY + thePlayer.getEyeHeight(), thePlayer.posZ);
+                    this.blockCollision = Projectiles.mc.theWorld.rayTraceBlocks(vec3, new Vec3(n, n2, n3));
+                    for (final Entity entity : Projectiles.mc.theWorld.getLoadedEntityList()) {
                         if (entity instanceof EntityLivingBase && !(entity instanceof EntityPlayerSP)) {
                             this.entity = (EntityLivingBase)entity;
-                            this.entityCollision = this.entity.func_174813_aQ().func_72314_b(0.3, 0.3, 0.3).func_72327_a(vec3, new Vec3(n, n2, n3));
+                            this.entityCollision = this.entity.getEntityBoundingBox().expand(0.3, 0.3, 0.3).calculateIntercept(vec3, new Vec3(n, n2, n3));
                             if (this.entityCollision != null) {
                                 this.blockCollision = this.entityCollision;
                             }
@@ -108,21 +108,21 @@ public class Projectiles extends Mod
                     }
                 }
                 GL11.glEnd();
-                final double n19 = n - ((IRenderManager)Projectiles.mc.func_175598_ae()).getRenderPosX();
-                final double n20 = n2 - ((IRenderManager)Projectiles.mc.func_175598_ae()).getRenderPosY();
-                final double n21 = n3 - ((IRenderManager)Projectiles.mc.func_175598_ae()).getRenderPosZ();
+                final double n19 = n - ((IRenderManager)Projectiles.mc.getRenderManager()).getRenderPosX();
+                final double n20 = n2 - ((IRenderManager)Projectiles.mc.getRenderManager()).getRenderPosY();
+                final double n21 = n3 - ((IRenderManager)Projectiles.mc.getRenderManager()).getRenderPosZ();
                 GL11.glPushMatrix();
                 GL11.glTranslated(n19 - 0.5, n20 - 0.5, n21 - 0.5);
-                switch (this.blockCollision.field_178784_b.func_176745_a()) {
+                switch (this.blockCollision.sideHit.getIndex()) {
                     case 2:
                     case 3: {
-                        GlStateManager.func_179114_b(90.0f, 1.0f, 0.0f, 0.0f);
+                        GlStateManager.rotate(90.0f, 1.0f, 0.0f, 0.0f);
                         Projectiles.aim = new AxisAlignedBB(0.0, 0.5, -1.0, 1.0, 0.45, 0.0);
                         break;
                     }
                     case 4:
                     case 5: {
-                        GlStateManager.func_179114_b(90.0f, 0.0f, 0.0f, 1.0f);
+                        GlStateManager.rotate(90.0f, 0.0f, 0.0f, 1.0f);
                         Projectiles.aim = new AxisAlignedBB(0.0, -0.5, 0.0, 1.0, -0.45, 1.0);
                         break;
                     }
@@ -132,7 +132,7 @@ public class Projectiles extends Mod
                     }
                 }
                 drawBox(Projectiles.aim);
-                func_181561_a(Projectiles.aim);
+                drawSelectionBoundingBox(Projectiles.aim);
                 GL11.glPopMatrix();
                 GL11.glDisable(3042);
                 GL11.glEnable(3553);
@@ -146,59 +146,59 @@ public class Projectiles extends Mod
     
     public static void drawBox(final AxisAlignedBB axisAlignedBB) {
         GL11.glBegin(7);
-        GL11.glVertex3d(axisAlignedBB.field_72340_a, axisAlignedBB.field_72338_b, axisAlignedBB.field_72339_c);
-        GL11.glVertex3d(axisAlignedBB.field_72336_d, axisAlignedBB.field_72338_b, axisAlignedBB.field_72339_c);
-        GL11.glVertex3d(axisAlignedBB.field_72336_d, axisAlignedBB.field_72338_b, axisAlignedBB.field_72334_f);
-        GL11.glVertex3d(axisAlignedBB.field_72340_a, axisAlignedBB.field_72338_b, axisAlignedBB.field_72334_f);
-        GL11.glVertex3d(axisAlignedBB.field_72340_a, axisAlignedBB.field_72337_e, axisAlignedBB.field_72339_c);
-        GL11.glVertex3d(axisAlignedBB.field_72340_a, axisAlignedBB.field_72337_e, axisAlignedBB.field_72334_f);
-        GL11.glVertex3d(axisAlignedBB.field_72336_d, axisAlignedBB.field_72337_e, axisAlignedBB.field_72334_f);
-        GL11.glVertex3d(axisAlignedBB.field_72336_d, axisAlignedBB.field_72337_e, axisAlignedBB.field_72339_c);
-        GL11.glVertex3d(axisAlignedBB.field_72340_a, axisAlignedBB.field_72338_b, axisAlignedBB.field_72339_c);
-        GL11.glVertex3d(axisAlignedBB.field_72340_a, axisAlignedBB.field_72337_e, axisAlignedBB.field_72339_c);
-        GL11.glVertex3d(axisAlignedBB.field_72336_d, axisAlignedBB.field_72337_e, axisAlignedBB.field_72339_c);
-        GL11.glVertex3d(axisAlignedBB.field_72336_d, axisAlignedBB.field_72338_b, axisAlignedBB.field_72339_c);
-        GL11.glVertex3d(axisAlignedBB.field_72336_d, axisAlignedBB.field_72338_b, axisAlignedBB.field_72339_c);
-        GL11.glVertex3d(axisAlignedBB.field_72336_d, axisAlignedBB.field_72337_e, axisAlignedBB.field_72339_c);
-        GL11.glVertex3d(axisAlignedBB.field_72336_d, axisAlignedBB.field_72337_e, axisAlignedBB.field_72334_f);
-        GL11.glVertex3d(axisAlignedBB.field_72336_d, axisAlignedBB.field_72338_b, axisAlignedBB.field_72334_f);
-        GL11.glVertex3d(axisAlignedBB.field_72340_a, axisAlignedBB.field_72338_b, axisAlignedBB.field_72334_f);
-        GL11.glVertex3d(axisAlignedBB.field_72336_d, axisAlignedBB.field_72338_b, axisAlignedBB.field_72334_f);
-        GL11.glVertex3d(axisAlignedBB.field_72336_d, axisAlignedBB.field_72337_e, axisAlignedBB.field_72334_f);
-        GL11.glVertex3d(axisAlignedBB.field_72340_a, axisAlignedBB.field_72337_e, axisAlignedBB.field_72334_f);
-        GL11.glVertex3d(axisAlignedBB.field_72340_a, axisAlignedBB.field_72338_b, axisAlignedBB.field_72339_c);
-        GL11.glVertex3d(axisAlignedBB.field_72340_a, axisAlignedBB.field_72338_b, axisAlignedBB.field_72334_f);
-        GL11.glVertex3d(axisAlignedBB.field_72340_a, axisAlignedBB.field_72337_e, axisAlignedBB.field_72334_f);
-        GL11.glVertex3d(axisAlignedBB.field_72340_a, axisAlignedBB.field_72337_e, axisAlignedBB.field_72339_c);
+        GL11.glVertex3d(axisAlignedBB.minX, axisAlignedBB.minY, axisAlignedBB.minZ);
+        GL11.glVertex3d(axisAlignedBB.maxX, axisAlignedBB.minY, axisAlignedBB.minZ);
+        GL11.glVertex3d(axisAlignedBB.maxX, axisAlignedBB.minY, axisAlignedBB.maxZ);
+        GL11.glVertex3d(axisAlignedBB.minX, axisAlignedBB.minY, axisAlignedBB.maxZ);
+        GL11.glVertex3d(axisAlignedBB.minX, axisAlignedBB.maxY, axisAlignedBB.minZ);
+        GL11.glVertex3d(axisAlignedBB.minX, axisAlignedBB.maxY, axisAlignedBB.maxZ);
+        GL11.glVertex3d(axisAlignedBB.maxX, axisAlignedBB.maxY, axisAlignedBB.maxZ);
+        GL11.glVertex3d(axisAlignedBB.maxX, axisAlignedBB.maxY, axisAlignedBB.minZ);
+        GL11.glVertex3d(axisAlignedBB.minX, axisAlignedBB.minY, axisAlignedBB.minZ);
+        GL11.glVertex3d(axisAlignedBB.minX, axisAlignedBB.maxY, axisAlignedBB.minZ);
+        GL11.glVertex3d(axisAlignedBB.maxX, axisAlignedBB.maxY, axisAlignedBB.minZ);
+        GL11.glVertex3d(axisAlignedBB.maxX, axisAlignedBB.minY, axisAlignedBB.minZ);
+        GL11.glVertex3d(axisAlignedBB.maxX, axisAlignedBB.minY, axisAlignedBB.minZ);
+        GL11.glVertex3d(axisAlignedBB.maxX, axisAlignedBB.maxY, axisAlignedBB.minZ);
+        GL11.glVertex3d(axisAlignedBB.maxX, axisAlignedBB.maxY, axisAlignedBB.maxZ);
+        GL11.glVertex3d(axisAlignedBB.maxX, axisAlignedBB.minY, axisAlignedBB.maxZ);
+        GL11.glVertex3d(axisAlignedBB.minX, axisAlignedBB.minY, axisAlignedBB.maxZ);
+        GL11.glVertex3d(axisAlignedBB.maxX, axisAlignedBB.minY, axisAlignedBB.maxZ);
+        GL11.glVertex3d(axisAlignedBB.maxX, axisAlignedBB.maxY, axisAlignedBB.maxZ);
+        GL11.glVertex3d(axisAlignedBB.minX, axisAlignedBB.maxY, axisAlignedBB.maxZ);
+        GL11.glVertex3d(axisAlignedBB.minX, axisAlignedBB.minY, axisAlignedBB.minZ);
+        GL11.glVertex3d(axisAlignedBB.minX, axisAlignedBB.minY, axisAlignedBB.maxZ);
+        GL11.glVertex3d(axisAlignedBB.minX, axisAlignedBB.maxY, axisAlignedBB.maxZ);
+        GL11.glVertex3d(axisAlignedBB.minX, axisAlignedBB.maxY, axisAlignedBB.minZ);
         GL11.glEnd();
     }
     
-    public static void func_181561_a(final AxisAlignedBB axisAlignedBB) {
-        final Tessellator func_178181_a = Tessellator.func_178181_a();
-        final WorldRenderer func_178180_c = func_178181_a.func_178180_c();
-        func_178180_c.func_181668_a(3, DefaultVertexFormats.field_181705_e);
-        func_178180_c.func_181662_b(axisAlignedBB.field_72340_a, axisAlignedBB.field_72338_b, axisAlignedBB.field_72339_c).func_181675_d();
-        func_178180_c.func_181662_b(axisAlignedBB.field_72336_d, axisAlignedBB.field_72338_b, axisAlignedBB.field_72339_c).func_181675_d();
-        func_178180_c.func_181662_b(axisAlignedBB.field_72336_d, axisAlignedBB.field_72338_b, axisAlignedBB.field_72334_f).func_181675_d();
-        func_178180_c.func_181662_b(axisAlignedBB.field_72340_a, axisAlignedBB.field_72338_b, axisAlignedBB.field_72334_f).func_181675_d();
-        func_178180_c.func_181662_b(axisAlignedBB.field_72340_a, axisAlignedBB.field_72338_b, axisAlignedBB.field_72339_c).func_181675_d();
-        func_178181_a.func_78381_a();
-        func_178180_c.func_181668_a(3, DefaultVertexFormats.field_181705_e);
-        func_178180_c.func_181662_b(axisAlignedBB.field_72340_a, axisAlignedBB.field_72337_e, axisAlignedBB.field_72339_c).func_181675_d();
-        func_178180_c.func_181662_b(axisAlignedBB.field_72336_d, axisAlignedBB.field_72337_e, axisAlignedBB.field_72339_c).func_181675_d();
-        func_178180_c.func_181662_b(axisAlignedBB.field_72336_d, axisAlignedBB.field_72337_e, axisAlignedBB.field_72334_f).func_181675_d();
-        func_178180_c.func_181662_b(axisAlignedBB.field_72340_a, axisAlignedBB.field_72337_e, axisAlignedBB.field_72334_f).func_181675_d();
-        func_178180_c.func_181662_b(axisAlignedBB.field_72340_a, axisAlignedBB.field_72337_e, axisAlignedBB.field_72339_c).func_181675_d();
-        func_178181_a.func_78381_a();
-        func_178180_c.func_181668_a(1, DefaultVertexFormats.field_181705_e);
-        func_178180_c.func_181662_b(axisAlignedBB.field_72340_a, axisAlignedBB.field_72338_b, axisAlignedBB.field_72339_c).func_181675_d();
-        func_178180_c.func_181662_b(axisAlignedBB.field_72340_a, axisAlignedBB.field_72337_e, axisAlignedBB.field_72339_c).func_181675_d();
-        func_178180_c.func_181662_b(axisAlignedBB.field_72336_d, axisAlignedBB.field_72338_b, axisAlignedBB.field_72339_c).func_181675_d();
-        func_178180_c.func_181662_b(axisAlignedBB.field_72336_d, axisAlignedBB.field_72337_e, axisAlignedBB.field_72339_c).func_181675_d();
-        func_178180_c.func_181662_b(axisAlignedBB.field_72336_d, axisAlignedBB.field_72338_b, axisAlignedBB.field_72334_f).func_181675_d();
-        func_178180_c.func_181662_b(axisAlignedBB.field_72336_d, axisAlignedBB.field_72337_e, axisAlignedBB.field_72334_f).func_181675_d();
-        func_178180_c.func_181662_b(axisAlignedBB.field_72340_a, axisAlignedBB.field_72338_b, axisAlignedBB.field_72334_f).func_181675_d();
-        func_178180_c.func_181662_b(axisAlignedBB.field_72340_a, axisAlignedBB.field_72337_e, axisAlignedBB.field_72334_f).func_181675_d();
-        func_178181_a.func_78381_a();
+    public static void drawSelectionBoundingBox(final AxisAlignedBB axisAlignedBB) {
+        final Tessellator getInstance = Tessellator.getInstance();
+        final WorldRenderer getWorldRenderer = getInstance.getWorldRenderer();
+        getWorldRenderer.begin(3, DefaultVertexFormats.POSITION);
+        getWorldRenderer.pos(axisAlignedBB.minX, axisAlignedBB.minY, axisAlignedBB.minZ).endVertex();
+        getWorldRenderer.pos(axisAlignedBB.maxX, axisAlignedBB.minY, axisAlignedBB.minZ).endVertex();
+        getWorldRenderer.pos(axisAlignedBB.maxX, axisAlignedBB.minY, axisAlignedBB.maxZ).endVertex();
+        getWorldRenderer.pos(axisAlignedBB.minX, axisAlignedBB.minY, axisAlignedBB.maxZ).endVertex();
+        getWorldRenderer.pos(axisAlignedBB.minX, axisAlignedBB.minY, axisAlignedBB.minZ).endVertex();
+        getInstance.draw();
+        getWorldRenderer.begin(3, DefaultVertexFormats.POSITION);
+        getWorldRenderer.pos(axisAlignedBB.minX, axisAlignedBB.maxY, axisAlignedBB.minZ).endVertex();
+        getWorldRenderer.pos(axisAlignedBB.maxX, axisAlignedBB.maxY, axisAlignedBB.minZ).endVertex();
+        getWorldRenderer.pos(axisAlignedBB.maxX, axisAlignedBB.maxY, axisAlignedBB.maxZ).endVertex();
+        getWorldRenderer.pos(axisAlignedBB.minX, axisAlignedBB.maxY, axisAlignedBB.maxZ).endVertex();
+        getWorldRenderer.pos(axisAlignedBB.minX, axisAlignedBB.maxY, axisAlignedBB.minZ).endVertex();
+        getInstance.draw();
+        getWorldRenderer.begin(1, DefaultVertexFormats.POSITION);
+        getWorldRenderer.pos(axisAlignedBB.minX, axisAlignedBB.minY, axisAlignedBB.minZ).endVertex();
+        getWorldRenderer.pos(axisAlignedBB.minX, axisAlignedBB.maxY, axisAlignedBB.minZ).endVertex();
+        getWorldRenderer.pos(axisAlignedBB.maxX, axisAlignedBB.minY, axisAlignedBB.minZ).endVertex();
+        getWorldRenderer.pos(axisAlignedBB.maxX, axisAlignedBB.maxY, axisAlignedBB.minZ).endVertex();
+        getWorldRenderer.pos(axisAlignedBB.maxX, axisAlignedBB.minY, axisAlignedBB.maxZ).endVertex();
+        getWorldRenderer.pos(axisAlignedBB.maxX, axisAlignedBB.maxY, axisAlignedBB.maxZ).endVertex();
+        getWorldRenderer.pos(axisAlignedBB.minX, axisAlignedBB.minY, axisAlignedBB.maxZ).endVertex();
+        getWorldRenderer.pos(axisAlignedBB.minX, axisAlignedBB.maxY, axisAlignedBB.maxZ).endVertex();
+        getInstance.draw();
     }
 }

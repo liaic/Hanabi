@@ -1,247 +1,256 @@
 package ClassSub;
 
-import java.io.*;
-import java.nio.*;
+import java.util.*;
 
-public class Class278 implements Serializable
+public class Class278 implements Class92
 {
-    private static final long serialVersionUID = 1393939L;
-    protected transient Class12 GL;
-    public static final Class278 transparent;
-    public static final Class278 white;
-    public static final Class278 yellow;
-    public static final Class278 red;
-    public static final Class278 blue;
-    public static final Class278 green;
-    public static final Class278 black;
-    public static final Class278 gray;
-    public static final Class278 cyan;
-    public static final Class278 darkGray;
-    public static final Class278 lightGray;
-    public static final Class278 pink;
-    public static final Class278 orange;
-    public static final Class278 magenta;
-    public float r;
-    public float g;
-    public float b;
-    public float a;
+    private static final float EPSILON = 1.0E-10f;
+    private Class42 poly;
+    private Class42 tris;
+    private boolean tried;
     public static final boolean Cracked_By_Somebody_Dumped_BY_Ganga_SupportedbySucen;
     
-    public Class278(final Class278 class278) {
-        super();
-        this.GL = Class83.get();
-        this.a = 1.0f;
-        this.r = class278.r;
-        this.g = class278.g;
-        this.b = class278.b;
-        this.a = class278.a;
-    }
-    
-    public Class278(final FloatBuffer floatBuffer) {
-        super();
-        this.GL = Class83.get();
-        this.a = 1.0f;
-        this.r = floatBuffer.get();
-        this.g = floatBuffer.get();
-        this.b = floatBuffer.get();
-        this.a = floatBuffer.get();
-    }
-    
-    public Class278(final float r, final float g, final float b) {
-        super();
-        this.GL = Class83.get();
-        this.a = 1.0f;
-        this.r = r;
-        this.g = g;
-        this.b = b;
-        this.a = 1.0f;
-    }
-    
-    public Class278(final float n, final float n2, final float n3, final float n4) {
-        super();
-        this.GL = Class83.get();
-        this.a = 1.0f;
-        this.r = Math.min(n, 1.0f);
-        this.g = Math.min(n2, 1.0f);
-        this.b = Math.min(n3, 1.0f);
-        this.a = Math.min(n4, 1.0f);
-    }
-    
-    public Class278(final int n, final int n2, final int n3) {
-        super();
-        this.GL = Class83.get();
-        this.a = 1.0f;
-        this.r = n / 255.0f;
-        this.g = n2 / 255.0f;
-        this.b = n3 / 255.0f;
-        this.a = 1.0f;
-    }
-    
-    public Class278(final int n, final int n2, final int n3, final int n4) {
-        super();
-        this.GL = Class83.get();
-        this.a = 1.0f;
-        this.r = n / 255.0f;
-        this.g = n2 / 255.0f;
-        this.b = n3 / 255.0f;
-        this.a = n4 / 255.0f;
-    }
-    
-    public Class278(final int n) {
-        super();
-        this.GL = Class83.get();
-        this.a = 1.0f;
-        final int n2 = (n & 0xFF0000) >> 16;
-        final int n3 = (n & 0xFF00) >> 8;
-        final int n4 = n & 0xFF;
-        int n5 = (n & 0xFF000000) >> 24;
-        if (n5 < 0) {
-            n5 += 256;
-        }
-        if (n5 == 0) {
-            n5 = 255;
-        }
-        this.r = n2 / 255.0f;
-        this.g = n3 / 255.0f;
-        this.b = n4 / 255.0f;
-        this.a = n5 / 255.0f;
-    }
-    
-    public static Class278 decode(final String s) {
-        return new Class278(Integer.decode(s));
-    }
-    
-    public void bind() {
-        this.GL.glColor4f(this.r, this.g, this.b, this.a);
+    public Class278() {
+        this.poly = new Class42();
+        this.tris = new Class42();
     }
     
     @Override
-    public int hashCode() {
-        return (int)(this.r + this.g + this.b + this.a) * 255;
-    }
-    
-    @Override
-    public boolean equals(final Object o) {
-        if (o instanceof Class278) {
-            final Class278 class278 = (Class278)o;
-            return class278.r == this.r && class278.g == this.g && class278.b == this.b && class278.a == this.a;
+    public void addPolyPoint(final float n, final float n2) {
+        final Class338 class338 = new Class338(n, n2);
+        if (!this.poly.contains(class338)) {
+            this.poly.add(class338);
         }
-        return false;
+    }
+    
+    public int getPolyPointCount() {
+        return this.poly.size();
+    }
+    
+    public float[] getPolyPoint(final int n) {
+        return new float[] { Class338.access$000(this.poly.get(n)), Class338.access$100(this.poly.get(n)) };
     }
     
     @Override
-    public String toString() {
-        return "Color (" + this.r + "," + this.g + "," + this.b + "," + this.a + ")";
+    public boolean triangulate() {
+        this.tried = true;
+        return this.process(this.poly, this.tris);
     }
     
-    public Class278 darker() {
-        return this.darker(0.5f);
+    @Override
+    public int getTriangleCount() {
+        if (!this.tried) {
+            throw new RuntimeException("Call triangulate() before accessing triangles");
+        }
+        return this.tris.size() / 3;
     }
     
-    public Class278 darker(float n) {
-        n = 1.0f - n;
-        return new Class278(this.r * n, this.g * n, this.b * n, this.a);
+    @Override
+    public float[] getTrianglePoint(final int n, final int n2) {
+        if (!this.tried) {
+            throw new RuntimeException("Call triangulate() before accessing triangles");
+        }
+        return this.tris.get(n * 3 + n2).toArray();
     }
     
-    public Class278 brighter() {
-        return this.brighter(0.2f);
+    private float area(final Class42 class42) {
+        final int size = class42.size();
+        float n = 0.0f;
+        int n2 = size - 1;
+        for (int i = 0; i < size; n2 = i++) {
+            final Class338 value = class42.get(n2);
+            final Class338 value2 = class42.get(i);
+            n += value.getX() * value2.getY() - value2.getX() * value.getY();
+        }
+        return n * 0.5f;
     }
     
-    public int getRed() {
-        return (int)(this.r * 255.0f);
+    private boolean insideTriangle(final float n, final float n2, final float n3, final float n4, final float n5, final float n6, final float n7, final float n8) {
+        final float n9 = n5 - n3;
+        final float n10 = n6 - n4;
+        final float n11 = n - n5;
+        final float n12 = n2 - n6;
+        final float n13 = n3 - n;
+        final float n14 = n4 - n2;
+        final float n15 = n7 - n;
+        final float n16 = n8 - n2;
+        final float n17 = n7 - n3;
+        final float n18 = n8 - n4;
+        final float n19 = n7 - n5;
+        final float n20 = n8 - n6;
+        final float n21 = n9 * n18 - n10 * n17;
+        final float n22 = n13 * n16 - n14 * n15;
+        final float n23 = n11 * n20 - n12 * n19;
+        return n21 >= 0.0f && n23 >= 0.0f && n22 >= 0.0f;
     }
     
-    public int getGreen() {
-        return (int)(this.g * 255.0f);
+    private boolean snip(final Class42 class42, final int n, final int n2, final int n3, final int n4, final int[] array) {
+        final float x = class42.get(array[n]).getX();
+        final float y = class42.get(array[n]).getY();
+        final float x2 = class42.get(array[n2]).getX();
+        final float y2 = class42.get(array[n2]).getY();
+        final float x3 = class42.get(array[n3]).getX();
+        final float y3 = class42.get(array[n3]).getY();
+        if (1.0E-10f > (x2 - x) * (y3 - y) - (y2 - y) * (x3 - x)) {
+            return false;
+        }
+        for (int i = 0; i < n4; ++i) {
+            if (i != n && i != n2) {
+                if (i != n3) {
+                    if (this.insideTriangle(x, y, x2, y2, x3, y3, class42.get(array[i]).getX(), class42.get(array[i]).getY())) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
     }
     
-    public int getBlue() {
-        return (int)(this.b * 255.0f);
+    private boolean process(final Class42 class42, final Class42 class43) {
+        class43.clear();
+        final int size = class42.size();
+        if (size < 3) {
+            return false;
+        }
+        final int[] array = new int[size];
+        if (0.0f < this.area(class42)) {
+            for (int i = 0; i < size; ++i) {
+                array[i] = i;
+            }
+        }
+        else {
+            for (int j = 0; j < size; ++j) {
+                array[j] = size - 1 - j;
+            }
+        }
+        int k = size;
+        int n = 2 * k;
+        int n2 = 0;
+        int n3 = k - 1;
+        while (k > 2) {
+            if (0 >= n--) {
+                return false;
+            }
+            int n4 = n3;
+            if (k <= n4) {
+                n4 = 0;
+            }
+            n3 = n4 + 1;
+            if (k <= n3) {
+                n3 = 0;
+            }
+            int n5 = n3 + 1;
+            if (k <= n5) {
+                n5 = 0;
+            }
+            if (!this.snip(class42, n4, n3, n5, k, array)) {
+                continue;
+            }
+            final int n6 = array[n4];
+            final int n7 = array[n3];
+            final int n8 = array[n5];
+            class43.add(class42.get(n6));
+            class43.add(class42.get(n7));
+            class43.add(class42.get(n8));
+            ++n2;
+            int n9 = n3;
+            for (int l = n3 + 1; l < k; ++l) {
+                array[n9] = array[l];
+                ++n9;
+            }
+            --k;
+            n = 2 * k;
+        }
+        return true;
     }
     
-    public int getAlpha() {
-        return (int)(this.a * 255.0f);
+    @Override
+    public void startHole() {
     }
     
-    public int getRedByte() {
-        return (int)(this.r * 255.0f);
+    private class Class42
+    {
+        private ArrayList points;
+        final Class278 this$0;
+        public static final boolean Cracked_By_Somebody_Dumped_BY_Ganga_SupportedbySucen;
+        
+        public Class42(final Class278 this$0) {
+            this.this$0 = this$0;
+            this.points = new ArrayList();
+        }
+        
+        public boolean contains(final Class338 class338) {
+            return this.points.contains(class338);
+        }
+        
+        public void add(final Class338 class338) {
+            this.points.add(class338);
+        }
+        
+        public void remove(final Class338 class338) {
+            this.points.remove(class338);
+        }
+        
+        public int size() {
+            return this.points.size();
+        }
+        
+        public Class338 get(final int n) {
+            return this.points.get(n);
+        }
+        
+        public void clear() {
+            this.points.clear();
+        }
     }
     
-    public int getGreenByte() {
-        return (int)(this.g * 255.0f);
-    }
-    
-    public int getBlueByte() {
-        return (int)(this.b * 255.0f);
-    }
-    
-    public int getAlphaByte() {
-        return (int)(this.a * 255.0f);
-    }
-    
-    public Class278 brighter(float n) {
-        ++n;
-        return new Class278(this.r * n, this.g * n, this.b * n, this.a);
-    }
-    
-    public Class278 multiply(final Class278 class278) {
-        return new Class278(this.r * class278.r, this.g * class278.g, this.b * class278.b, this.a * class278.a);
-    }
-    
-    public void add(final Class278 class278) {
-        this.r += class278.r;
-        this.g += class278.g;
-        this.b += class278.b;
-        this.a += class278.a;
-    }
-    
-    public void scale(final float n) {
-        this.r *= n;
-        this.g *= n;
-        this.b *= n;
-        this.a *= n;
-    }
-    
-    public Class278 addToCopy(final Class278 class278) {
-        final Class278 class280;
-        final Class278 class279 = class280 = new Class278(this.r, this.g, this.b, this.a);
-        class280.r += class278.r;
-        final Class278 class281 = class279;
-        class281.g += class278.g;
-        final Class278 class282 = class279;
-        class282.b += class278.b;
-        final Class278 class283 = class279;
-        class283.a += class278.a;
-        return class279;
-    }
-    
-    public Class278 scaleCopy(final float n) {
-        final Class278 class279;
-        final Class278 class278 = class279 = new Class278(this.r, this.g, this.b, this.a);
-        class279.r *= n;
-        final Class278 class280 = class278;
-        class280.g *= n;
-        final Class278 class281 = class278;
-        class281.b *= n;
-        final Class278 class282 = class278;
-        class282.a *= n;
-        return class278;
-    }
-    
-    static {
-        transparent = new Class278(0.0f, 0.0f, 0.0f, 0.0f);
-        white = new Class278(1.0f, 1.0f, 1.0f, 1.0f);
-        yellow = new Class278(1.0f, 1.0f, 0.0f, 1.0f);
-        red = new Class278(1.0f, 0.0f, 0.0f, 1.0f);
-        blue = new Class278(0.0f, 0.0f, 1.0f, 1.0f);
-        green = new Class278(0.0f, 1.0f, 0.0f, 1.0f);
-        black = new Class278(0.0f, 0.0f, 0.0f, 1.0f);
-        gray = new Class278(0.5f, 0.5f, 0.5f, 1.0f);
-        cyan = new Class278(0.0f, 1.0f, 1.0f, 1.0f);
-        darkGray = new Class278(0.3f, 0.3f, 0.3f, 1.0f);
-        lightGray = new Class278(0.7f, 0.7f, 0.7f, 1.0f);
-        pink = new Class278(255, 175, 175, 255);
-        orange = new Class278(255, 200, 0, 255);
-        magenta = new Class278(255, 0, 255, 255);
+    private class Class338
+    {
+        private float x;
+        private float y;
+        private float[] array;
+        final Class278 this$0;
+        public static final boolean Cracked_By_Somebody_Dumped_BY_Ganga_SupportedbySucen;
+        
+        public Class338(final Class278 this$0, final float x, final float y) {
+            this.this$0 = this$0;
+            this.x = x;
+            this.y = y;
+            this.array = new float[] { x, y };
+        }
+        
+        public float getX() {
+            return this.x;
+        }
+        
+        public float getY() {
+            return this.y;
+        }
+        
+        public float[] toArray() {
+            return this.array;
+        }
+        
+        @Override
+        public int hashCode() {
+            return (int)(this.x * this.y * 31.0f);
+        }
+        
+        @Override
+        public boolean equals(final Object o) {
+            if (o instanceof Class338) {
+                final Class338 class338 = (Class338)o;
+                return class338.x == this.x && class338.y == this.y;
+            }
+            return false;
+        }
+        
+        static float access$000(final Class338 class338) {
+            return class338.x;
+        }
+        
+        static float access$100(final Class338 class338) {
+            return class338.y;
+        }
     }
 }

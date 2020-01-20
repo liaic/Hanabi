@@ -1,56 +1,101 @@
 package ClassSub;
 
-import cn.Hanabi.value.*;
-import org.lwjgl.opengl.*;
-import org.lwjgl.input.*;
-import net.minecraft.client.gui.*;
-import java.awt.*;
+import java.io.*;
 
-public class Class277 extends Class179<Value>
+private static class Class277 implements Serializable
 {
+    protected Class224 pt;
+    protected Class277 prev;
+    protected Class277 next;
+    protected double nx;
+    protected double ny;
+    protected double angle;
+    protected double dist;
     public static final boolean Cracked_By_Somebody_Dumped_BY_Ganga_SupportedbySucen;
     
-    public Class277(final Value value) {
-        super(-1, -1, 0, 0, value);
+    public Class277(final Class224 pt) {
+        this.pt = pt;
     }
     
-    @Override
-    public void draw() {
-        GL11.glTranslated((double)this.x, (double)this.y, 0.0);
-        final Rectangle rectangle = new Rectangle(this.x, this.y, this.width, this.height);
-        GL11.glEnable(3042);
-        GL11.glDisable(2884);
-        Class167.setColor(Class8.PANEL_MAIN_COLOR);
-        final int n = rectangle.height - 4;
-        if ((boolean)((Value<Boolean>)((Class179<Value<Boolean>>)this).getValue()).getValueState()) {
-            Class167.setColor(Class8.PANEL_SECONDARY_COLOR);
-            Class167.drawRect(7, 2, 2, n + 2, n + 2, Class8.PANEL_SECONDARY_COLOR.getRGB());
-        }
-        GL11.glLineWidth(2.0f);
-        Class167.drawRect(2, 2, 2, n + 2, n + 2, Class8.PANEL_MAIN_COLOR.getRGB());
-        if (rectangle.contains(Class251.calculateMouseLocation())) {
-            GL11.glColor4f(0.0f, 0.0f, 0.0f, Mouse.isButtonDown(0) ? 0.5f : 0.3f);
-            Gui.func_73734_a(0, 0, rectangle.width, rectangle.height, Class167.toRGBA(new Color(0, 0, 0, Mouse.isButtonDown(0) ? 125 : 70)));
-        }
-        Class167.setColor(Color.white);
-        this.fontRenderer.func_78276_b(((String[])((Value)this.getValue()).getValueName().split("_"))[1], n + 6, rectangle.height / 2 - this.fontRenderer.field_78288_b / 2 + 1, Class167.toRGBA(Color.white));
-        GL11.glEnable(2884);
-        GL11.glDisable(3042);
-        GL11.glTranslated((double)(-this.x), (double)(-this.y), 0.0);
+    public void unlink() {
+        this.prev.next = this.next;
+        this.next.prev = this.prev;
+        this.next = null;
+        this.prev = null;
     }
     
-    @Override
-    public boolean onMouseClick(final int n, final int n2, final int n3) {
-        if (new Rectangle(this.getX(), this.getY(), this.width, this.height).contains(new Point(n, n2)) && n3 == 0) {
-            ((Value)this.value).setValueState(!(boolean)((Value)this.value).getValueState());
-            return true;
-        }
-        return false;
+    public void insertBefore(final Class277 class277) {
+        this.prev.next = class277;
+        class277.prev = this.prev;
+        class277.next = this;
+        this.prev = class277;
     }
     
-    @Override
-    public void update() {
-        this.width = this.fontRenderer.func_78256_a(((String[])((Value)this.value).getValueName().split("_"))[1]) + this.fontRenderer.field_78288_b + 8;
-        this.height = this.fontRenderer.field_78288_b + 4;
+    public void insertAfter(final Class277 class277) {
+        this.next.prev = class277;
+        class277.prev = this;
+        class277.next = this.next;
+        this.next = class277;
+    }
+    
+    private double hypot(final double n, final double n2) {
+        return Math.sqrt(n * n + n2 * n2);
+    }
+    
+    public void computeAngle() {
+        if (this.prev.pt.equals(this.pt)) {
+            final Class224 pt = this.pt;
+            pt.x += 0.01f;
+        }
+        final double n = this.pt.x - this.prev.pt.x;
+        final double n2 = this.pt.y - this.prev.pt.y;
+        final double hypot = this.hypot(n, n2);
+        final double nx = n / hypot;
+        final double n3 = n2 / hypot;
+        if (this.next.pt.equals(this.pt)) {
+            final Class224 pt2 = this.pt;
+            pt2.y += 0.01f;
+        }
+        final double n4 = this.next.pt.x - this.pt.x;
+        final double n5 = this.next.pt.y - this.pt.y;
+        final double hypot2 = this.hypot(n4, n5);
+        final double n6 = n4 / hypot2;
+        final double ny = n5 / hypot2;
+        final double n7 = -n3;
+        final double n8 = nx;
+        this.nx = (n7 - ny) * 0.5;
+        this.ny = (n8 + n6) * 0.5;
+        if (this.nx * this.nx + this.ny * this.ny < 1.0E-5) {
+            this.nx = nx;
+            this.ny = ny;
+            this.angle = 1.0;
+            if (nx * n6 + n3 * ny > 0.0) {
+                this.nx = -nx;
+                this.ny = -n3;
+            }
+        }
+        else {
+            this.angle = this.nx * n6 + this.ny * ny;
+        }
+    }
+    
+    public double getAngle(final Class277 class277) {
+        final double n = class277.pt.x - this.pt.x;
+        final double n2 = class277.pt.y - this.pt.y;
+        return (this.nx * n + this.ny * n2) / this.hypot(n, n2);
+    }
+    
+    public boolean isConcave() {
+        return this.angle < 0.0;
+    }
+    
+    public boolean isInfront(final double n, final double n2) {
+        final boolean b = (this.prev.pt.y - this.pt.y) * n + (this.pt.x - this.prev.pt.x) * n2 >= 0.0;
+        final boolean b2 = (this.pt.y - this.next.pt.y) * n + (this.next.pt.x - this.pt.x) * n2 >= 0.0;
+        return (this.angle < 0.0) ? (b | b2) : (b & b2);
+    }
+    
+    public boolean isInfront(final Class277 class277) {
+        return this.isInfront(class277.pt.x - this.pt.x, class277.pt.y - this.pt.y);
     }
 }

@@ -8,62 +8,58 @@ import org.spongepowered.asm.mixin.*;
 public class MixinC03PacketPlayer implements IC03PacketPlayer
 {
     @Shadow
-    protected boolean field_149474_g;
+    protected boolean onGround;
     @Shadow
-    protected double field_149477_b;
+    protected double y;
     @Shadow
-    protected float field_149476_e;
+    protected float yaw;
     @Shadow
-    protected float field_149473_f;
+    protected float pitch;
     @Shadow
-    protected boolean field_149481_i;
-    
-    public MixinC03PacketPlayer() {
-        super();
-    }
+    protected boolean rotating;
     
     @Override
     public boolean isOnGround() {
-        return this.field_149474_g;
+        return this.onGround;
     }
     
     @Override
     public void setOnGround(final boolean b) {
-        this.field_149474_g = b;
+        this.onGround = b;
     }
     
     @Override
     public void setPosY(final double y2) {
-        this.field_149477_b = y2;
+        this.y = y2;
     }
     
     @Override
     public void setYaw(final float f) {
-        this.field_149476_e = f;
+        this.yaw = f;
     }
     
     @Override
     public float getYaw() {
-        return this.field_149476_e;
+        return this.yaw;
     }
     
     @Override
     public void setPitch(final float f) {
-        this.field_149473_f = f;
+        this.pitch = f;
     }
     
     @Override
     public float getPitch() {
-        return this.field_149473_f;
+        return this.pitch;
     }
     
     @Override
     public void setRotate(final boolean b) {
-        this.field_149481_i = b;
+        this.rotating = b;
     }
     
     @Override
     public boolean getRotate() {
-        return this.field_149481_i;
+        return this.rotating;
     }
 }

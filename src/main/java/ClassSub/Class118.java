@@ -1,514 +1,610 @@
 package ClassSub;
 
-import com.google.common.base.*;
-import net.minecraft.util.*;
-import net.minecraft.client.gui.*;
+import java.time.format.*;
+import cn.Hanabi.value.*;
+import java.text.*;
+import com.darkmagician6.eventapi.*;
 import java.awt.*;
+import org.lwjgl.opengl.*;
+import cn.Hanabi.events.*;
 import cn.Hanabi.*;
-import net.minecraft.client.renderer.vertex.*;
+import net.minecraft.entity.player.*;
+import net.minecraft.client.*;
+import cn.Hanabi.modules.Player.*;
+import cn.Hanabi.utils.fontmanager.*;
+import net.minecraft.entity.boss.*;
+import cn.Hanabi.modules.World.*;
+import net.minecraft.item.*;
+import net.minecraft.client.gui.*;
+import net.minecraft.potion.*;
+import net.minecraft.client.resources.*;
 import net.minecraft.client.renderer.*;
+import net.minecraft.util.*;
+import cn.Hanabi.modules.*;
+import java.util.*;
 
-public class Class118 extends Gui
+public class Class118 extends Mod
 {
-    protected final int id;
-    protected final FontRenderer fontRendererInstance;
-    public int xPosition;
-    public int yPosition;
-    protected int width;
-    protected final int height;
-    protected String text;
-    protected int maxStringLength;
-    protected int cursorCounter;
-    protected boolean enableBackgroundDrawing;
-    protected boolean canLoseFocus;
-    protected boolean isFocused;
-    protected boolean isEnabled;
-    protected int lineScrollOffset;
-    protected int cursorPosition;
-    protected int selectionEnd;
-    protected int enabledColor;
-    protected int disabledColor;
-    protected boolean visible;
-    private GuiPageButtonList.GuiResponder field_175210_x;
-    private Predicate<String> field_175209_y;
+    private static final DateTimeFormatter dateFormat;
+    private static final DateTimeFormatter timeFormat;
+    public Value<Boolean> arraylist;
+    public Value<Boolean> logo;
+    public static Value<Boolean> hotbar;
+    public Value<Boolean> music;
+    public Value<Boolean> potion;
+    public Value<Boolean> noti;
+    public static Value<Double> musicPosX;
+    public static Value<Double> musicPosY;
+    public static Value<Double> musicPosYlyr;
+    SimpleDateFormat f;
+    SimpleDateFormat f2;
+    private float animationY2;
+    Map<Potion, Double> timerMap;
+    private int x;
     public static final boolean Cracked_By_Somebody_Dumped_BY_Ganga_SupportedbySucen;
     
-    public Class118(final int id, final FontRenderer fontRendererInstance, final int xPosition, final int yPosition, final int width, final int height) {
-        super();
-        this.text = "";
-        this.maxStringLength = 32;
-        this.enableBackgroundDrawing = true;
-        this.canLoseFocus = true;
-        this.isEnabled = true;
-        this.enabledColor = 14737632;
-        this.disabledColor = 7368816;
-        this.visible = true;
-        this.field_175209_y = (Predicate<String>)Predicates.alwaysTrue();
-        this.id = id;
-        this.fontRendererInstance = fontRendererInstance;
-        this.xPosition = xPosition;
-        this.yPosition = yPosition;
-        this.width = width;
-        this.height = height;
+    public Class118() {
+        // 
+        // This method could not be decompiled.
+        // 
+        // Original Bytecode:
+        // 
+        //     3: istore          4
+        //     5: goto            9
+        //     8: athrow         
+        //     9: aload_0        
+        //    10: ldc             "HUD"
+        //    12: getstatic       cn/Hanabi/modules/Category.RENDER:Lcn/Hanabi/modules/Category;
+        //    15: ldc             0
+        //    17: ldc             1
+        //    19: ldc             0
+        //    21: invokespecial   cn/Hanabi/modules/Mod.<init>:(Ljava/lang/String;Lcn/Hanabi/modules/Category;ZZI)V
+        //    24: aload_0        
+        //    25: new             Lcn/Hanabi/value/Value;
+        //    28: dup            
+        //    29: ldc             "HUD_ArrayList"
+        //    31: ldc             1
+        //    33: invokestatic    java/lang/Boolean.valueOf:(Z)Ljava/lang/Boolean;
+        //    36: invokespecial   cn/Hanabi/value/Value.<init>:(Ljava/lang/String;Ljava/lang/Object;)V
+        //    39: putfield        ClassSub/Class118.arraylist:Lcn/Hanabi/value/Value;
+        //    42: aload_0        
+        //    43: new             Lcn/Hanabi/value/Value;
+        //    46: dup            
+        //    47: ldc             "HUD_Logo"
+        //    49: ldc             1
+        //    51: invokestatic    java/lang/Boolean.valueOf:(Z)Ljava/lang/Boolean;
+        //    54: invokespecial   cn/Hanabi/value/Value.<init>:(Ljava/lang/String;Ljava/lang/Object;)V
+        //    57: putfield        ClassSub/Class118.logo:Lcn/Hanabi/value/Value;
+        //    60: aload_0        
+        //    61: new             Lcn/Hanabi/value/Value;
+        //    64: dup            
+        //    65: ldc             "HUD_MusicPlayer"
+        //    67: ldc             1
+        //    69: invokestatic    java/lang/Boolean.valueOf:(Z)Ljava/lang/Boolean;
+        //    72: invokespecial   cn/Hanabi/value/Value.<init>:(Ljava/lang/String;Ljava/lang/Object;)V
+        //    75: putfield        ClassSub/Class118.music:Lcn/Hanabi/value/Value;
+        //    78: aload_0        
+        //    79: new             Lcn/Hanabi/value/Value;
+        //    82: dup            
+        //    83: ldc             "HUD_Potion"
+        //    85: ldc             1
+        //    87: invokestatic    java/lang/Boolean.valueOf:(Z)Ljava/lang/Boolean;
+        //    90: invokespecial   cn/Hanabi/value/Value.<init>:(Ljava/lang/String;Ljava/lang/Object;)V
+        //    93: putfield        ClassSub/Class118.potion:Lcn/Hanabi/value/Value;
+        //    96: aload_0        
+        //    97: new             Lcn/Hanabi/value/Value;
+        //   100: dup            
+        //   101: ldc             "HUD_Notification"
+        //   103: ldc             1
+        //   105: invokestatic    java/lang/Boolean.valueOf:(Z)Ljava/lang/Boolean;
+        //   108: invokespecial   cn/Hanabi/value/Value.<init>:(Ljava/lang/String;Ljava/lang/Object;)V
+        //   111: putfield        ClassSub/Class118.noti:Lcn/Hanabi/value/Value;
+        //   114: aload_0        
+        //   115: new             Ljava/text/SimpleDateFormat;
+        //   118: dup            
+        //   119: ldc             "HH:mm"
+        //   121: invokespecial   java/text/SimpleDateFormat.<init>:(Ljava/lang/String;)V
+        //   124: putfield        ClassSub/Class118.f:Ljava/text/SimpleDateFormat;
+        //   127: aload_0        
+        //   128: new             Ljava/text/SimpleDateFormat;
+        //   131: dup            
+        //   132: ldc             "YYYY/MM/dd"
+        //   134: invokespecial   java/text/SimpleDateFormat.<init>:(Ljava/lang/String;)V
+        //   137: putfield        ClassSub/Class118.f2:Ljava/text/SimpleDateFormat;
+        //   140: aload_0        
+        //   141: new             Ljava/util/HashMap;
+        //   144: dup            
+        //   145: invokespecial   java/util/HashMap.<init>:()V
+        //   148: putfield        ClassSub/Class118.timerMap:Ljava/util/Map;
+        //   151: aload_0        
+        //   152: ldc             1
+        //   154: invokevirtual   ClassSub/Class118.setState:(Z)V
+        //   157: new             Ljava/util/HashMap;
+        //   160: dup            
+        //   161: invokespecial   java/util/HashMap.<init>:()V
+        //   164: astore_1       
+        //   165: getstatic       cn/Hanabi/Hanabi.INSTANCE:Lcn/Hanabi/Hanabi;
+        //   168: getfield        cn/Hanabi/Hanabi.moduleManager:Lcn/Hanabi/modules/ModManager;
+        //   171: invokevirtual   cn/Hanabi/modules/ModManager.getModules:()Ljava/util/List;
+        //   174: invokeinterface java/util/List.iterator:()Ljava/util/Iterator;
+        //   179: astore_2       
+        //   180: aload_2        
+        //   181: invokeinterface java/util/Iterator.hasNext:()Z
+        //   186: ifeq            247
+        //   189: aload_2        
+        //   190: invokeinterface java/util/Iterator.next:()Ljava/lang/Object;
+        //   195: checkcast       Lcn/Hanabi/modules/Mod;
+        //   198: astore_3       
+        //   199: aload_1        
+        //   200: aload_3        
+        //   201: invokevirtual   cn/Hanabi/modules/Mod.getCategory:()Lcn/Hanabi/modules/Category;
+        //   204: invokevirtual   java/util/HashMap.containsKey:(Ljava/lang/Object;)Z
+        //   207: ifne            226
+        //   210: aload_1        
+        //   211: aload_3        
+        //   212: invokevirtual   cn/Hanabi/modules/Mod.getCategory:()Lcn/Hanabi/modules/Category;
+        //   215: new             Ljava/util/ArrayList;
+        //   218: dup            
+        //   219: invokespecial   java/util/ArrayList.<init>:()V
+        //   222: invokevirtual   java/util/HashMap.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+        //   225: pop            
+        //   226: aload_1        
+        //   227: aload_3        
+        //   228: invokevirtual   cn/Hanabi/modules/Mod.getCategory:()Lcn/Hanabi/modules/Category;
+        //   231: invokevirtual   java/util/HashMap.get:(Ljava/lang/Object;)Ljava/lang/Object;
+        //   234: checkcast       Ljava/util/List;
+        //   237: aload_3        
+        //   238: invokeinterface java/util/List.add:(Ljava/lang/Object;)Z
+        //   243: pop            
+        //   244: goto            180
+        //   247: aload_1        
+        //   248: invokevirtual   java/util/HashMap.entrySet:()Ljava/util/Set;
+        //   251: invokeinterface java/util/Set.stream:()Ljava/util/stream/Stream;
+        //   256: invokedynamic   BootstrapMethod #0, applyAsInt:()Ljava/util/function/ToIntFunction;
+        //   261: invokeinterface java/util/Comparator.comparingInt:(Ljava/util/function/ToIntFunction;)Ljava/util/Comparator;
+        //   266: invokeinterface java/util/stream/Stream.sorted:(Ljava/util/Comparator;)Ljava/util/stream/Stream;
+        //   271: invokedynamic   BootstrapMethod #1, accept:()Ljava/util/function/Consumer;
+        //   276: invokeinterface java/util/stream/Stream.forEach:(Ljava/util/function/Consumer;)V
+        //   281: return         
+        // 
+        // The error that occurred was:
+        // 
+        // java.lang.ArrayIndexOutOfBoundsException
+        // 
+        throw new IllegalStateException("An error occurred while decompiling this method.");
     }
     
-    public void func_175207_a(final GuiPageButtonList.GuiResponder field_175210_x) {
-        this.field_175210_x = field_175210_x;
+    @EventTarget
+    public void onReload(final EventWorldChange eventWorldChange) {
+        class Class14 extends Thread
+        {
+            final Class118 val$hud;
+            final Class118 this$0;
+            public static final boolean Cracked_By_Somebody_Dumped_BY_Ganga_SupportedbySucen;
+            
+            Class14(final Class118 this$0, final Class118 val$hud) {
+                this.this$0 = this$0;
+                this.val$hud = val$hud;
+            }
+            
+            @Override
+            public void run() {
+                this.val$hud.set(false);
+                try {
+                    Thread.sleep(500L);
+                }
+                catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+                this.val$hud.set(true);
+            }
+        }
+        // 
+        // This method could not be decompiled.
+        // 
+        // Original Bytecode:
+        // 
+        //     3: athrow         
+        //     4: ldc             "HUD"
+        //     6: invokestatic    cn/Hanabi/modules/ModManager.getModule:(Ljava/lang/String;)Lcn/Hanabi/modules/Mod;
+        //     9: checkcast       LClassSub/Class118;
+        //    12: astore_2       
+        //    13: new             LClassSub/Class14;
+        //    16: dup            
+        //    17: aload_0        
+        //    18: aload_2        
+        //    19: invokespecial   ClassSub/Class14.<init>:(LClassSub/Class118;LClassSub/Class118;)V
+        //    22: invokevirtual   ClassSub/Class14.start:()V
+        //    25: return         
+        //    26: nop            
+        //    27: nop            
+        //    28: nop            
+        //    29: athrow         
+        // 
+        // The error that occurred was:
+        // 
+        // java.lang.NullPointerException
+        // 
+        throw new IllegalStateException("An error occurred while decompiling this method.");
     }
     
-    public void updateCursorCounter() {
-        ++this.cursorCounter;
+    public static int rainbow(final int n) {
+        return Color.getHSBColor((float)(Math.ceil((System.currentTimeMillis() + n) / 20.0) % 360.0 / 360.0), 0.8f, 0.7f).getRGB();
     }
     
-    public void setText(final String text) {
-        if (this.field_175209_y.apply((Object)text)) {
-            if (text.length() > this.maxStringLength) {
-                this.text = text.substring(0, this.maxStringLength);
+    public void drawRoundedRect(float n, float n2, float n3, float n4, final int n5, final int n6) {
+        enableGL2D();
+        GL11.glScalef(0.5f, 0.5f, 0.5f);
+        drawVLine(n *= 2.0f, (n2 *= 2.0f) + 1.0f, (n4 *= 2.0f) - 2.0f, n5);
+        drawVLine((n3 *= 2.0f) - 1.0f, n2 + 1.0f, n4 - 2.0f, n5);
+        drawHLine(n + 2.0f, n3 - 3.0f, n2, n5);
+        drawHLine(n + 2.0f, n3 - 3.0f, n4 - 1.0f, n5);
+        drawHLine(n + 1.0f, n + 1.0f, n2 + 1.0f, n5);
+        drawHLine(n3 - 2.0f, n3 - 2.0f, n2 + 1.0f, n5);
+        drawHLine(n3 - 2.0f, n3 - 2.0f, n4 - 2.0f, n5);
+        drawHLine(n + 1.0f, n + 1.0f, n4 - 2.0f, n5);
+        Class246.drawRect(n + 1.0f, n2 + 1.0f, n3 - 1.0f, n4 - 1.0f, n6);
+        GL11.glScalef(2.0f, 2.0f, 2.0f);
+        disableGL2D();
+    }
+    
+    public void color(final int n) {
+        GL11.glColor4f((n >> 16 & 0xFF) / 255.0f, (n >> 8 & 0xFF) / 255.0f, (n & 0xFF) / 255.0f, (n >> 24 & 0xFF) / 255.0f);
+    }
+    
+    public static void enableGL2D() {
+        GL11.glDisable(2929);
+        GL11.glEnable(3042);
+        GL11.glDisable(3553);
+        GL11.glBlendFunc(770, 771);
+        GL11.glDepthMask(true);
+        GL11.glEnable(2848);
+        GL11.glHint(3154, 4354);
+        GL11.glHint(3155, 4354);
+    }
+    
+    public static void disableGL2D() {
+        GL11.glEnable(3553);
+        GL11.glDisable(3042);
+        GL11.glEnable(2929);
+        GL11.glDisable(2848);
+        GL11.glHint(3154, 4352);
+        GL11.glHint(3155, 4352);
+    }
+    
+    @EventTarget
+    private void render2D(final EventRender2D eventRender2D) {
+        final ScaledResolution scaledResolution = new ScaledResolution(Class118.mc);
+        final float n = scaledResolution.getScaledWidth();
+        final float n2 = scaledResolution.getScaledHeight();
+        if (this.potion.getValueState()) {
+            this.renderPotionStatus((int)n, (int)n2);
+        }
+        if (this.arraylist.getValueState()) {
+            this.renderArray(scaledResolution);
+        }
+        if (this.noti.getValueState()) {
+            Class120.INSTANCE.drawNotifications();
+        }
+        if (this.music.getValueState()) {
+            Class344.INSTANCE.renderOverlay();
+        }
+        if (this.logo.getValueState()) {
+            Hanabi.INSTANCE.fontManager.icon130.drawStringWithShadow(HanabiFonts.ICON_HANABI_LOGO, 2.0f, 2.0f, new Color(47, 116, 253).getRGB());
+        }
+        if (Class118.hotbar.getValueState() && Class118.mc.getRenderViewEntity() instanceof EntityPlayer && !Class118.mc.gameSettings.hideGUI) {
+            final float n3 = 0.0f;
+            final float n4 = n2 - 20.0f;
+            final float n5 = n;
+            final float n6 = n2;
+            final Class120 instance = Class120.INSTANCE;
+            Class246.drawRect(n3, n4, n5, n6, Class120.reAlpha(Class15.BLACK.c, 0.5f));
+            final UnicodeFontRenderer comfortaa17 = Hanabi.INSTANCE.fontManager.comfortaa17;
+            if (Class118.mc.isSingleplayer()) {
+                Class246.drawFilledCircle(10.0f, n2 - 10.0f, 3.0f, Class15.AQUA.c);
+                comfortaa17.drawString("PING:N/Ams     FPS:" + Minecraft.getDebugFPS(), 16.0f, n2 - 14.5f, -1);
             }
             else {
-                this.text = text;
+                try {
+                    final int getResponseTime = Class118.mc.getNetHandler().getPlayerInfo(Class118.mc.getSession().getUsername()).getResponseTime();
+                    Class246.drawFilledCircle(10.0f, n2 - 10.0f, 3.0f, (getResponseTime <= 100) ? new Color(3110141).getRGB() : ((getResponseTime <= 250) ? new Color(Class15.ORANGE.c).darker().getRGB() : new Color(Class15.RED.c).getRGB()));
+                    comfortaa17.drawString("PING:" + getResponseTime + "ms     FPS:" + Minecraft.getDebugFPS(), 16.0f, n2 - 14.5f, -1);
+                }
+                catch (Exception ex) {
+                    Class246.drawFilledCircle(10.0f, n2 - 10.0f, 3.0f, Class15.AQUA.c);
+                    comfortaa17.drawString("PING:N/Ams     FPS:" + Minecraft.getDebugFPS(), 16.0f, n2 - 14.5f, -1);
+                }
             }
-            this.setCursorPositionEnd();
+            final Date date = new Date();
+            this.f2.format(date);
+            this.f.format(date);
+            final String string = "Hanabi Build 1.5.1 - " + Class118.fuck;
+            Hanabi.INSTANCE.fontManager.wqy18.drawString(string, scaledResolution.getScaledWidth() - comfortaa17.getStringWidth(string), scaledResolution.getScaledHeight() - 16, -1);
+            if (Class118.mc.thePlayer.inventory.currentItem == 0) {
+                final float n7 = n / 2.0f - 91.0f;
+                final float n8 = n2 - 20.0f;
+                final float n9 = n / 2.0f + 90.0f - 160.0f;
+                final float n10 = n2;
+                final Class120 instance2 = Class120.INSTANCE;
+                Class246.drawRect(n7, n8, n9, n10, Class120.reAlpha(Class15.WHITE.c, 0.5f));
+            }
+            else {
+                final float n11 = n / 2.0f - 91.0f + Class118.mc.thePlayer.inventory.currentItem * 20;
+                final float n12 = n2 - 20.0f;
+                final float n13 = n / 2.0f + 90.0f - 20 * (8 - Class118.mc.thePlayer.inventory.currentItem);
+                final float n14 = n2;
+                final Class120 instance3 = Class120.INSTANCE;
+                Class246.drawRect(n11, n12, n13, n14, Class120.reAlpha(Class15.WHITE.c, 0.5f));
+            }
+            RenderHelper.enableGUIStandardItemLighting();
+            for (int i = 0; i < 9; ++i) {
+                this.customRenderHotbarItem(i, (int)(n / 2.0f - 90.0f + i * 20 + 2.0f), (int)(n2 - 16.0f - 2.0f), eventRender2D.partialTicks, (EntityPlayer)Class118.mc.thePlayer);
+            }
+            GlStateManager.disableBlend();
+            GlStateManager.color(1.0f, 1.0f, 1.0f);
+            RenderHelper.disableStandardItemLighting();
+            GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+            if (ModManager.getModule("StaffAnalyzer").isEnabled() && StaffAnalyzer.ui != null) {
+                StaffAnalyzer.ui.draw();
+            }
+            this.renderScaffold();
         }
     }
     
-    public String getText() {
-        return this.text;
-    }
-    
-    public String getSelectedText() {
-        return this.text.substring((this.cursorPosition < this.selectionEnd) ? this.cursorPosition : this.selectionEnd, (this.cursorPosition < this.selectionEnd) ? this.selectionEnd : this.cursorPosition);
-    }
-    
-    public void func_175205_a(final Predicate<String> field_175209_y) {
-        this.field_175209_y = field_175209_y;
-    }
-    
-    public void writeText(final String s) {
-        String string = "";
-        final String func_71565_a = ChatAllowedCharacters.func_71565_a(s);
-        final int n = (this.cursorPosition < this.selectionEnd) ? this.cursorPosition : this.selectionEnd;
-        final int n2 = (this.cursorPosition < this.selectionEnd) ? this.selectionEnd : this.cursorPosition;
-        final int n3 = this.maxStringLength - this.text.length() - (n - n2);
-        if (this.text.length() > 0) {
-            string += this.text.substring(0, n);
-        }
-        String text;
-        int length;
-        if (n3 < func_71565_a.length()) {
-            text = string + func_71565_a.substring(0, n3);
-            length = n3;
+    private void renderScaffold() {
+        final int getScaledWidth = new ScaledResolution(Class118.mc).getScaledWidth();
+        if (ModManager.getModule("Scaffold").getState()) {
+            final int reAlpha = Class120.reAlpha(Class15.WHITE.c, 0.8f);
+            if (BossStatus.bossName != null && BossStatus.statusBarTime > 0 && Class118.mc.thePlayer.getHealth() <= 6.0f) {
+                this.animationY2 = (float)Class246.getAnimationState(this.animationY2, 50.0, Math.max(10.0f, Math.abs(this.animationY2 - 50.0f) * 25.0f) * 0.3);
+            }
+            else if (BossStatus.bossName != null && BossStatus.statusBarTime > 0) {
+                this.animationY2 = (float)Class246.getAnimationState(this.animationY2, 20.0, Math.max(10.0f, Math.abs(this.animationY2 - 20.0f) * 25.0f) * 0.3);
+            }
+            else if (Class118.mc.thePlayer.getHealth() <= 6.0f) {
+                this.animationY2 = (float)Class246.getAnimationState(this.animationY2, 30.0, Math.max(10.0f, Math.abs(this.animationY2 - 30.0f) * 25.0f) * 0.3);
+            }
+            else {
+                this.animationY2 = (float)Class246.getAnimationState(this.animationY2, 2.0, Math.max(10.0f, Math.abs(this.animationY2 - 2.0f) * 25.0f) * 0.3);
+            }
+            drawRoundedRect2(getScaledWidth / 2 - 90, this.animationY2, getScaledWidth / 2 + 90, this.animationY2 + 20.0f, reAlpha, reAlpha);
+            if (Scaffold.currentlyHolding != null) {
+                GL11.glPushMatrix();
+                GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+                if (Class118.mc.theWorld != null) {
+                    RenderHelper.enableGUIStandardItemLighting();
+                }
+                GlStateManager.pushMatrix();
+                GlStateManager.disableAlpha();
+                GlStateManager.clear(256);
+                Class118.mc.getRenderItem().zLevel = -150.0f;
+                Class118.mc.getRenderItem().renderItemAndEffectIntoGUI(Scaffold.currentlyHolding, getScaledWidth / 2 - 90 + 2, (int)(this.animationY2 + 2.0f));
+                Class118.mc.getRenderItem().zLevel = 0.0f;
+                GlStateManager.disableBlend();
+                GlStateManager.scale(0.5, 0.5, 0.5);
+                GlStateManager.disableDepth();
+                GlStateManager.disableLighting();
+                GlStateManager.enableDepth();
+                GlStateManager.scale(2.0f, 2.0f, 2.0f);
+                GlStateManager.enableAlpha();
+                GlStateManager.popMatrix();
+                GL11.glPopMatrix();
+            }
+            else {
+                Hanabi.INSTANCE.fontManager.icon30.drawString("c", getScaledWidth / 2 - 88, this.animationY2 + 2.5f, Class15.GREY.c);
+            }
+            Hanabi.INSTANCE.fontManager.usans18.drawCenteredString(this.getBlockCount() + " blocks left", getScaledWidth / 2 - 2, this.animationY2 + 5.5f, Class15.GREY.c);
         }
         else {
-            text = string + func_71565_a;
-            length = func_71565_a.length();
+            this.animationY2 += 65.0f;
+            final int reAlpha2 = Class120.reAlpha(Class15.WHITE.c, 0.8f);
+            this.animationY2 = (float)Class246.getAnimationState(this.animationY2, -25.0, Math.max(10.0f, Math.abs(this.animationY2 + 25.0f) * 15.0f) * 0.3);
+            this.animationY2 -= 65.0f;
+            drawRoundedRect2(getScaledWidth / 2 - 90, this.animationY2, getScaledWidth / 2 + 90, this.animationY2 + 20.0f, reAlpha2, reAlpha2);
+            Hanabi.INSTANCE.fontManager.usans18.drawCenteredString("Scaffold Disabled", getScaledWidth / 2 - 2, this.animationY2 + 5.5f, Class15.GREY.c);
         }
-        if (this.text.length() > 0 && n2 < this.text.length()) {
-            text += this.text.substring(n2);
+        if (BossStatus.bossName != null && BossStatus.statusBarTime > 0) {
+            this.animationY2 = (float)Class246.getAnimationState(this.animationY2, 20.0, Math.max(10.0f, Math.abs(this.animationY2 - 20.0f) * 25.0f) * 0.3);
         }
-        if (this.field_175209_y.apply((Object)text)) {
-            this.text = text;
-            this.moveCursorBy(n - this.selectionEnd + length);
-            if (this.field_175210_x != null) {
-                this.field_175210_x.func_175319_a(this.id, this.text);
-            }
-        }
-    }
-    
-    public void deleteWords(final int n) {
-        if (this.text.length() != 0) {
-            if (this.selectionEnd != this.cursorPosition) {
-                this.writeText("");
-            }
-            else {
-                this.deleteFromCursor(this.getNthWordFromCursor(n) - this.cursorPosition);
-            }
+        else {
+            this.animationY2 = (float)Class246.getAnimationState(this.animationY2, 2.0, Math.max(10.0f, Math.abs(this.animationY2 - 2.0f) * 25.0f) * 0.3);
         }
     }
     
-    public void deleteFromCursor(final int n) {
-        if (this.text.length() != 0) {
-            if (this.selectionEnd != this.cursorPosition) {
-                this.writeText("");
-            }
-            else {
-                final boolean b = n < 0;
-                final int n2 = b ? (this.cursorPosition + n) : this.cursorPosition;
-                final int n3 = b ? this.cursorPosition : (this.cursorPosition + n);
-                String text = "";
-                if (n2 >= 0) {
-                    text = this.text.substring(0, n2);
-                }
-                if (n3 < this.text.length()) {
-                    text += this.text.substring(n3);
-                }
-                if (this.field_175209_y.apply((Object)text)) {
-                    this.text = text;
-                    if (b) {
-                        this.moveCursorBy(n);
-                    }
-                    if (this.field_175210_x != null) {
-                        this.field_175210_x.func_175319_a(this.id, this.text);
-                    }
-                }
-            }
+    public static void drawRoundedRect2(float n, float n2, float n3, float n4, final int n5, final int n6) {
+        enableGL2D();
+        GL11.glScalef(0.5f, 0.5f, 0.5f);
+        drawVLine(n *= 2.0f, (n2 *= 2.0f) + 1.0f, (n4 *= 2.0f) - 2.0f, n5);
+        drawVLine((n3 *= 2.0f) - 1.0f, n2 + 1.0f, n4 - 2.0f, n5);
+        drawHLine(n + 2.0f, n3 - 3.0f, n2, n5);
+        drawHLine(n + 2.0f, n3 - 3.0f, n4 - 1.0f, n5);
+        drawHLine(n + 1.0f, n + 1.0f, n2 + 1.0f, n5);
+        drawHLine(n3 - 2.0f, n3 - 2.0f, n2 + 1.0f, n5);
+        drawHLine(n3 - 2.0f, n3 - 2.0f, n4 - 2.0f, n5);
+        drawHLine(n + 1.0f, n + 1.0f, n4 - 2.0f, n5);
+        Class246.drawRect(n + 1.0f, n2 + 1.0f, n3 - 1.0f, n4 - 1.0f, n6);
+        GL11.glScalef(2.0f, 2.0f, 2.0f);
+        disableGL2D();
+    }
+    
+    public static void drawHLine(float n, float n2, final float n3, final int n4) {
+        if (n2 < n) {
+            final float n5 = n;
+            n = n2;
+            n2 = n5;
         }
+        Class246.drawRect(n, n3, n2 + 1.0f, n3 + 1.0f, n4);
     }
     
-    public int getId() {
-        return this.id;
-    }
-    
-    public int getNthWordFromCursor(final int n) {
-        return this.getNthWordFromPos(n, this.getCursorPosition());
-    }
-    
-    public int getNthWordFromPos(final int n, final int n2) {
-        return this.func_146197_a(n, n2, true);
-    }
-    
-    public int func_146197_a(final int n, final int n2, final boolean b) {
-        int index = n2;
-        final boolean b2 = n < 0;
-        for (int abs = Math.abs(n), i = 0; i < abs; ++i) {
-            if (!b2) {
-                final int length = this.text.length();
-                index = this.text.indexOf(32, index);
-                if (index == -1) {
-                    index = length;
-                }
-                else {
-                    while (b && index < length && this.text.charAt(index) == ' ') {
-                        ++index;
-                    }
-                }
-            }
-            else {
-                while (b && index > 0 && this.text.charAt(index - 1) == ' ') {
-                    --index;
-                }
-                while (index > 0 && this.text.charAt(index - 1) != ' ') {
-                    --index;
-                }
-            }
-        }
-        return index;
-    }
-    
-    public void moveCursorBy(final int n) {
-        this.setCursorPosition(this.selectionEnd + n);
-    }
-    
-    public void setCursorPosition(final int cursorPosition) {
-        this.cursorPosition = cursorPosition;
-        this.setSelectionPos(this.cursorPosition = MathHelper.func_76125_a(this.cursorPosition, 0, this.text.length()));
-    }
-    
-    public void setCursorPositionZero() {
-        this.setCursorPosition(0);
-    }
-    
-    public void setCursorPositionEnd() {
-        this.setCursorPosition(this.text.length());
-    }
-    
-    public boolean textboxKeyTyped(final char c, final int n) {
-        if (!this.isFocused) {
-            return false;
-        }
-        if (GuiScreen.func_175278_g(n)) {
-            this.setCursorPositionEnd();
-            this.setSelectionPos(0);
-            return true;
-        }
-        if (GuiScreen.func_175280_f(n)) {
-            GuiScreen.func_146275_d(this.getSelectedText());
-            return true;
-        }
-        if (GuiScreen.func_175279_e(n)) {
-            if (this.isEnabled) {
-                this.writeText(GuiScreen.func_146277_j());
-            }
-            return true;
-        }
-        if (GuiScreen.func_175277_d(n)) {
-            GuiScreen.func_146275_d(this.getSelectedText());
-            if (this.isEnabled) {
-                this.writeText("");
-            }
-            return true;
-        }
-        switch (n) {
-            case 14: {
-                if (GuiScreen.func_146271_m()) {
-                    if (this.isEnabled) {
-                        this.deleteWords(-1);
-                    }
-                }
-                else if (this.isEnabled) {
-                    this.deleteFromCursor(-1);
-                }
-                return true;
-            }
-            case 199: {
-                if (GuiScreen.func_146272_n()) {
-                    this.setSelectionPos(0);
-                }
-                else {
-                    this.setCursorPositionZero();
-                }
-                return true;
-            }
-            case 203: {
-                if (GuiScreen.func_146272_n()) {
-                    if (GuiScreen.func_146271_m()) {
-                        this.setSelectionPos(this.getNthWordFromPos(-1, this.getSelectionEnd()));
-                    }
-                    else {
-                        this.setSelectionPos(this.getSelectionEnd() - 1);
-                    }
-                }
-                else if (GuiScreen.func_146271_m()) {
-                    this.setCursorPosition(this.getNthWordFromCursor(-1));
-                }
-                else {
-                    this.moveCursorBy(-1);
-                }
-                return true;
-            }
-            case 205: {
-                if (GuiScreen.func_146272_n()) {
-                    if (GuiScreen.func_146271_m()) {
-                        this.setSelectionPos(this.getNthWordFromPos(1, this.getSelectionEnd()));
-                    }
-                    else {
-                        this.setSelectionPos(this.getSelectionEnd() + 1);
-                    }
-                }
-                else if (GuiScreen.func_146271_m()) {
-                    this.setCursorPosition(this.getNthWordFromCursor(1));
-                }
-                else {
-                    this.moveCursorBy(1);
-                }
-                return true;
-            }
-            case 207: {
-                if (GuiScreen.func_146272_n()) {
-                    this.setSelectionPos(this.text.length());
-                }
-                else {
-                    this.setCursorPositionEnd();
-                }
-                return true;
-            }
-            case 211: {
-                if (GuiScreen.func_146271_m()) {
-                    if (this.isEnabled) {
-                        this.deleteWords(1);
-                    }
-                }
-                else if (this.isEnabled) {
-                    this.deleteFromCursor(1);
-                }
-                return true;
-            }
-            default: {
-                if (ChatAllowedCharacters.func_71566_a(c)) {
-                    if (this.isEnabled) {
-                        this.writeText(Character.toString(c));
-                    }
-                    return true;
-                }
-                return false;
-            }
-        }
-    }
-    
-    public void mouseClicked(final int n, final int n2, final int n3) {
-        final boolean focused = n >= this.xPosition && n < this.xPosition + this.width && n2 >= this.yPosition && n2 < this.yPosition + this.height;
-        if (this.canLoseFocus) {
-            this.setFocused(focused);
-        }
-        if (this.isFocused && focused && n3 == 0) {
-            int n4 = n - this.xPosition;
-            if (this.enableBackgroundDrawing) {
-                n4 -= 4;
-            }
-            this.setCursorPosition(this.fontRendererInstance.func_78269_a(this.fontRendererInstance.func_78269_a(this.text.substring(this.lineScrollOffset), this.getWidth()), n4).length() + this.lineScrollOffset);
-        }
-    }
-    
-    public void drawTextBox() {
-        if (this.getVisible()) {
-            if (this.getEnableBackgroundDrawing()) {
-                Class284.drawRoundedRect(this.xPosition - 1, this.yPosition - 1, this.xPosition + this.width + 1, this.yPosition + this.height + 1, 5.0f, new Color(Class59.WHITE.c).darker().getRGB());
-            }
-            final int color = this.isEnabled ? this.enabledColor : this.disabledColor;
-            final int n = this.cursorPosition - this.lineScrollOffset;
-            int length = this.selectionEnd - this.lineScrollOffset;
-            final String func_78269_a = this.fontRendererInstance.func_78269_a(this.text.substring(this.lineScrollOffset), this.getWidth());
-            final boolean b = n >= 0 && n <= func_78269_a.length();
-            final boolean b2 = this.isFocused && this.cursorCounter / 6 % 2 == 0 && b;
-            final int n2 = this.enableBackgroundDrawing ? (this.xPosition + 4) : this.xPosition;
-            final int n3 = this.enableBackgroundDrawing ? (this.yPosition + (this.height - 8) / 2) : this.yPosition;
-            int func_175063_a = n2;
-            if (length > func_78269_a.length()) {
-                length = func_78269_a.length();
-            }
-            if (func_78269_a.length() > 0) {
-                func_175063_a = this.fontRendererInstance.func_175063_a(b ? func_78269_a.substring(0, n) : func_78269_a, (float)n2, (float)n3, color);
-            }
-            final boolean b3 = this.cursorPosition < this.text.length() || this.text.length() >= this.getMaxStringLength();
-            int n4 = func_175063_a;
-            if (!b) {
-                n4 = ((n > 0) ? (n2 + this.width) : n2);
-            }
-            else if (b3) {
-                n4 = func_175063_a - 1;
-                --func_175063_a;
-            }
-            if (func_78269_a.length() > 0 && b && n < func_78269_a.length()) {
-                this.fontRendererInstance.func_175063_a(func_78269_a.substring(n), (float)func_175063_a, (float)n3, color);
-            }
-            if (b2) {
-                if (b3) {
-                    Gui.func_73734_a(n4, n3 - 1, n4 + 1, n3 + 1 + this.fontRendererInstance.field_78288_b, -3092272);
-                }
-                else {
-                    Hanabi.INSTANCE.fontManager.comfortaa15.func_175063_a("_", n4, n3, color);
-                }
-            }
-            if (length != n) {
-                this.drawCursorVertical(n4, n3 - 1, n2 + this.fontRendererInstance.func_78256_a(func_78269_a.substring(0, length)) - 1, n3 + 1 + this.fontRendererInstance.field_78288_b);
-            }
-        }
-    }
-    
-    public void drawCursorVertical(int n, int n2, int n3, int n4) {
-        if (n < n3) {
-            final int n5 = n;
-            n = n3;
+    public static void drawVLine(final float n, float n2, float n3, final int n4) {
+        if (n3 < n2) {
+            final float n5 = n2;
+            n2 = n3;
             n3 = n5;
         }
-        if (n2 < n4) {
-            final int n6 = n2;
-            n2 = n4;
-            n4 = n6;
-        }
-        if (n3 > this.xPosition + this.width) {
-            n3 = this.xPosition + this.width;
-        }
-        if (n > this.xPosition + this.width) {
-            n = this.xPosition + this.width;
-        }
-        final Tessellator func_178181_a = Tessellator.func_178181_a();
-        final WorldRenderer func_178180_c = func_178181_a.func_178180_c();
-        GlStateManager.func_179131_c(0.0f, 0.0f, 255.0f, 255.0f);
-        GlStateManager.func_179090_x();
-        GlStateManager.func_179115_u();
-        GlStateManager.func_179116_f(5387);
-        func_178180_c.func_181668_a(7, DefaultVertexFormats.field_181705_e);
-        func_178180_c.func_181662_b((double)n, (double)n4, 0.0).func_181675_d();
-        func_178180_c.func_181662_b((double)n3, (double)n4, 0.0).func_181675_d();
-        func_178180_c.func_181662_b((double)n3, (double)n2, 0.0).func_181675_d();
-        func_178180_c.func_181662_b((double)n, (double)n2, 0.0).func_181675_d();
-        func_178181_a.func_78381_a();
-        GlStateManager.func_179134_v();
-        GlStateManager.func_179098_w();
+        Class246.drawRect(n, n2 + 1.0f, n + 1.0f, n3, n4);
     }
     
-    public void setMaxStringLength(final int maxStringLength) {
-        this.maxStringLength = maxStringLength;
-        if (this.text.length() > maxStringLength) {
-            this.text = this.text.substring(0, maxStringLength);
-        }
-    }
-    
-    public int getMaxStringLength() {
-        return this.maxStringLength;
-    }
-    
-    public int getCursorPosition() {
-        return this.cursorPosition;
-    }
-    
-    public boolean getEnableBackgroundDrawing() {
-        return this.enableBackgroundDrawing;
-    }
-    
-    public void setEnableBackgroundDrawing(final boolean enableBackgroundDrawing) {
-        this.enableBackgroundDrawing = enableBackgroundDrawing;
-    }
-    
-    public void setTextColor(final int enabledColor) {
-        this.enabledColor = enabledColor;
-    }
-    
-    public void setDisabledTextColour(final int disabledColor) {
-        this.disabledColor = disabledColor;
-    }
-    
-    public void setFocused(final boolean isFocused) {
-        if (isFocused && !this.isFocused) {
-            this.cursorCounter = 0;
-        }
-        this.isFocused = isFocused;
-    }
-    
-    public boolean isFocused() {
-        return this.isFocused;
-    }
-    
-    public void setEnabled(final boolean isEnabled) {
-        this.isEnabled = isEnabled;
-    }
-    
-    public int getSelectionEnd() {
-        return this.selectionEnd;
-    }
-    
-    public int getWidth() {
-        return this.getEnableBackgroundDrawing() ? (this.width - 8) : this.width;
-    }
-    
-    public void setSelectionPos(int selectionEnd) {
-        final int length = this.text.length();
-        if (selectionEnd > length) {
-            selectionEnd = length;
-        }
-        if (selectionEnd < 0) {
-            selectionEnd = 0;
-        }
-        this.selectionEnd = selectionEnd;
-        if (this.fontRendererInstance != null) {
-            if (this.lineScrollOffset > length) {
-                this.lineScrollOffset = length;
+    public int getBlockCount() {
+        int n = 0;
+        for (int i = 36; i < 45; ++i) {
+            if (Class118.mc.thePlayer.inventoryContainer.getSlot(i).getHasStack()) {
+                final ItemStack getStack = Class118.mc.thePlayer.inventoryContainer.getSlot(i).getStack();
+                final Item getItem = getStack.getItem();
+                if (getStack.getItem() instanceof ItemBlock && this.isValid(getItem)) {
+                    n += getStack.stackSize;
+                }
             }
-            final int width = this.getWidth();
-            final int n = this.fontRendererInstance.func_78269_a(this.text.substring(this.lineScrollOffset), width).length() + this.lineScrollOffset;
-            if (selectionEnd == this.lineScrollOffset) {
-                this.lineScrollOffset -= this.fontRendererInstance.func_78262_a(this.text, width, true).length();
+        }
+        return n;
+    }
+    
+    private boolean isValid(final Item item) {
+        return item instanceof ItemBlock && !Scaffold.blacklistedBlocks.contains(((ItemBlock)item).getBlock());
+    }
+    
+    private void customRenderHotbarItem(final int n, final int n2, final int n3, final float n4, final EntityPlayer entityPlayer) {
+        GlStateManager.disableBlend();
+        final ItemStack itemStack = entityPlayer.inventory.mainInventory[n];
+        if (itemStack != null) {
+            final float n5 = itemStack.animationsToGo - n4;
+            if (n5 > 0.0f) {
+                GlStateManager.pushMatrix();
+                final float n6 = 1.0f + n5 / 5.0f;
+                GlStateManager.translate((float)(n2 + 8), (float)(n3 + 12), 0.0f);
+                GlStateManager.scale(1.0f / n6, (n6 + 1.0f) / 2.0f, 1.0f);
+                GlStateManager.translate((float)(-(n2 + 8)), (float)(-(n3 + 12)), 0.0f);
             }
-            if (selectionEnd > n) {
-                this.lineScrollOffset += selectionEnd - n;
+            Class118.mc.getRenderItem().renderItemAndEffectIntoGUI(itemStack, n2, n3);
+            if (n5 > 0.0f) {
+                GlStateManager.popMatrix();
             }
-            else if (selectionEnd <= this.lineScrollOffset) {
-                this.lineScrollOffset -= this.lineScrollOffset - selectionEnd;
-            }
-            this.lineScrollOffset = MathHelper.func_76125_a(this.lineScrollOffset, 0, length);
+            Class118.mc.getRenderItem().renderItemOverlays((FontRenderer)Hanabi.INSTANCE.fontManager.comfortaa16, itemStack, n2 - 1, n3);
         }
     }
     
-    public void setCanLoseFocus(final boolean canLoseFocus) {
-        this.canLoseFocus = canLoseFocus;
+    private void renderArray(final ScaledResolution scaledResolution) {
+        final ArrayList<Mod> list = new ArrayList<Mod>(ModManager.getEnabledModListHUD());
+        float posY = 3.0f;
+        final UnicodeFontRenderer raleway17 = Hanabi.INSTANCE.fontManager.raleway17;
+        for (final Mod mod : list) {
+            mod.onRenderArray();
+            if (!mod.isEnabled() && mod.posX == 0.0f) {
+                continue;
+            }
+            final String name = mod.getName();
+            final String displayName = mod.getDisplayName();
+            final float posX = mod.posX;
+            mod.lastY = mod.posY;
+            mod.posY = posY;
+            Class246.drawRect(scaledResolution.getScaledWidth() - posX - 7.0f, posY + mod.posYRend - 3.5f, scaledResolution.getScaledWidth(), posY + mod.posYRend + 10.5f, Class120.reAlpha(Class15.BLACK.c, 0.55f));
+            Class246.drawRect(scaledResolution.getScaledWidth() - posX - 7.0f, posY + mod.posYRend - 3.5f, scaledResolution.getScaledWidth() - posX - 5.0f, posY + mod.posYRend + 10.5f, new Color(47, 116, 253).getRGB());
+            raleway17.drawString(name, scaledResolution.getScaledWidth() - posX - 2.0f, posY + mod.posYRend - 1.5f, new Color(47, 116, 253).getRGB());
+            if (displayName != null) {
+                raleway17.drawString(displayName, scaledResolution.getScaledWidth() - posX + raleway17.getStringWidth(name), posY + mod.posYRend - 1.5f, new Color(159, 159, 159).getRGB());
+            }
+            posY += 14.0f;
+        }
     }
     
-    public boolean getVisible() {
-        return this.visible;
+    public void renderPotionStatus(final int n, final int n2) {
+        this.x = 0;
+        for (final PotionEffect potionEffect : Class118.mc.thePlayer.getActivePotionEffects()) {
+            final Potion potion = Potion.potionTypes[potionEffect.getPotionID()];
+            String s = I18n.format(potion.getName(), new Object[0]);
+            int int1;
+            int int2;
+            try {
+                int1 = Integer.parseInt(Potion.getDurationString(potionEffect).split(":")[0]);
+                int2 = Integer.parseInt(Potion.getDurationString(potionEffect).split(":")[1]);
+            }
+            catch (Exception ex) {
+                int1 = 0;
+                int2 = 0;
+            }
+            final double n3 = int1 * 60 + int2;
+            if (!this.timerMap.containsKey(potion)) {
+                this.timerMap.put(potion, n3);
+            }
+            if (this.timerMap.get(potion) == 0.0 || n3 > this.timerMap.get(potion)) {
+                this.timerMap.replace(potion, n3);
+            }
+            switch (potionEffect.getAmplifier()) {
+                case 1: {
+                    s += " II";
+                    break;
+                }
+                case 2: {
+                    s += " III";
+                    break;
+                }
+                case 3: {
+                    s += " IV";
+                    break;
+                }
+            }
+            final int c = Class15.WHITE.c;
+            if (potionEffect.getDuration() < 600 && potionEffect.getDuration() > 300) {
+                final int c2 = Class15.YELLOW.c;
+            }
+            else if (potionEffect.getDuration() < 300) {
+                final int c3 = Class15.RED.c;
+            }
+            else if (potionEffect.getDuration() > 600) {
+                final int c4 = Class15.WHITE.c;
+            }
+            final int n4 = (int)((n - 6) * 1.33f);
+            final int n5 = (int)((n2 - 52 - Class118.mc.fontRendererObj.FONT_HEIGHT + this.x + 5) * 1.33f);
+            final float n6 = n - 120;
+            final float n7 = n2 - 60 + this.x;
+            final float n8 = n - 10;
+            final float n9 = n2 - 30 + this.x;
+            final Class120 instance = Class120.INSTANCE;
+            Class246.drawRect(n6, n7, n8, n9, Class120.reAlpha(Class15.BLACK.c, 0.41f));
+            if (potion.hasStatusIcon()) {
+                GlStateManager.pushMatrix();
+                GL11.glDisable(2929);
+                GL11.glEnable(3042);
+                GL11.glDepthMask(false);
+                OpenGlHelper.glBlendFunc(770, 771, 1, 0);
+                GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+                final int getStatusIconIndex = potion.getStatusIconIndex();
+                Class118.mc.getTextureManager().bindTexture(new ResourceLocation("textures/gui/container/inventory.png"));
+                GlStateManager.scale(0.75, 0.75, 0.75);
+                Class118.mc.ingameGUI.drawTexturedModalRect(n4 - 138, n5 + 8, 0 + getStatusIconIndex % 8 * 18, 198 + getStatusIconIndex / 8 * 18, 18, 18);
+                GL11.glDepthMask(true);
+                GL11.glDisable(3042);
+                GL11.glEnable(2929);
+                GlStateManager.popMatrix();
+            }
+            final int n10 = n2 - Class118.mc.fontRendererObj.FONT_HEIGHT + this.x - 38;
+            Hanabi.INSTANCE.fontManager.wqy18.drawString(s.replaceAll("§.", ""), n - 91.0f, n10 - Class118.mc.fontRendererObj.FONT_HEIGHT + 1, new Color(47, 116, 253).getRGB());
+            Hanabi.INSTANCE.fontManager.comfortaa16.drawString(Potion.getDurationString(potionEffect).replaceAll("§.", ""), n - 91.0f, n10 + 4, Class120.reAlpha(-1, 0.8f));
+            this.x -= 35;
+        }
     }
     
-    public void setVisible(final boolean visible) {
-        this.visible = visible;
+    private static void lambda$new$2(final Map.Entry entry) {
+        final Class245<Object> class245 = new Class245<Object>(entry.getKey().toString());
+        for (final Mod mod : (List)entry.getValue()) {
+            class245.addSubTab(new Class176<Object>(mod.getName(), Class118::lambda$null$1, mod));
+        }
+    }
+    
+    private static void lambda$null$1(final Class176 class176) {
+        class176.getObject().setState(!class176.getObject().getState());
+    }
+    
+    private static int lambda$new$0(final Map.Entry entry) {
+        return entry.getKey().toString().hashCode();
+    }
+    
+    static {
+        dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        timeFormat = DateTimeFormatter.ofPattern("HH:mm:ss");
+        Class118.hotbar = new Value<Boolean>("HUD_Hotbar", true);
+        Class118.musicPosX = new Value<Double>("HUD_MusicPlayerX", 70.0, 0.0, 400.0, 1.0);
+        Class118.musicPosY = new Value<Double>("HUD_MusicPlayerY", 5.0, 0.0, 200.0, 1.0);
+        Class118.musicPosYlyr = new Value<Double>("HUD_MusicPlayerLyricY", 120.0, 0.0, 200.0, 1.0);
     }
 }

@@ -8,7 +8,7 @@ import cn.Hanabi.modules.*;
 public class Reach extends Mod
 {
     public long lastAttack;
-    public Class191 timer;
+    public Class205 timer;
     public static Value<Double> reach;
     public Value<Boolean> combo;
     public Random rand;
@@ -18,7 +18,7 @@ public class Reach extends Mod
     public Reach() {
         super("Reach", Category.COMBAT);
         this.lastAttack = 0L;
-        this.timer = new Class191();
+        this.timer = new Class205();
         this.combo = new Value<Boolean>("Reach_ComboMode", false);
         this.rand = new Random();
         this.currentRange = 3.0;

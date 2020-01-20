@@ -1,101 +1,79 @@
 package ClassSub;
 
 import java.awt.*;
-import org.lwjgl.opengl.*;
-import net.minecraft.client.renderer.vertex.*;
-import net.minecraft.client.renderer.*;
-import java.util.*;
+import java.awt.font.*;
 
 public class Class167
 {
-    private static Map<Integer, Boolean> glCapMap;
+    private int codePoint;
+    private short width;
+    private short height;
+    private short yOffset;
+    private boolean isMissing;
+    private Shape shape;
+    private Class220 image;
     public static final boolean Cracked_By_Somebody_Dumped_BY_Ganga_SupportedbySucen;
     
-    public Class167() {
-        super();
-    }
-    
-    public static void setColor(final Color color) {
-        GL11.glColor4f((float)color.getRed() / 255.0f, (float)color.getGreen() / 255.0f, (float)color.getBlue() / 255.0f, (float)color.getAlpha() / 255.0f);
-    }
-    
-    public static void setGLCap(final int n, final boolean b) {
-        Class167.glCapMap.put(n, GL11.glGetBoolean(n));
-        if (b) {
-            GL11.glEnable(n);
+    public Class167(final int codePoint, final Rectangle rectangle, final GlyphVector glyphVector, final int n, final Class139 class139) {
+        this.codePoint = codePoint;
+        final GlyphMetrics glyphMetrics = glyphVector.getGlyphMetrics(n);
+        int n2 = (int)glyphMetrics.getLSB();
+        if (n2 > 0) {
+            n2 = 0;
         }
-        else {
-            GL11.glDisable(n);
+        int n3 = (int)glyphMetrics.getRSB();
+        if (n3 > 0) {
+            n3 = 0;
         }
-    }
-    
-    public static void revertGLCap(final int n) {
-        final Boolean b = (Boolean)Class167.glCapMap.get(n);
-        if (b != null) {
-            if ((boolean)b) {
-                GL11.glEnable(n);
-            }
-            else {
-                GL11.glDisable(n);
-            }
+        final int n4 = rectangle.width - n2 - n3;
+        final int height = rectangle.height;
+        if (n4 > 0 && height > 0) {
+            final int paddingTop = class139.getPaddingTop();
+            final int paddingRight = class139.getPaddingRight();
+            final int paddingBottom = class139.getPaddingBottom();
+            final int paddingLeft = class139.getPaddingLeft();
+            final int n5 = 1;
+            this.width = (short)(n4 + paddingLeft + paddingRight + n5);
+            this.height = (short)(height + paddingTop + paddingBottom + n5);
+            this.yOffset = (short)(class139.getAscent() + rectangle.y - paddingTop);
         }
+        this.shape = glyphVector.getGlyphOutline(n, -rectangle.x + class139.getPaddingLeft(), -rectangle.y + class139.getPaddingTop());
+        this.isMissing = !class139.getFont().canDisplay((char)codePoint);
     }
     
-    public static void glEnable(final int n) {
-        setGLCap(n, true);
+    public int getCodePoint() {
+        return this.codePoint;
     }
     
-    public static void glDisable(final int n) {
-        setGLCap(n, false);
+    public boolean isMissing() {
+        return this.isMissing;
     }
     
-    public static void revertAllCaps() {
-        final Iterator<Integer> iterator = Class167.glCapMap.keySet().iterator();
-        while (iterator.hasNext()) {
-            revertGLCap(iterator.next());
-        }
+    public int getWidth() {
+        return this.width;
     }
     
-    public static void setColor(final int n) {
-        GL11.glColor4b((byte)(n & 0xFF), (byte)(n >> 8 & 0xFF), (byte)(n >> 16 & 0xFF), (byte)(n >> 24 & 0xFF));
+    public int getHeight() {
+        return this.height;
     }
     
-    public static int toRGBA(final Color color) {
-        return color.getRed() | color.getGreen() << 8 | color.getBlue() << 16 | color.getAlpha() << 24;
+    public Shape getShape() {
+        return this.shape;
     }
     
-    public static void drawRect(final int n, int n2, int n3, int n4, int n5, final int n6) {
-        if (n2 < n4) {
-            final int n7 = n2;
-            n2 = n4;
-            n4 = n7;
-        }
-        if (n3 < n5) {
-            final int n8 = n3;
-            n3 = n5;
-            n5 = n8;
-        }
-        final float n9 = (n6 >> 24 & 0xFF) / 255.0f;
-        final float n10 = (n6 >> 16 & 0xFF) / 255.0f;
-        final float n11 = (n6 >> 8 & 0xFF) / 255.0f;
-        final float n12 = (n6 & 0xFF) / 255.0f;
-        final Tessellator func_178181_a = Tessellator.func_178181_a();
-        final WorldRenderer func_178180_c = func_178181_a.func_178180_c();
-        GlStateManager.func_179147_l();
-        GlStateManager.func_179090_x();
-        GlStateManager.func_179120_a(770, 771, 1, 0);
-        GlStateManager.func_179131_c(n10, n11, n12, n9);
-        func_178180_c.func_181668_a(n, DefaultVertexFormats.field_181705_e);
-        func_178180_c.func_181662_b((double)n2, (double)n5, 0.0).func_181675_d();
-        func_178180_c.func_181662_b((double)n4, (double)n5, 0.0).func_181675_d();
-        func_178180_c.func_181662_b((double)n4, (double)n3, 0.0).func_181675_d();
-        func_178180_c.func_181662_b((double)n2, (double)n3, 0.0).func_181675_d();
-        func_178181_a.func_78381_a();
-        GlStateManager.func_179098_w();
-        GlStateManager.func_179084_k();
+    public void setShape(final Shape shape) {
+        this.shape = shape;
     }
     
-    static {
-        Class167.glCapMap = new HashMap<Integer, Boolean>();
+    public Class220 getImage() {
+        return this.image;
+    }
+    
+    public void setImage(final Class220 image) {
+        this.image = image;
+    }
+    
+    public int getYOffset() {
+        return this.yOffset;
     }
 }

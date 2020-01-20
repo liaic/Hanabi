@@ -1,8 +1,19 @@
 package ClassSub;
 
-public interface Class175<T>
+public class Class175 extends Class249
 {
-    public static final boolean 你到底让我说你什么你才会服输你自己用那些狗刨式的词汇来挑战我的忍耐力你小心你登峰造极的爹爹我大义灭亲啊登峰造极出类拔萃的窝囊废再见了好吗用复制和你妖域的爷爷奶奶们抗衡NMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSL‎;
+    public static final String PACKET_ID = "CLEARUSER";
+    public final Class194 user;
+    public final Class59 client;
+    public static final boolean Cracked_By_Somebody_Dumped_BY_Ganga_SupportedbySucen;
     
-    void onClick(final Class40<T> p0);
+    public Class175(final Class59 client, final Class194 user) {
+        super("CLEARUSER::" + client.getClientName() + "::" + user.getUsername(), Class298.RECIEVE);
+        this.client = client;
+        this.user = user;
+    }
+    
+    public Class175(final String s) {
+        this(Class294.getTypeByName(s.split("::")[1]), Class194.getIRCUserByNameAndType(Class294.getTypeByName(s.split("::")[1]), s.split("::")[2]));
+    }
 }

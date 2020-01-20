@@ -8,13 +8,9 @@ import net.minecraft.entity.*;
 public abstract class MixinRender
 {
     @Shadow
-    protected RenderManager field_76990_c;
-    
-    public MixinRender() {
-        super();
-    }
+    protected RenderManager renderManager;
     
     @Shadow
-    public <T extends Entity> void func_76986_a(final T entity, final double x, final double y, final double z, final float entityYaw, final float partialTicks) {
+    public <T extends Entity> void doRender(final T entity, final double x, final double y, final double z, final float entityYaw, final float partialTicks) {
     }
 }

@@ -1,54 +1,51 @@
 package ClassSub;
 
-import net.minecraft.util.*;
-import java.net.*;
-import com.mojang.authlib.yggdrasil.*;
-import com.mojang.authlib.*;
-import cn.Hanabi.*;
-import com.mojang.authlib.exceptions.*;
-
-private class Class252 extends Thread
+class Class252 implements Runnable
 {
-    private final String password;
-    private final String username;
-    final Class54 this$0;
+    final Class286 this$0;
     public static final boolean Cracked_By_Somebody_Dumped_BY_Ganga_SupportedbySucen;
     
-    public Class252(final Class54 this$0, final String username, final String password) {
+    Class252(final Class286 this$0) {
         this.this$0 = this$0;
-        super();
-        this.username = username;
-        this.password = password;
-        Class54.access$0(this$0, EnumChatFormatting.GRAY + "Idle...");
-    }
-    
-    private final void checkAndAddAlt(final String username, final String password) {
-        final YggdrasilUserAuthentication yggdrasilUserAuthentication = (YggdrasilUserAuthentication)new YggdrasilAuthenticationService(Proxy.NO_PROXY, "").createUserAuthentication(Agent.MINECRAFT);
-        yggdrasilUserAuthentication.setUsername(username);
-        yggdrasilUserAuthentication.setPassword(password);
-        try {
-            yggdrasilUserAuthentication.logIn();
-            Class91.registry.add(new Class98(username, password, yggdrasilUserAuthentication.getSelectedProfile().getName()));
-            try {
-                Hanabi.INSTANCE.altFileMgr.getFile(Class169.class).saveFile();
-            }
-            catch (Exception ex2) {}
-            Class54.access$0(this.this$0, "Alt added. (" + username + ")");
-        }
-        catch (AuthenticationException ex) {
-            Class54.access$0(this.this$0, EnumChatFormatting.RED + "Alt failed!");
-            ex.printStackTrace();
-        }
     }
     
     @Override
     public void run() {
-        if (this.password.equals("")) {
-            Class91.registry.add(new Class98(this.username, ""));
-            Class54.access$0(this.this$0, EnumChatFormatting.GREEN + "Alt added. (" + this.username + " - offline name)");
-            return;
+        int n = 1;
+        int n2 = 0;
+        final Class296 currentTrack = Class286.getInstance().getCurrentTrack();
+        while (true) {
+            final long n3 = (long)Class286.getInstance().getMediaPlayer().getCurrentTime().toMillis();
+            try {
+                if (n3 < Class286.getInstance().lyric.get(n).getTime()) {
+                    if (n2 == 0) {
+                        Class344.INSTANCE.ly = Class286.getInstance().lyric.get(n - 1).getText();
+                        if (Class286.instance.tLyric.isEmpty()) {
+                            try {
+                                Class344.INSTANCE.tly = Class286.getInstance().lyric.get(n).getText();
+                            }
+                            catch (Exception ex) {
+                                Class344.INSTANCE.tly = "";
+                            }
+                        }
+                    }
+                    n2 = 1;
+                }
+                else {
+                    ++n;
+                    n2 = 0;
+                }
+            }
+            catch (Exception ex2) {
+                Class344.INSTANCE.ly = "";
+            }
+            if (n - 1 > Class286.getInstance().lyric.size() || Class286.getInstance().getCurrentTrack() != currentTrack || !this.this$0.playLyric) {
+                break;
+            }
+            try {
+                Thread.sleep(50L);
+            }
+            catch (Exception ex3) {}
         }
-        Class54.access$0(this.this$0, EnumChatFormatting.AQUA + "Trying alt...");
-        this.checkAndAddAlt(this.username, this.password);
     }
 }

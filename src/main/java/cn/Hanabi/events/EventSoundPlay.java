@@ -10,7 +10,6 @@ public class EventSoundPlay implements Event
     public boolean cancel;
     
     public EventSoundPlay(final Entity entity, final String name) {
-        super();
         this.entity = entity;
         this.name = name;
     }

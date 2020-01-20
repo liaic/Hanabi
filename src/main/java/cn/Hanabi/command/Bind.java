@@ -22,37 +22,37 @@ public class Bind extends Command
         super("bind", new String[0]);
         this.active = false;
         this.currentModule = null;
-        EventManager.register((Object)this);
+        EventManager.register(this);
     }
     
     @Override
     public void run(final String s, @NotNull final String[] array) {
         if (array.length == 0) {
-            throw new Class58("Usage: ." + s + " <module> [<none/show>]");
+            throw new Class226("Usage: ." + s + " <module> [<none/show>]");
         }
         final ModManager moduleManager = Hanabi.INSTANCE.moduleManager;
         final Mod module = ModManager.getModule(array[0], false);
         if (module == null) {
-            throw new Class58("The module '" + array[0] + "' does not exist");
+            throw new Class226("The module '" + array[0] + "' does not exist");
         }
         if (array.length > 1) {
             if (array[1].equalsIgnoreCase("none")) {
                 module.setKeybind(0);
-                Class213.success("§1" + module.getName() + "§7" + " was bound to " + "§1" + "NONE");
+                Class64.success("§1" + module.getName() + "§7" + " was bound to " + "§1" + "NONE");
             }
             else if (array[1].equalsIgnoreCase("show")) {
-                Class213.success("§1" + module.getName() + "§7" + " is bound to " + "§1" + Keyboard.getKeyName(module.getKeybind()));
+                Class64.success("§1" + module.getName() + "§7" + " is bound to " + "§1" + Keyboard.getKeyName(module.getKeybind()));
             }
             else {
                 final int keyIndex = Keyboard.getKeyIndex(array[1].toUpperCase());
                 module.setKeybind(keyIndex);
-                Class213.success("§1" + module.getName() + "§7" + " was bound to " + "§1" + Keyboard.getKeyName(keyIndex));
+                Class64.success("§1" + module.getName() + "§7" + " was bound to " + "§1" + Keyboard.getKeyName(keyIndex));
             }
             return;
         }
         this.active = true;
         this.currentModule = module;
-        Class213.info("Please press a key");
+        Class64.info("Please press a key");
     }
     
     @Override
@@ -82,7 +82,7 @@ public class Bind extends Command
     public void onKey(@NotNull final EventKey eventKey) {
         if (this.active) {
             this.currentModule.setKeybind(eventKey.getKey());
-            Class213.success("§1" + this.currentModule.getName() + "§7" + " was bound to " + "§1" + Keyboard.getKeyName(eventKey.getKey()));
+            Class64.success("§1" + this.currentModule.getName() + "§7" + " was bound to " + "§1" + Keyboard.getKeyName(eventKey.getKey()));
             this.active = false;
             this.currentModule = null;
         }

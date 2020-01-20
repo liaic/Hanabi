@@ -1,280 +1,167 @@
 package ClassSub;
 
-import java.awt.*;
-import javax.swing.border.*;
-import javax.swing.*;
+import net.minecraft.client.*;
+import net.minecraft.potion.*;
+import net.minecraft.entity.*;
+import net.minecraft.entity.player.*;
+import net.minecraft.client.entity.*;
+import net.minecraft.block.*;
+import net.minecraft.util.*;
 
-private static class Class180 extends JDialog
+public class Class180
 {
-    public boolean okPressed;
+    private static Minecraft mc;
     public static final boolean Cracked_By_Somebody_Dumped_BY_Ganga_SupportedbySucen;
     
-    public Class180(final JComponent component, final String s, final String s2) {
-        // 
-        // This method could not be decompiled.
-        // 
-        // Original Bytecode:
-        // 
-        //     3: athrow         
-        //     4: aload_0        
-        //     5: invokespecial   javax/swing/JDialog.<init>:()V
-        //     8: aload_0        
-        //     9: ldc             0
-        //    11: putfield        ClassSub/Class180.okPressed:Z
-        //    14: aload_0        
-        //    15: ldc             2
-        //    17: invokevirtual   ClassSub/Class180.setDefaultCloseOperation:(I)V
-        //    20: aload_0        
-        //    21: new             Ljava/awt/GridBagLayout;
-        //    24: dup            
-        //    25: invokespecial   java/awt/GridBagLayout.<init>:()V
-        //    28: invokevirtual   ClassSub/Class180.setLayout:(Ljava/awt/LayoutManager;)V
-        //    31: aload_0        
-        //    32: ldc             1
-        //    34: invokevirtual   ClassSub/Class180.setModal:(Z)V
-        //    37: aload_1        
-        //    38: instanceof      Ljavax/swing/JSpinner;
-        //    41: ifeq            62
-        //    44: aload_1        
-        //    45: checkcast       Ljavax/swing/JSpinner;
-        //    48: invokevirtual   javax/swing/JSpinner.getEditor:()Ljavax/swing/JComponent;
-        //    51: checkcast       Ljavax/swing/JSpinner$DefaultEditor;
-        //    54: invokevirtual   javax/swing/JSpinner$DefaultEditor.getTextField:()Ljavax/swing/JFormattedTextField;
-        //    57: ldc             4
-        //    59: invokevirtual   javax/swing/JFormattedTextField.setColumns:(I)V
-        //    62: new             Ljavax/swing/JPanel;
-        //    65: dup            
-        //    66: invokespecial   javax/swing/JPanel.<init>:()V
-        //    69: astore          4
-        //    71: aload           4
-        //    73: new             Ljava/awt/GridBagLayout;
-        //    76: dup            
-        //    77: invokespecial   java/awt/GridBagLayout.<init>:()V
-        //    80: invokevirtual   javax/swing/JPanel.setLayout:(Ljava/awt/LayoutManager;)V
-        //    83: aload_0        
-        //    84: invokevirtual   ClassSub/Class180.getContentPane:()Ljava/awt/Container;
-        //    87: aload           4
-        //    89: new             Ljava/awt/GridBagConstraints;
-        //    92: dup            
-        //    93: ldc             0
-        //    95: ldc             0
-        //    97: ldc             2
-        //    99: ldc             1
-        //   101: dconst_1       
-        //   102: dconst_0       
-        //   103: ldc             10
-        //   105: ldc             1
-        //   107: new             Ljava/awt/Insets;
-        //   110: dup            
-        //   111: ldc             0
-        //   113: ldc             0
-        //   115: ldc             0
-        //   117: ldc             0
-        //   119: invokespecial   java/awt/Insets.<init>:(IIII)V
-        //   122: ldc             0
-        //   124: ldc             0
-        //   126: invokespecial   java/awt/GridBagConstraints.<init>:(IIIIDDIILjava/awt/Insets;II)V
-        //   129: invokevirtual   java/awt/Container.add:(Ljava/awt/Component;Ljava/lang/Object;)V
-        //   132: aload           4
-        //   134: getstatic       java/awt/Color.white:Ljava/awt/Color;
-        //   137: invokevirtual   javax/swing/JPanel.setBackground:(Ljava/awt/Color;)V
-        //   140: aload           4
-        //   142: ldc             0
-        //   144: ldc             0
-        //   146: ldc             1
-        //   148: ldc             0
-        //   150: getstatic       java/awt/Color.black:Ljava/awt/Color;
-        //   153: invokestatic    javax/swing/BorderFactory.createMatteBorder:(IIIILjava/awt/Color;)Ljavax/swing/border/MatteBorder;
-        //   156: invokevirtual   javax/swing/JPanel.setBorder:(Ljavax/swing/border/Border;)V
-        //   159: new             Ljavax/swing/JTextArea;
-        //   162: dup            
-        //   163: aload_3        
-        //   164: invokespecial   javax/swing/JTextArea.<init>:(Ljava/lang/String;)V
-        //   167: astore          5
-        //   169: aload           4
-        //   171: aload           5
-        //   173: new             Ljava/awt/GridBagConstraints;
-        //   176: dup            
-        //   177: ldc             0
-        //   179: ldc             0
-        //   181: ldc             1
-        //   183: ldc             1
-        //   185: dconst_1       
-        //   186: dconst_0       
-        //   187: ldc             10
-        //   189: ldc             1
-        //   191: new             Ljava/awt/Insets;
-        //   194: dup            
-        //   195: ldc             5
-        //   197: ldc             5
-        //   199: ldc             5
-        //   201: ldc             5
-        //   203: invokespecial   java/awt/Insets.<init>:(IIII)V
-        //   206: ldc             0
-        //   208: ldc             0
-        //   210: invokespecial   java/awt/GridBagConstraints.<init>:(IIIIDDIILjava/awt/Insets;II)V
-        //   213: invokevirtual   javax/swing/JPanel.add:(Ljava/awt/Component;Ljava/lang/Object;)V
-        //   216: aload           5
-        //   218: ldc             1
-        //   220: invokevirtual   javax/swing/JTextArea.setWrapStyleWord:(Z)V
-        //   223: aload           5
-        //   225: ldc             1
-        //   227: invokevirtual   javax/swing/JTextArea.setLineWrap:(Z)V
-        //   230: aload           5
-        //   232: ldc             0
-        //   234: ldc             0
-        //   236: ldc             0
-        //   238: ldc             0
-        //   240: invokestatic    javax/swing/BorderFactory.createEmptyBorder:(IIII)Ljavax/swing/border/Border;
-        //   243: invokevirtual   javax/swing/JTextArea.setBorder:(Ljavax/swing/border/Border;)V
-        //   246: aload           5
-        //   248: ldc             0
-        //   250: invokevirtual   javax/swing/JTextArea.setEditable:(Z)V
-        //   253: new             Ljavax/swing/JPanel;
-        //   256: dup            
-        //   257: invokespecial   javax/swing/JPanel.<init>:()V
-        //   260: astore          5
-        //   262: aload_0        
-        //   263: invokevirtual   ClassSub/Class180.getContentPane:()Ljava/awt/Container;
-        //   266: aload           5
-        //   268: new             Ljava/awt/GridBagConstraints;
-        //   271: dup            
-        //   272: ldc             0
-        //   274: ldc             1
-        //   276: ldc             1
-        //   278: ldc             1
-        //   280: dconst_1       
-        //   281: dconst_1       
-        //   282: ldc             10
-        //   284: ldc             0
-        //   286: new             Ljava/awt/Insets;
-        //   289: dup            
-        //   290: ldc             5
-        //   292: ldc             5
-        //   294: ldc             0
-        //   296: ldc             5
-        //   298: invokespecial   java/awt/Insets.<init>:(IIII)V
-        //   301: ldc             0
-        //   303: ldc             0
-        //   305: invokespecial   java/awt/GridBagConstraints.<init>:(IIIIDDIILjava/awt/Insets;II)V
-        //   308: invokevirtual   java/awt/Container.add:(Ljava/awt/Component;Ljava/lang/Object;)V
-        //   311: aload           5
-        //   313: new             Ljavax/swing/JLabel;
-        //   316: dup            
-        //   317: new             Ljava/lang/StringBuilder;
-        //   320: dup            
-        //   321: invokespecial   java/lang/StringBuilder.<init>:()V
-        //   324: aload_2        
-        //   325: invokevirtual   java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
-        //   328: ldc             ":"
-        //   330: invokevirtual   java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
-        //   333: invokevirtual   java/lang/StringBuilder.toString:()Ljava/lang/String;
-        //   336: invokespecial   javax/swing/JLabel.<init>:(Ljava/lang/String;)V
-        //   339: invokevirtual   javax/swing/JPanel.add:(Ljava/awt/Component;)Ljava/awt/Component;
-        //   342: pop            
-        //   343: aload           5
-        //   345: aload_1        
-        //   346: invokevirtual   javax/swing/JPanel.add:(Ljava/awt/Component;)Ljava/awt/Component;
-        //   349: pop            
-        //   350: new             Ljavax/swing/JPanel;
-        //   353: dup            
-        //   354: invokespecial   javax/swing/JPanel.<init>:()V
-        //   357: astore          6
-        //   359: aload_0        
-        //   360: invokevirtual   ClassSub/Class180.getContentPane:()Ljava/awt/Container;
-        //   363: aload           6
-        //   365: new             Ljava/awt/GridBagConstraints;
-        //   368: dup            
-        //   369: ldc             0
-        //   371: ldc             2
-        //   373: ldc             2
-        //   375: ldc             1
-        //   377: dconst_0       
-        //   378: dconst_0       
-        //   379: ldc             13
-        //   381: ldc             0
-        //   383: new             Ljava/awt/Insets;
-        //   386: dup            
-        //   387: ldc             0
-        //   389: ldc             0
-        //   391: ldc             0
-        //   393: ldc             0
-        //   395: invokespecial   java/awt/Insets.<init>:(IIII)V
-        //   398: ldc             0
-        //   400: ldc             0
-        //   402: invokespecial   java/awt/GridBagConstraints.<init>:(IIIIDDIILjava/awt/Insets;II)V
-        //   405: invokevirtual   java/awt/Container.add:(Ljava/awt/Component;Ljava/lang/Object;)V
-        //   408: new             Ljavax/swing/JButton;
-        //   411: dup            
-        //   412: ldc             "OK"
-        //   414: invokespecial   javax/swing/JButton.<init>:(Ljava/lang/String;)V
-        //   417: astore          7
-        //   419: aload           6
-        //   421: aload           7
-        //   423: invokevirtual   javax/swing/JPanel.add:(Ljava/awt/Component;)Ljava/awt/Component;
-        //   426: pop            
-        //   427: aload           7
-        //   429: new             LClassSub/Class209;
-        //   432: dup            
-        //   433: aload_0        
-        //   434: invokespecial   ClassSub/Class209.<init>:(LClassSub/Class180;)V
-        //   437: invokevirtual   javax/swing/JButton.addActionListener:(Ljava/awt/event/ActionListener;)V
-        //   440: new             Ljavax/swing/JButton;
-        //   443: dup            
-        //   444: ldc             "Cancel"
-        //   446: invokespecial   javax/swing/JButton.<init>:(Ljava/lang/String;)V
-        //   449: astore          7
-        //   451: aload           6
-        //   453: aload           7
-        //   455: invokevirtual   javax/swing/JPanel.add:(Ljava/awt/Component;)Ljava/awt/Component;
-        //   458: pop            
-        //   459: aload           7
-        //   461: new             LClassSub/Class134;
-        //   464: dup            
-        //   465: aload_0        
-        //   466: invokespecial   ClassSub/Class134.<init>:(LClassSub/Class180;)V
-        //   469: invokevirtual   javax/swing/JButton.addActionListener:(Ljava/awt/event/ActionListener;)V
-        //   472: aload_0        
-        //   473: new             Ljava/awt/Dimension;
-        //   476: dup            
-        //   477: ldc             320
-        //   479: ldc             175
-        //   481: invokespecial   java/awt/Dimension.<init>:(II)V
-        //   484: invokevirtual   ClassSub/Class180.setSize:(Ljava/awt/Dimension;)V
-        //   487: return         
-        //   488: nop            
-        //   489: nop            
-        //   490: nop            
-        //   491: nop            
-        //   492: athrow         
-        // 
-        // The error that occurred was:
-        // 
-        // java.lang.NullPointerException
-        //     at com.strobel.decompiler.languages.java.ast.AstBuilder.convertType(AstBuilder.java:324)
-        //     at com.strobel.decompiler.languages.java.ast.AstBuilder.convertType(AstBuilder.java:153)
-        //     at com.strobel.decompiler.languages.java.ast.AstMethodBodyBuilder.transformCall(AstMethodBodyBuilder.java:1120)
-        //     at com.strobel.decompiler.languages.java.ast.AstMethodBodyBuilder.transformByteCode(AstMethodBodyBuilder.java:1010)
-        //     at com.strobel.decompiler.languages.java.ast.AstMethodBodyBuilder.transformExpression(AstMethodBodyBuilder.java:540)
-        //     at com.strobel.decompiler.languages.java.ast.AstMethodBodyBuilder.transformByteCode(AstMethodBodyBuilder.java:554)
-        //     at com.strobel.decompiler.languages.java.ast.AstMethodBodyBuilder.transformExpression(AstMethodBodyBuilder.java:540)
-        //     at com.strobel.decompiler.languages.java.ast.AstMethodBodyBuilder.transformNode(AstMethodBodyBuilder.java:392)
-        //     at com.strobel.decompiler.languages.java.ast.AstMethodBodyBuilder.transformBlock(AstMethodBodyBuilder.java:333)
-        //     at com.strobel.decompiler.languages.java.ast.AstMethodBodyBuilder.createMethodBody(AstMethodBodyBuilder.java:294)
-        //     at com.strobel.decompiler.languages.java.ast.AstMethodBodyBuilder.createMethodBody(AstMethodBodyBuilder.java:99)
-        //     at com.strobel.decompiler.languages.java.ast.AstBuilder.createMethodBody(AstBuilder.java:757)
-        //     at com.strobel.decompiler.languages.java.ast.AstBuilder.createConstructor(AstBuilder.java:692)
-        //     at com.strobel.decompiler.languages.java.ast.AstBuilder.addTypeMembers(AstBuilder.java:529)
-        //     at com.strobel.decompiler.languages.java.ast.AstBuilder.createTypeCore(AstBuilder.java:499)
-        //     at com.strobel.decompiler.languages.java.ast.AstBuilder.createTypeNoCache(AstBuilder.java:141)
-        //     at com.strobel.decompiler.languages.java.ast.AstBuilder.createType(AstBuilder.java:130)
-        //     at com.strobel.decompiler.languages.java.ast.AstBuilder.addType(AstBuilder.java:105)
-        //     at com.strobel.decompiler.languages.java.JavaLanguage.buildAst(JavaLanguage.java:71)
-        //     at com.strobel.decompiler.languages.java.JavaLanguage.decompileType(JavaLanguage.java:59)
-        //     at us.deathmarine.luyten.FileSaver.doSaveForgeJarDecompiled(FileSaver.java:228)
-        //     at us.deathmarine.luyten.FileSaver.lambda$saveAllForgeDir$0(FileSaver.java:142)
-        //     at java.lang.Thread.run(Unknown Source)
-        // 
-        throw new IllegalStateException("An error occurred while decompiling this method.");
+    public static double defaultSpeed() {
+        double n = 0.2873;
+        if (Minecraft.getMinecraft().thePlayer.isPotionActive(Potion.moveSpeed)) {
+            n *= 1.0 + 0.2 * (Minecraft.getMinecraft().thePlayer.getActivePotionEffect(Potion.moveSpeed).getAmplifier() + 1);
+        }
+        return n;
+    }
+    
+    public static void setMotion(final double n) {
+        double n2 = Class180.mc.thePlayer.movementInput.moveForward;
+        double n3 = Class180.mc.thePlayer.movementInput.moveStrafe;
+        float rotationYaw = Class180.mc.thePlayer.rotationYaw;
+        if (n2 == 0.0 && n3 == 0.0) {
+            Class180.mc.thePlayer.motionX = 0.0;
+            Class180.mc.thePlayer.motionZ = 0.0;
+        }
+        else {
+            if (n2 != 0.0) {
+                if (n3 > 0.0) {
+                    rotationYaw += ((n2 > 0.0) ? -45 : 45);
+                }
+                else if (n3 < 0.0) {
+                    rotationYaw += ((n2 > 0.0) ? 45 : -45);
+                }
+                n3 = 0.0;
+                if (n2 > 0.0) {
+                    n2 = 1.0;
+                }
+                else if (n2 < 0.0) {
+                    n2 = -1.0;
+                }
+            }
+            Class180.mc.thePlayer.motionX = n2 * n * Math.cos(Math.toRadians(rotationYaw + 90.0f)) + n3 * n * Math.sin(Math.toRadians(rotationYaw + 90.0f));
+            Class180.mc.thePlayer.motionZ = n2 * n * Math.sin(Math.toRadians(rotationYaw + 90.0f)) - n3 * n * Math.cos(Math.toRadians(rotationYaw + 90.0f));
+        }
+    }
+    
+    public static boolean checkTeleport(final double n, final double n2, final double n3, final double n4) {
+        final double n5 = Class180.mc.thePlayer.posX - n;
+        final double n6 = Class180.mc.thePlayer.posY - n2;
+        final double n7 = Class180.mc.thePlayer.posZ - n3;
+        final double n8 = Math.round(Math.sqrt(Class180.mc.thePlayer.getDistanceSq(n, n2, n3)) / n4 + 0.49999999999) - 1L;
+        double posX = Class180.mc.thePlayer.posX;
+        double posY = Class180.mc.thePlayer.posY;
+        double posZ = Class180.mc.thePlayer.posZ;
+        for (int n9 = 1; n9 < n8; ++n9) {
+            posX += (n - Class180.mc.thePlayer.posX) / n8;
+            posZ += (n3 - Class180.mc.thePlayer.posZ) / n8;
+            posY += (n2 - Class180.mc.thePlayer.posY) / n8;
+            if (!Class180.mc.theWorld.getCollidingBoundingBoxes((Entity)Class180.mc.thePlayer, new AxisAlignedBB(posX - 0.3, posY, posZ - 0.3, posX + 0.3, posY + 1.8, posZ + 0.3)).isEmpty()) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    public static boolean isOnGround(final double n) {
+        return !Class180.mc.theWorld.getCollidingBoundingBoxes((Entity)Class180.mc.thePlayer, Class180.mc.thePlayer.getEntityBoundingBox().offset(0.0, -n, 0.0)).isEmpty();
+    }
+    
+    public static boolean isOnGround(final Entity entity, final double n) {
+        return !Class180.mc.theWorld.getCollidingBoundingBoxes(entity, entity.getEntityBoundingBox().offset(0.0, -n, 0.0)).isEmpty();
+    }
+    
+    public static int getJumpEffect() {
+        if (Class180.mc.thePlayer.isPotionActive(Potion.jump)) {
+            return Class180.mc.thePlayer.getActivePotionEffect(Potion.jump).getAmplifier() + 1;
+        }
+        return 0;
+    }
+    
+    public static int getSpeedEffect() {
+        if (Class180.mc.thePlayer.isPotionActive(Potion.moveSpeed)) {
+            return Class180.mc.thePlayer.getActivePotionEffect(Potion.moveSpeed).getAmplifier() + 1;
+        }
+        return 0;
+    }
+    
+    public static Block getBlockUnderPlayer(final EntityPlayer entityPlayer, final double n) {
+        return Minecraft.getMinecraft().theWorld.getBlockState(new BlockPos(entityPlayer.posX, entityPlayer.posY - n, entityPlayer.posZ)).getBlock();
+    }
+    
+    public static Block getBlockAtPosC(final double n, final double n2, final double n3) {
+        final EntityPlayerSP thePlayer = Minecraft.getMinecraft().thePlayer;
+        return Minecraft.getMinecraft().theWorld.getBlockState(new BlockPos(((EntityPlayer)thePlayer).posX + n, ((EntityPlayer)thePlayer).posY + n2, ((EntityPlayer)thePlayer).posZ + n3)).getBlock();
+    }
+    
+    public static float getDistanceToGround(final Entity entity) {
+        if (Class180.mc.thePlayer.isCollidedVertically && Class180.mc.thePlayer.onGround) {
+            return 0.0f;
+        }
+        float n = (float)entity.posY;
+        while (n > 0.0f) {
+            final int[] array = { 53, 67, 108, 109, 114, 128, 134, 135, 136, 156, 163, 164, 180 };
+            final int[] array2 = { 6, 27, 28, 30, 31, 32, 37, 38, 39, 40, 50, 51, 55, 59, 63, 65, 66, 68, 69, 70, 72, 75, 76, 77, 83, 92, 93, 94, 104, 105, 106, 115, 119, 131, 132, 143, 147, 148, 149, 150, 157, 171, 175, 176, 177 };
+            final Block getBlock = Class180.mc.theWorld.getBlockState(new BlockPos(entity.posX, (double)(n - 1.0f), entity.posZ)).getBlock();
+            if (!(getBlock instanceof BlockAir)) {
+                if (Block.getIdFromBlock(getBlock) == 44 || Block.getIdFromBlock(getBlock) == 126) {
+                    return ((float)(entity.posY - n - 0.5) < 0.0f) ? 0.0f : ((float)(entity.posY - n - 0.5));
+                }
+                int[] array3;
+                for (int length = (array3 = array).length, i = 0; i < length; ++i) {
+                    if (Block.getIdFromBlock(getBlock) == array3[i]) {
+                        return ((float)(entity.posY - n - 1.0) < 0.0f) ? 0.0f : ((float)(entity.posY - n - 1.0));
+                    }
+                }
+                int[] array4;
+                for (int length2 = (array4 = array2).length, j = 0; j < length2; ++j) {
+                    if (Block.getIdFromBlock(getBlock) == array4[j]) {
+                        return ((float)(entity.posY - n) < 0.0f) ? 0.0f : ((float)(entity.posY - n));
+                    }
+                }
+                return (float)(entity.posY - n + getBlock.getBlockBoundsMaxY() - 1.0);
+            }
+            else {
+                --n;
+            }
+        }
+        return 0.0f;
+    }
+    
+    public static float[] getRotationsBlock(final BlockPos blockPos, final EnumFacing enumFacing) {
+        final double n = blockPos.getX() + 0.5 - Class180.mc.thePlayer.posX + enumFacing.getFrontOffsetX() / 2.0;
+        final double n2 = blockPos.getZ() + 0.5 - Class180.mc.thePlayer.posZ + enumFacing.getFrontOffsetZ() / 2.0;
+        final double n3 = Class180.mc.thePlayer.posY + Class180.mc.thePlayer.getEyeHeight() - (blockPos.getY() + 0.5);
+        final double n4 = MathHelper.sqrt_double(n * n + n2 * n2);
+        float n5 = (float)(Math.atan2(n2, n) * 180.0 / 3.141592653589793) - 90.0f;
+        final float n6 = (float)(Math.atan2(n3, n4) * 180.0 / 3.141592653589793);
+        if (n5 < 0.0f) {
+            n5 += 360.0f;
+        }
+        return new float[] { n5, n6 };
+    }
+    
+    public static boolean isBlockAboveHead() {
+        return !Class180.mc.theWorld.getCollidingBoundingBoxes((Entity)Class180.mc.thePlayer, new AxisAlignedBB(Class180.mc.thePlayer.posX - 0.3, Class180.mc.thePlayer.posY + Class180.mc.thePlayer.getEyeHeight(), Class180.mc.thePlayer.posZ + 0.3, Class180.mc.thePlayer.posX + 0.3, Class180.mc.thePlayer.posY + 2.5, Class180.mc.thePlayer.posZ - 0.3)).isEmpty();
+    }
+    
+    public static boolean isCollidedH(final double n) {
+        final AxisAlignedBB axisAlignedBB = new AxisAlignedBB(Class180.mc.thePlayer.posX - 0.3, Class180.mc.thePlayer.posY + 2.0, Class180.mc.thePlayer.posZ + 0.3, Class180.mc.thePlayer.posX + 0.3, Class180.mc.thePlayer.posY + 3.0, Class180.mc.thePlayer.posZ - 0.3);
+        return !Class180.mc.theWorld.getCollidingBoundingBoxes((Entity)Class180.mc.thePlayer, axisAlignedBB.offset(0.3 + n, 0.0, 0.0)).isEmpty() || !Class180.mc.theWorld.getCollidingBoundingBoxes((Entity)Class180.mc.thePlayer, axisAlignedBB.offset(-0.3 - n, 0.0, 0.0)).isEmpty() || !Class180.mc.theWorld.getCollidingBoundingBoxes((Entity)Class180.mc.thePlayer, axisAlignedBB.offset(0.0, 0.0, 0.3 + n)).isEmpty() || !Class180.mc.theWorld.getCollidingBoundingBoxes((Entity)Class180.mc.thePlayer, axisAlignedBB.offset(0.0, 0.0, -0.3 - n)).isEmpty();
+    }
+    
+    public static boolean isRealCollidedH(final double n) {
+        final AxisAlignedBB axisAlignedBB = new AxisAlignedBB(Class180.mc.thePlayer.posX - 0.3, Class180.mc.thePlayer.posY + 0.5, Class180.mc.thePlayer.posZ + 0.3, Class180.mc.thePlayer.posX + 0.3, Class180.mc.thePlayer.posY + 1.9, Class180.mc.thePlayer.posZ - 0.3);
+        return !Class180.mc.theWorld.getCollidingBoundingBoxes((Entity)Class180.mc.thePlayer, axisAlignedBB.offset(0.3 + n, 0.0, 0.0)).isEmpty() || !Class180.mc.theWorld.getCollidingBoundingBoxes((Entity)Class180.mc.thePlayer, axisAlignedBB.offset(-0.3 - n, 0.0, 0.0)).isEmpty() || !Class180.mc.theWorld.getCollidingBoundingBoxes((Entity)Class180.mc.thePlayer, axisAlignedBB.offset(0.0, 0.0, 0.3 + n)).isEmpty() || !Class180.mc.theWorld.getCollidingBoundingBoxes((Entity)Class180.mc.thePlayer, axisAlignedBB.offset(0.0, 0.0, -0.3 - n)).isEmpty();
+    }
+    
+    static {
+        Class180.mc = Minecraft.getMinecraft();
     }
 }

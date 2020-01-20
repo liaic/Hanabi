@@ -1,52 +1,27 @@
 package ClassSub;
 
-class Class261
+import java.io.*;
+import java.util.*;
+
+public class Class261 extends IOException
 {
-    private float yaw;
-    private float pitch;
+    private ArrayList exceptions;
     public static final boolean Cracked_By_Somebody_Dumped_BY_Ganga_SupportedbySucen;
     
-    public Class261(final float yaw, final float pitch) {
-        super();
-        this.yaw = yaw;
-        this.pitch = pitch;
-    }
-    
     public Class261() {
-        this(0.0f, 0.0f);
+        this.exceptions = new ArrayList();
     }
     
-    public float getYaw() {
-        return this.yaw;
+    public void addException(final Exception ex) {
+        this.exceptions.add(ex);
     }
     
-    public float getPitch() {
-        return this.pitch;
-    }
-    
-    public void setYaw(final float yaw) {
-        this.yaw = yaw;
-    }
-    
-    public void setPitch(final float pitch) {
-        this.pitch = pitch;
-    }
-    
-    public Class261 constrantAngle() {
-        this.setYaw(this.getYaw() % 360.0f);
-        this.setPitch(this.getPitch() % 360.0f);
-        while (this.getYaw() <= -180.0f) {
-            this.setYaw(this.getYaw() + 360.0f);
+    @Override
+    public String getMessage() {
+        String string = "Composite Exception: \n";
+        for (int i = 0; i < this.exceptions.size(); ++i) {
+            string = string + "\t" + ((IOException)this.exceptions.get(i)).getMessage() + "\n";
         }
-        while (this.getPitch() <= -180.0f) {
-            this.setPitch(this.getPitch() + 360.0f);
-        }
-        while (this.getYaw() > 180.0f) {
-            this.setYaw(this.getYaw() - 360.0f);
-        }
-        while (this.getPitch() > 180.0f) {
-            this.setPitch(this.getPitch() - 360.0f);
-        }
-        return this;
+        return string;
     }
 }

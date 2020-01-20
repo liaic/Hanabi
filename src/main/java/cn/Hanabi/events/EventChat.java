@@ -8,7 +8,6 @@ public class EventChat implements Event
     public boolean cancelled;
     
     public EventChat(final String chat) {
-        super();
         this.message = chat;
     }
     

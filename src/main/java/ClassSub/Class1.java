@@ -1,19 +1,11 @@
 package ClassSub;
 
-final class Class1 implements Class163.Class50
+import java.awt.image.*;
+import java.awt.*;
+
+public interface Class1
 {
-    final Class90 val$fill;
-    public static final boolean Cracked_By_Somebody_Dumped_BY_Ganga_SupportedbySucen;
+    public static final boolean 我不回你这句话我直接甩给你证据我求你了大哥实在是没时间再跟你废话了小伙子你�?�么狼狈为奸了啊你不觉得你现在像个跳梁小丑一样的取悦大家吗NMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSL �??;
     
-    Class1(final Class90 val$fill) {
-        this.val$fill = val$fill;
-        super();
-    }
-    
-    @Override
-    public float[] preRenderPoint(final Class68 class68, final float n, final float n2) {
-        this.val$fill.colorAt(class68, n, n2).bind();
-        final Class271 offset = this.val$fill.getOffsetAt(class68, n, n2);
-        return new float[] { offset.x + n, offset.y + n2 };
-    }
+    void draw(final BufferedImage p0, final Graphics2D p1, final Class139 p2, final Class167 p3);
 }

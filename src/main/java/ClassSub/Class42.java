@@ -1,18 +1,39 @@
 package ClassSub;
 
-import java.io.*;
+import java.util.*;
 
-public interface Class42 extends Serializable
+private class Class42
 {
-    public static final boolean 你难以抵挡我平平淡淡的语言为什么总是叫我用我的语言刺激你的神经你总是傻乐吧唧的从别人那里模仿些语言我自己所谓的那华丽的语言呢你们这些所谓的大手自称登峰造极的本事是的NMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSL    ;
+    private ArrayList points;
+    final Class278 this$0;
+    public static final boolean Cracked_By_Somebody_Dumped_BY_Ganga_SupportedbySucen;
     
-    int getTriangleCount();
+    public Class42(final Class278 this$0) {
+        this.this$0 = this$0;
+        this.points = new ArrayList();
+    }
     
-    float[] getTrianglePoint(final int p0, final int p1);
+    public boolean contains(final Class338 class338) {
+        return this.points.contains(class338);
+    }
     
-    void addPolyPoint(final float p0, final float p1);
+    public void add(final Class338 class338) {
+        this.points.add(class338);
+    }
     
-    void startHole();
+    public void remove(final Class338 class338) {
+        this.points.remove(class338);
+    }
     
-    boolean triangulate();
+    public int size() {
+        return this.points.size();
+    }
+    
+    public Class338 get(final int n) {
+        return this.points.get(n);
+    }
+    
+    public void clear() {
+        this.points.clear();
+    }
 }

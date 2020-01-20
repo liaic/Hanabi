@@ -1,46 +1,20 @@
 package ClassSub;
 
-import java.net.*;
-import java.io.*;
-
-public class Class172 implements Class314
+class Class172
 {
-    private File root;
+    int v0;
+    int v1;
+    int t0;
+    int t1;
+    boolean suspect;
+    final Class248 this$0;
     public static final boolean Cracked_By_Somebody_Dumped_BY_Ganga_SupportedbySucen;
     
-    public Class172(final File root) {
-        super();
-        this.root = root;
-    }
-    
-    @Override
-    public URL getResource(final String s) {
-        try {
-            File file = new File(this.root, s);
-            if (!file.exists()) {
-                file = new File(s);
-            }
-            if (!file.exists()) {
-                return null;
-            }
-            return file.toURI().toURL();
-        }
-        catch (IOException ex) {
-            return null;
-        }
-    }
-    
-    @Override
-    public InputStream getResourceAsStream(final String s) {
-        try {
-            File file = new File(this.root, s);
-            if (!file.exists()) {
-                file = new File(s);
-            }
-            return new FileInputStream(file);
-        }
-        catch (IOException ex) {
-            return null;
-        }
+    Class172(final Class248 this$0) {
+        this.this$0 = this$0;
+        this.v0 = -1;
+        this.v1 = -1;
+        this.t0 = -1;
+        this.t1 = -1;
     }
 }

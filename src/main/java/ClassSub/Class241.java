@@ -1,23 +1,23 @@
-package cn.Hanabi.modules.World;
+package ClassSub;
 
-import net.minecraft.util.*;
-import ClassSub.*;
-
-private class Class241
+class Class241 implements Runnable
 {
-    public BlockPos position;
-    public EnumFacing face;
-    final Scaffold this$0;
+    final Class296 val$track;
+    final Class286 this$0;
     public static final boolean Cracked_By_Somebody_Dumped_BY_Ganga_SupportedbySucen;
     
-    private Class241(final Scaffold this$0, final BlockPos position, final EnumFacing face) {
-        ((Class241)this).this$0 = this$0;
-        super();
-        ((Class241)this).position = position;
-        ((Class241)this).face = face;
+    Class241(final Class286 this$0, final Class296 val$track) {
+        this.this$0 = this$0;
+        this.val$track = val$track;
     }
     
-    Class241(final Scaffold scaffold, final BlockPos blockPos, final EnumFacing enumFacing, final Class257 class257) {
-        this(scaffold, blockPos, enumFacing);
+    @Override
+    public void run() {
+        if (Class286.instance.isLoop) {
+            this.this$0.play(this.val$track);
+        }
+        else {
+            this.this$0.next();
+        }
     }
 }

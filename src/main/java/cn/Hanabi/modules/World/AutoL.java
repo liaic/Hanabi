@@ -10,15 +10,15 @@ import java.util.*;
 
 public class AutoL extends Mod
 {
-    public static Class191 LTimer;
+    public static Class205 LTimer;
     public static Value<Boolean> ad;
     public static Value<Boolean> wdr;
     public static Value<Boolean> abuse;
     public static List<String> wdred;
     public static List<EntityPlayer> power;
-    static Class202 baizhijun;
-    static Class202 fanyangxiao;
-    static Class202 lilejie;
+    static Class343 baizhijun;
+    static Class343 fanyangxiao;
+    static Class343 lilejie;
     public static final boolean Cracked_By_Somebody_Dumped_BY_Ganga_SupportedbySucen;
     
     public AutoL() {
@@ -44,14 +44,14 @@ public class AutoL extends Mod
     }
     
     static {
-        AutoL.LTimer = new Class191();
+        AutoL.LTimer = new Class205();
         AutoL.ad = new Value<Boolean>("AutoL_AD", true);
         AutoL.wdr = new Value<Boolean>("AutoL_WatchdogReport", true);
         AutoL.abuse = new Value<Boolean>("AutoL_Abuse", false);
         AutoL.wdred = new ArrayList<String>();
         AutoL.power = new ArrayList<EntityPlayer>();
-        AutoL.baizhijun = new Class202("白治军", "15397699681", "陈桂荣", "四川广安");
-        AutoL.fanyangxiao = new Class202("范杨孝", "18361960482", "没有妈妈", "江苏苏州");
-        AutoL.lilejie = new Class202("李乐杰", "13546806422", "陈少燕", "广东汕头");
+        AutoL.baizhijun = new Class343("白治�?", "15397699681", "陈桂�?", "四川广安");
+        AutoL.fanyangxiao = new Class343("范杨�?", "18361960482", "没有妈妈", "江苏苏州");
+        AutoL.lilejie = new Class343("李乐�?", "13546806422", "陈少�?", "广东汕头");
     }
 }

@@ -1,28 +1,33 @@
 package ClassSub;
 
-import java.io.*;
-import java.util.*;
+import net.minecraftforge.fml.relauncher.*;
+import com.google.gson.*;
+import net.minecraft.client.*;
+import net.minecraft.util.*;
 
-public class Class64 extends IOException
+@SideOnly(Side.CLIENT)
+public class Class64
 {
-    private ArrayList exceptions;
+    public static final String PRIMARY_COLOR = "§7";
+    public static final String SECONDARY_COLOR = "§1";
+    private static final String PREFIX = "§7[§1Hanabi§7] ";
     public static final boolean Cracked_By_Somebody_Dumped_BY_Ganga_SupportedbySucen;
     
-    public Class64() {
-        super();
-        this.exceptions = new ArrayList();
+    public static void send(final String s) {
+        final JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("text", s);
+        Minecraft.getMinecraft().thePlayer.addChatMessage(IChatComponent.Serializer.jsonToComponent(jsonObject.toString()));
     }
     
-    public void addException(final Exception ex) {
-        this.exceptions.add(ex);
+    public static void success(final String s) {
+        info(s);
     }
     
-    @Override
-    public String getMessage() {
-        String string = "Composite Exception: \n";
-        for (int i = 0; i < this.exceptions.size(); ++i) {
-            string = string + "\t" + ((IOException)this.exceptions.get(i)).getMessage() + "\n";
-        }
-        return string;
+    public static void info(final String s) {
+        send("§7[§1Hanabi§7] " + s);
+    }
+    
+    public static void showMessageBox(final String s) {
+        new Class98(s);
     }
 }

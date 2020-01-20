@@ -8,14 +8,10 @@ import org.spongepowered.asm.mixin.*;
 public class MixinEntityPlayer implements IEntityPlayer
 {
     @Shadow
-    public int field_71072_f;
-    
-    public MixinEntityPlayer() {
-        super();
-    }
+    public int itemInUseCount;
     
     @Override
     public void setItemInUseCount(final int i) {
-        this.field_71072_f = i;
+        this.itemInUseCount = i;
     }
 }

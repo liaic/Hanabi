@@ -1,38 +1,55 @@
 package ClassSub;
 
-import cn.Hanabi.command.*;
-import org.jetbrains.annotations.*;
-import cn.Hanabi.modules.*;
-import cn.Hanabi.modules.World.*;
-import java.util.*;
-
-public class Class16 extends Command
+public class Class16 implements Class127
 {
+    private Class311 GL;
     public static final boolean Cracked_By_Somebody_Dumped_BY_Ganga_SupportedbySucen;
     
     public Class16() {
-        super("irc", new String[] { "i" });
+        this.GL = Class197.get();
     }
     
     @Override
-    public void run(final String s, @NotNull final String[] array) {
-        if (array.length < 1) {
-            throw new Class58("Usage: ." + s + " message");
-        }
-        String string = "";
-        for (int i = 0; i < array.length; ++i) {
-            string = string + array[i] + " ";
-        }
-        if (ModManager.getModule("IRC").isEnabled()) {
-            IRC.sendIRCMessage(string, true);
+    public void end() {
+        this.GL.glEnd();
+    }
+    
+    @Override
+    public void setAntiAlias(final boolean b) {
+        if (b) {
+            this.GL.glEnable(2848);
         }
         else {
-            Class128.sendClientMessage("Open your IRC first then you can send message!", Class67.Class124.ERROR);
+            this.GL.glDisable(2848);
         }
     }
     
     @Override
-    public List<String> autocomplete(final int n, final String[] array) {
-        return new ArrayList<String>();
+    public void setWidth(final float n) {
+        this.GL.glLineWidth(n);
+    }
+    
+    @Override
+    public void start() {
+        this.GL.glBegin(3);
+    }
+    
+    @Override
+    public void vertex(final float n, final float n2) {
+        this.GL.glVertex2f(n, n2);
+    }
+    
+    @Override
+    public void color(final float n, final float n2, final float n3, final float n4) {
+        this.GL.glColor4f(n, n2, n3, n4);
+    }
+    
+    @Override
+    public void setLineCaps(final boolean b) {
+    }
+    
+    @Override
+    public boolean applyGLLineFixes() {
+        return true;
     }
 }

@@ -10,14 +10,12 @@ public class EventStep extends EventCancellable
     private boolean pre;
     
     public EventStep(final boolean state, final double stepHeight, final double realHeight) {
-        super();
         this.pre = state;
         this.stepHeight = stepHeight;
         this.realHeight = realHeight;
     }
     
     public EventStep(final boolean state, final double stepHeight) {
-        super();
         this.pre = state;
         this.realHeight = stepHeight;
         this.stepHeight = stepHeight;

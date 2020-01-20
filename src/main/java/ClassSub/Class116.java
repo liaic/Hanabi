@@ -1,856 +1,721 @@
 package ClassSub;
 
-import java.util.*;
-import org.lwjgl.*;
-import java.nio.*;
+import java.awt.image.*;
+import java.awt.*;
+import javax.swing.border.*;
+import javax.swing.*;
 
 public class Class116
 {
-    protected static Class12 GL;
-    private static Class247 LSR;
-    public static int MODE_NORMAL;
-    public static int MODE_ALPHA_MAP;
-    public static int MODE_ALPHA_BLEND;
-    public static int MODE_COLOR_MULTIPLY;
-    public static int MODE_ADD;
-    public static int MODE_SCREEN;
-    private static final int DEFAULT_SEGMENTS = 50;
-    protected static Class116 currentGraphics;
-    protected static Class51 DEFAULT_FONT;
-    private float sx;
-    private float sy;
-    private Class51 font;
-    private Class278 currentColor;
-    protected int screenWidth;
-    protected int screenHeight;
-    private boolean pushed;
-    private Class115 clip;
-    private DoubleBuffer worldClip;
-    private ByteBuffer readBuffer;
-    private boolean antialias;
-    private Class115 worldClipRecord;
-    private int currentDrawingMode;
-    private float lineWidth;
-    private ArrayList stack;
-    private int stackIndex;
+    private static BufferedImage scratchImage;
     public static final boolean Cracked_By_Somebody_Dumped_BY_Ganga_SupportedbySucen;
     
-    public static void setCurrent(final Class116 currentGraphics) {
-        if (Class116.currentGraphics != currentGraphics) {
-            if (Class116.currentGraphics != null) {
-                Class116.currentGraphics.disable();
+    public static BufferedImage getScratchImage() {
+        final Graphics2D graphics2D = (Graphics2D)Class116.scratchImage.getGraphics();
+        graphics2D.setComposite(AlphaComposite.Clear);
+        graphics2D.fillRect(0, 0, 256, 256);
+        graphics2D.setComposite(AlphaComposite.SrcOver);
+        graphics2D.setColor(Color.white);
+        return Class116.scratchImage;
+    }
+    
+    public static Class193.Class111 colorValue(final String s, final Color color) {
+        final class Class235 extends Class354
+        {
+            public static final boolean Cracked_By_Somebody_Dumped_BY_Ganga_SupportedbySucen;
+            
+            Class235(final String s, final String s2) {
+                super(s, s2);
             }
-            (Class116.currentGraphics = currentGraphics).enable();
+            
+            @Override
+            public void showDialog() {
+                final Color showDialog = JColorChooser.showDialog(null, "Choose a color", Class116.fromString(this.value));
+                if (showDialog != null) {
+                    this.value = Class116.toString(showDialog);
+                }
+            }
+            
+            @Override
+            public Object getObject() {
+                return Class116.fromString(this.value);
+            }
         }
-    }
-    
-    public Class116() {
-        super();
-        this.sx = 1.0f;
-        this.sy = 1.0f;
-        this.currentColor = Class278.white;
-        this.worldClip = BufferUtils.createDoubleBuffer(4);
-        this.readBuffer = BufferUtils.createByteBuffer(4);
-        this.currentDrawingMode = Class116.MODE_NORMAL;
-        this.lineWidth = 1.0f;
-        this.stack = new ArrayList();
-    }
-    
-    public Class116(final int screenWidth, final int screenHeight) {
         // 
         // This method could not be decompiled.
         // 
         // Original Bytecode:
         // 
-        //     3: athrow         
-        //     4: aload_0        
-        //     5: invokespecial   java/lang/Object.<init>:()V
-        //     8: aload_0        
-        //     9: fconst_1       
-        //    10: putfield        ClassSub/Class116.sx:F
-        //    13: aload_0        
-        //    14: fconst_1       
-        //    15: putfield        ClassSub/Class116.sy:F
-        //    18: aload_0        
-        //    19: getstatic       ClassSub/Class278.white:LClassSub/Class278;
-        //    22: putfield        ClassSub/Class116.currentColor:LClassSub/Class278;
-        //    25: aload_0        
-        //    26: ldc             4
-        //    28: invokestatic    org/lwjgl/BufferUtils.createDoubleBuffer:(I)Ljava/nio/DoubleBuffer;
-        //    31: putfield        ClassSub/Class116.worldClip:Ljava/nio/DoubleBuffer;
-        //    34: aload_0        
-        //    35: ldc             4
-        //    37: invokestatic    org/lwjgl/BufferUtils.createByteBuffer:(I)Ljava/nio/ByteBuffer;
-        //    40: putfield        ClassSub/Class116.readBuffer:Ljava/nio/ByteBuffer;
-        //    43: aload_0        
-        //    44: getstatic       ClassSub/Class116.MODE_NORMAL:I
-        //    47: putfield        ClassSub/Class116.currentDrawingMode:I
-        //    50: aload_0        
-        //    51: fconst_1       
-        //    52: putfield        ClassSub/Class116.lineWidth:F
-        //    55: aload_0        
-        //    56: new             Ljava/util/ArrayList;
-        //    59: dup            
-        //    60: invokespecial   java/util/ArrayList.<init>:()V
-        //    63: putfield        ClassSub/Class116.stack:Ljava/util/ArrayList;
-        //    66: getstatic       ClassSub/Class116.DEFAULT_FONT:LClassSub/Class51;
-        //    69: ifnonnull       84
-        //    72: new             LClassSub/Class312;
-        //    75: dup            
-        //    76: aload_0        
-        //    77: invokespecial   ClassSub/Class312.<init>:(LClassSub/Class116;)V
-        //    80: invokestatic    java/security/AccessController.doPrivileged:(Ljava/security/PrivilegedAction;)Ljava/lang/Object;
-        //    83: pop            
-        //    84: aload_0        
-        //    85: getstatic       ClassSub/Class116.DEFAULT_FONT:LClassSub/Class51;
-        //    88: putfield        ClassSub/Class116.font:LClassSub/Class51;
-        //    91: aload_0        
-        //    92: iload_1        
-        //    93: putfield        ClassSub/Class116.screenWidth:I
-        //    96: aload_0        
-        //    97: iload_2        
-        //    98: putfield        ClassSub/Class116.screenHeight:I
-        //   101: return         
-        //   102: nop            
-        //   103: nop            
-        //   104: nop            
-        //   105: athrow         
+        //     3: nop            
+        //     4: athrow         
+        //     5: new             LClassSub/Class235;
+        //     8: dup            
+        //     9: aload_0        
+        //    10: aload_1        
+        //    11: invokestatic    ClassSub/Class116.toString:(Ljava/awt/Color;)Ljava/lang/String;
+        //    14: invokespecial   ClassSub/Class235.<init>:(Ljava/lang/String;Ljava/lang/String;)V
+        //    17: areturn        
+        //    18: nop            
+        //    19: nop            
+        //    20: nop            
+        //    21: athrow         
         // 
         // The error that occurred was:
         // 
         // java.lang.NullPointerException
-        //     at com.strobel.decompiler.languages.java.ast.AstBuilder.convertType(AstBuilder.java:324)
-        //     at com.strobel.decompiler.languages.java.ast.AstBuilder.convertType(AstBuilder.java:153)
-        //     at com.strobel.decompiler.languages.java.ast.AstMethodBodyBuilder.transformCall(AstMethodBodyBuilder.java:1120)
-        //     at com.strobel.decompiler.languages.java.ast.AstMethodBodyBuilder.transformByteCode(AstMethodBodyBuilder.java:1010)
-        //     at com.strobel.decompiler.languages.java.ast.AstMethodBodyBuilder.transformExpression(AstMethodBodyBuilder.java:540)
-        //     at com.strobel.decompiler.languages.java.ast.AstMethodBodyBuilder.transformByteCode(AstMethodBodyBuilder.java:554)
-        //     at com.strobel.decompiler.languages.java.ast.AstMethodBodyBuilder.transformExpression(AstMethodBodyBuilder.java:540)
-        //     at com.strobel.decompiler.languages.java.ast.AstMethodBodyBuilder.transformNode(AstMethodBodyBuilder.java:392)
-        //     at com.strobel.decompiler.languages.java.ast.AstMethodBodyBuilder.transformBlock(AstMethodBodyBuilder.java:333)
-        //     at com.strobel.decompiler.languages.java.ast.AstMethodBodyBuilder.transformNode(AstMethodBodyBuilder.java:437)
-        //     at com.strobel.decompiler.languages.java.ast.AstMethodBodyBuilder.transformBlock(AstMethodBodyBuilder.java:333)
-        //     at com.strobel.decompiler.languages.java.ast.AstMethodBodyBuilder.createMethodBody(AstMethodBodyBuilder.java:294)
-        //     at com.strobel.decompiler.languages.java.ast.AstMethodBodyBuilder.createMethodBody(AstMethodBodyBuilder.java:99)
-        //     at com.strobel.decompiler.languages.java.ast.AstBuilder.createMethodBody(AstBuilder.java:757)
-        //     at com.strobel.decompiler.languages.java.ast.AstBuilder.createConstructor(AstBuilder.java:692)
-        //     at com.strobel.decompiler.languages.java.ast.AstBuilder.addTypeMembers(AstBuilder.java:529)
-        //     at com.strobel.decompiler.languages.java.ast.AstBuilder.createTypeCore(AstBuilder.java:499)
-        //     at com.strobel.decompiler.languages.java.ast.AstBuilder.createTypeNoCache(AstBuilder.java:141)
-        //     at com.strobel.decompiler.languages.java.ast.AstBuilder.createType(AstBuilder.java:130)
-        //     at com.strobel.decompiler.languages.java.ast.AstBuilder.addType(AstBuilder.java:105)
-        //     at com.strobel.decompiler.languages.java.JavaLanguage.buildAst(JavaLanguage.java:71)
-        //     at com.strobel.decompiler.languages.java.JavaLanguage.decompileType(JavaLanguage.java:59)
-        //     at us.deathmarine.luyten.FileSaver.doSaveForgeJarDecompiled(FileSaver.java:228)
-        //     at us.deathmarine.luyten.FileSaver.lambda$saveAllForgeDir$0(FileSaver.java:142)
-        //     at java.lang.Thread.run(Unknown Source)
         // 
         throw new IllegalStateException("An error occurred while decompiling this method.");
     }
     
-    void setDimensions(final int screenWidth, final int screenHeight) {
-        this.screenWidth = screenWidth;
-        this.screenHeight = screenHeight;
-    }
-    
-    public void setDrawMode(final int currentDrawingMode) {
-        this.predraw();
-        this.currentDrawingMode = currentDrawingMode;
-        if (this.currentDrawingMode == Class116.MODE_NORMAL) {
-            Class116.GL.glEnable(3042);
-            Class116.GL.glColorMask(true, true, true, true);
-            Class116.GL.glBlendFunc(770, 771);
-        }
-        if (this.currentDrawingMode == Class116.MODE_ALPHA_MAP) {
-            Class116.GL.glDisable(3042);
-            Class116.GL.glColorMask(false, false, false, true);
-        }
-        if (this.currentDrawingMode == Class116.MODE_ALPHA_BLEND) {
-            Class116.GL.glEnable(3042);
-            Class116.GL.glColorMask(true, true, true, false);
-            Class116.GL.glBlendFunc(772, 773);
-        }
-        if (this.currentDrawingMode == Class116.MODE_COLOR_MULTIPLY) {
-            Class116.GL.glEnable(3042);
-            Class116.GL.glColorMask(true, true, true, true);
-            Class116.GL.glBlendFunc(769, 768);
-        }
-        if (this.currentDrawingMode == Class116.MODE_ADD) {
-            Class116.GL.glEnable(3042);
-            Class116.GL.glColorMask(true, true, true, true);
-            Class116.GL.glBlendFunc(1, 1);
-        }
-        if (this.currentDrawingMode == Class116.MODE_SCREEN) {
-            Class116.GL.glEnable(3042);
-            Class116.GL.glColorMask(true, true, true, true);
-            Class116.GL.glBlendFunc(1, 769);
-        }
-        this.postdraw();
-    }
-    
-    public void clearAlphaMap() {
-        this.pushTransform();
-        Class116.GL.glLoadIdentity();
-        final int currentDrawingMode = this.currentDrawingMode;
-        this.setDrawMode(Class116.MODE_ALPHA_MAP);
-        this.setColor(new Class278(0, 0, 0, 0));
-        this.fillRect(0.0f, 0.0f, this.screenWidth, this.screenHeight);
-        this.setColor(this.currentColor);
-        this.setDrawMode(currentDrawingMode);
-        this.popTransform();
-    }
-    
-    private void predraw() {
-        setCurrent(this);
-    }
-    
-    private void postdraw() {
-    }
-    
-    protected void enable() {
-    }
-    
-    public void flush() {
-        if (Class116.currentGraphics == this) {
-            Class116.currentGraphics.disable();
-            Class116.currentGraphics = null;
-        }
-    }
-    
-    protected void disable() {
-    }
-    
-    public Class51 getFont() {
-        return this.font;
-    }
-    
-    public void setBackground(final Class278 class278) {
-        this.predraw();
-        Class116.GL.glClearColor(class278.r, class278.g, class278.b, class278.a);
-        this.postdraw();
-    }
-    
-    public Class278 getBackground() {
-        this.predraw();
-        final FloatBuffer floatBuffer = BufferUtils.createFloatBuffer(16);
-        Class116.GL.glGetFloat(3106, floatBuffer);
-        this.postdraw();
-        return new Class278(floatBuffer);
-    }
-    
-    public void clear() {
-        this.predraw();
-        Class116.GL.glClear(16384);
-        this.postdraw();
-    }
-    
-    public void resetTransform() {
-        this.sx = 1.0f;
-        this.sy = 1.0f;
-        if (this.pushed) {
-            this.predraw();
-            Class116.GL.glPopMatrix();
-            this.pushed = false;
-            this.postdraw();
-        }
-    }
-    
-    private void checkPush() {
-        if (!this.pushed) {
-            this.predraw();
-            Class116.GL.glPushMatrix();
-            this.pushed = true;
-            this.postdraw();
-        }
-    }
-    
-    public void scale(final float n, final float n2) {
-        this.sx *= n;
-        this.sy *= n2;
-        this.checkPush();
-        this.predraw();
-        Class116.GL.glScalef(n, n2, 1.0f);
-        this.postdraw();
-    }
-    
-    public void rotate(final float n, final float n2, final float n3) {
-        this.checkPush();
-        this.predraw();
-        this.translate(n, n2);
-        Class116.GL.glRotatef(n3, 0.0f, 0.0f, 1.0f);
-        this.translate(-n, -n2);
-        this.postdraw();
-    }
-    
-    public void translate(final float n, final float n2) {
-        this.checkPush();
-        this.predraw();
-        Class116.GL.glTranslatef(n, n2, 0.0f);
-        this.postdraw();
-    }
-    
-    public void setFont(final Class51 font) {
-        this.font = font;
-    }
-    
-    public void resetFont() {
-        this.font = Class116.DEFAULT_FONT;
-    }
-    
-    public void setColor(final Class278 class278) {
-        if (class278 == null) {
-            return;
-        }
-        this.currentColor = new Class278(class278);
-        this.predraw();
-        this.currentColor.bind();
-        this.postdraw();
-    }
-    
-    public Class278 getColor() {
-        return new Class278(this.currentColor);
-    }
-    
-    public void drawLine(float n, float n2, float n3, float n4) {
-        final float n5 = this.lineWidth - 1.0f;
-        if (Class116.LSR.applyGLLineFixes()) {
-            if (n == n3) {
-                if (n2 > n4) {
-                    final float n6 = n4;
-                    n4 = n2;
-                    n2 = n6;
+    public static Class193.Class111 intValue(final String s, final int n, final String s2) {
+        final class Class323 extends Class354
+        {
+            final int val$currentValue;
+            final String val$description;
+            public static final boolean Cracked_By_Somebody_Dumped_BY_Ganga_SupportedbySucen;
+            
+            Class323(final String s, final String s2, final int val$currentValue, final String val$description) {
+                this.val$currentValue = val$currentValue;
+                this.val$description = val$description;
+                super(s, s2);
+            }
+            
+            @Override
+            public void showDialog() {
+                final JSpinner spinner = new JSpinner(new SpinnerNumberModel(this.val$currentValue, -32768, 32767, 1));
+                if (this.showValueDialog(spinner, this.val$description)) {
+                    this.value = String.valueOf(spinner.getValue());
                 }
-                final float n7 = 1.0f / this.sy;
-                final float n8 = n5 / this.sy;
-                this.fillRect(n - n8 / 2.0f, n2 - n8 / 2.0f, n8 + n7, n4 - n2 + n8 + n7);
-                return;
             }
-            if (n2 == n4) {
-                if (n > n3) {
-                    final float n9 = n3;
-                    n3 = n;
-                    n = n9;
+            
+            @Override
+            public Object getObject() {
+                return Integer.valueOf(this.value);
+            }
+        }
+        // 
+        // This method could not be decompiled.
+        // 
+        // Original Bytecode:
+        // 
+        //     3: nop            
+        //     4: athrow         
+        //     5: new             LClassSub/Class323;
+        //     8: dup            
+        //     9: aload_0        
+        //    10: iload_1        
+        //    11: invokestatic    java/lang/String.valueOf:(I)Ljava/lang/String;
+        //    14: iload_1        
+        //    15: aload_2        
+        //    16: invokespecial   ClassSub/Class323.<init>:(Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;)V
+        //    19: areturn        
+        //    20: nop            
+        //    21: nop            
+        //    22: nop            
+        //    23: athrow         
+        // 
+        // The error that occurred was:
+        // 
+        // java.lang.NullPointerException
+        // 
+        throw new IllegalStateException("An error occurred while decompiling this method.");
+    }
+    
+    public static Class193.Class111 floatValue(final String s, final float n, final float n2, final float n3, final String s2) {
+        final class Class106 extends Class354
+        {
+            final float val$currentValue;
+            final float val$min;
+            final float val$max;
+            final String val$description;
+            public static final boolean Cracked_By_Somebody_Dumped_BY_Ganga_SupportedbySucen;
+            
+            Class106(final String s, final String s2, final float val$currentValue, final float val$min, final float val$max, final String val$description) {
+                this.val$currentValue = val$currentValue;
+                this.val$min = val$min;
+                this.val$max = val$max;
+                this.val$description = val$description;
+                super(s, s2);
+            }
+            
+            @Override
+            public void showDialog() {
+                final JSpinner spinner = new JSpinner(new SpinnerNumberModel(this.val$currentValue, this.val$min, this.val$max, 0.10000000149011612));
+                if (this.showValueDialog(spinner, this.val$description)) {
+                    this.value = String.valueOf((float)spinner.getValue());
                 }
-                final float n10 = 1.0f / this.sx;
-                final float n11 = n5 / this.sx;
-                this.fillRect(n - n11 / 2.0f, n2 - n11 / 2.0f, n3 - n + n11 + n10, n11 + n10);
-                return;
+            }
+            
+            @Override
+            public Object getObject() {
+                return Float.valueOf(this.value);
             }
         }
-        this.predraw();
-        this.currentColor.bind();
-        Class85.bindNone();
-        Class116.LSR.start();
-        Class116.LSR.vertex(n, n2);
-        Class116.LSR.vertex(n3, n4);
-        Class116.LSR.end();
-        this.postdraw();
+        // 
+        // This method could not be decompiled.
+        // 
+        // Original Bytecode:
+        // 
+        //     3: nop            
+        //     4: athrow         
+        //     5: new             LClassSub/Class106;
+        //     8: dup            
+        //     9: aload_0        
+        //    10: fload_1        
+        //    11: invokestatic    java/lang/String.valueOf:(F)Ljava/lang/String;
+        //    14: fload_1        
+        //    15: fload_2        
+        //    16: fload_3        
+        //    17: aload           4
+        //    19: invokespecial   ClassSub/Class106.<init>:(Ljava/lang/String;Ljava/lang/String;FFFLjava/lang/String;)V
+        //    22: areturn        
+        //    23: nop            
+        //    24: nop            
+        //    25: nop            
+        //    26: nop            
+        //    27: athrow         
+        // 
+        // The error that occurred was:
+        // 
+        // java.lang.NullPointerException
+        // 
+        throw new IllegalStateException("An error occurred while decompiling this method.");
     }
     
-    public void draw(final Class68 class68, final Class90 class69) {
-        this.predraw();
-        Class85.bindNone();
-        Class163.draw(class68, class69);
-        this.currentColor.bind();
-        this.postdraw();
-    }
-    
-    public void fill(final Class68 class68, final Class90 class69) {
-        this.predraw();
-        Class85.bindNone();
-        Class163.fill(class68, class69);
-        this.currentColor.bind();
-        this.postdraw();
-    }
-    
-    public void draw(final Class68 class68) {
-        this.predraw();
-        Class85.bindNone();
-        this.currentColor.bind();
-        Class163.draw(class68);
-        this.postdraw();
-    }
-    
-    public void fill(final Class68 class68) {
-        this.predraw();
-        Class85.bindNone();
-        this.currentColor.bind();
-        Class163.fill(class68);
-        this.postdraw();
-    }
-    
-    public void texture(final Class68 class68, final Class140 class69) {
-        this.texture(class68, class69, 0.01f, 0.01f, false);
-    }
-    
-    public void texture(final Class68 class68, final Class140 class69, final Class90 class70) {
-        this.texture(class68, class69, 0.01f, 0.01f, class70);
-    }
-    
-    public void texture(final Class68 class68, final Class140 class69, final boolean b) {
-        if (b) {
-            this.texture(class68, class69, 1.0f, 1.0f, true);
-        }
-        else {
-            this.texture(class68, class69, 0.01f, 0.01f, false);
-        }
-    }
-    
-    public void texture(final Class68 class68, final Class140 class69, final float n, final float n2) {
-        this.texture(class68, class69, n, n2, false);
-    }
-    
-    public void texture(final Class68 class68, final Class140 class69, final float n, final float n2, final boolean b) {
-        this.predraw();
-        Class85.bindNone();
-        this.currentColor.bind();
-        if (b) {
-            Class163.textureFit(class68, class69, n, n2);
-        }
-        else {
-            Class163.texture(class68, class69, n, n2);
-        }
-        this.postdraw();
-    }
-    
-    public void texture(final Class68 class68, final Class140 class69, final float n, final float n2, final Class90 class70) {
-        this.predraw();
-        Class85.bindNone();
-        this.currentColor.bind();
-        Class163.texture(class68, class69, n, n2, class70);
-        this.postdraw();
-    }
-    
-    public void drawRect(final float n, final float n2, final float n3, final float n4) {
-        this.getLineWidth();
-        this.drawLine(n, n2, n + n3, n2);
-        this.drawLine(n + n3, n2, n + n3, n2 + n4);
-        this.drawLine(n + n3, n2 + n4, n, n2 + n4);
-        this.drawLine(n, n2 + n4, n, n2);
-    }
-    
-    public void clearClip() {
-        this.clip = null;
-        this.predraw();
-        Class116.GL.glDisable(3089);
-        this.postdraw();
-    }
-    
-    public void setWorldClip(final float n, final float n2, final float n3, final float n4) {
-        this.predraw();
-        this.worldClipRecord = new Class115(n, n2, n3, n4);
-        Class116.GL.glEnable(12288);
-        this.worldClip.put(1.0).put(0.0).put(0.0).put(-n).flip();
-        Class116.GL.glClipPlane(12288, this.worldClip);
-        Class116.GL.glEnable(12289);
-        this.worldClip.put(-1.0).put(0.0).put(0.0).put(n + n3).flip();
-        Class116.GL.glClipPlane(12289, this.worldClip);
-        Class116.GL.glEnable(12290);
-        this.worldClip.put(0.0).put(1.0).put(0.0).put(-n2).flip();
-        Class116.GL.glClipPlane(12290, this.worldClip);
-        Class116.GL.glEnable(12291);
-        this.worldClip.put(0.0).put(-1.0).put(0.0).put(n2 + n4).flip();
-        Class116.GL.glClipPlane(12291, this.worldClip);
-        this.postdraw();
-    }
-    
-    public void clearWorldClip() {
-        this.predraw();
-        this.worldClipRecord = null;
-        Class116.GL.glDisable(12288);
-        Class116.GL.glDisable(12289);
-        Class116.GL.glDisable(12290);
-        Class116.GL.glDisable(12291);
-        this.postdraw();
-    }
-    
-    public void setWorldClip(final Class115 class115) {
-        if (class115 == null) {
-            this.clearWorldClip();
-        }
-        else {
-            this.setWorldClip(class115.getX(), class115.getY(), class115.getWidth(), class115.getHeight());
-        }
-    }
-    
-    public Class115 getWorldClip() {
-        return this.worldClipRecord;
-    }
-    
-    public void setClip(final int n, final int n2, final int n3, final int n4) {
-        this.predraw();
-        if (this.clip == null) {
-            Class116.GL.glEnable(3089);
-            this.clip = new Class115(n, n2, n3, n4);
-        }
-        else {
-            this.clip.setBounds(n, n2, n3, n4);
-        }
-        Class116.GL.glScissor(n, this.screenHeight - n2 - n4, n3, n4);
-        this.postdraw();
-    }
-    
-    public void setClip(final Class115 class115) {
-        if (class115 == null) {
-            this.clearClip();
-            return;
-        }
-        this.setClip((int)class115.getX(), (int)class115.getY(), (int)class115.getWidth(), (int)class115.getHeight());
-    }
-    
-    public Class115 getClip() {
-        return this.clip;
-    }
-    
-    public void fillRect(final float n, final float n2, final float n3, final float n4, final Class140 class140, final float n5, final float n6) {
-        final int n7 = (int)Math.ceil(n3 / class140.getWidth()) + 2;
-        final int n8 = (int)Math.ceil(n4 / class140.getHeight()) + 2;
-        final Class115 worldClip = this.getWorldClip();
-        this.setWorldClip(n, n2, n3, n4);
-        this.predraw();
-        for (int i = 0; i < n7; ++i) {
-            for (int j = 0; j < n8; ++j) {
-                class140.draw(i * class140.getWidth() + n - n5, j * class140.getHeight() + n2 - n6);
+    public static Class193.Class111 booleanValue(final String s, final boolean b, final String s2) {
+        final class Class244 extends Class354
+        {
+            final boolean val$currentValue;
+            final String val$description;
+            public static final boolean Cracked_By_Somebody_Dumped_BY_Ganga_SupportedbySucen;
+            
+            Class244(final String s, final String s2, final boolean val$currentValue, final String val$description) {
+                this.val$currentValue = val$currentValue;
+                this.val$description = val$description;
+                super(s, s2);
             }
-        }
-        this.postdraw();
-        this.setWorldClip(worldClip);
-    }
-    
-    public void fillRect(final float n, final float n2, final float n3, final float n4) {
-        this.predraw();
-        Class85.bindNone();
-        this.currentColor.bind();
-        Class116.GL.glBegin(7);
-        Class116.GL.glVertex2f(n, n2);
-        Class116.GL.glVertex2f(n + n3, n2);
-        Class116.GL.glVertex2f(n + n3, n2 + n4);
-        Class116.GL.glVertex2f(n, n2 + n4);
-        Class116.GL.glEnd();
-        this.postdraw();
-    }
-    
-    public void drawOval(final float n, final float n2, final float n3, final float n4) {
-        this.drawOval(n, n2, n3, n4, 50);
-    }
-    
-    public void drawOval(final float n, final float n2, final float n3, final float n4, final int n5) {
-        this.drawArc(n, n2, n3, n4, n5, 0.0f, 360.0f);
-    }
-    
-    public void drawArc(final float n, final float n2, final float n3, final float n4, final float n5, final float n6) {
-        this.drawArc(n, n2, n3, n4, 50, n5, n6);
-    }
-    
-    public void drawArc(final float n, final float n2, final float n3, final float n4, final int n5, final float n6, float n7) {
-        this.predraw();
-        Class85.bindNone();
-        this.currentColor.bind();
-        while (n7 < n6) {
-            n7 += 360.0f;
-        }
-        final float n8 = n + n3 / 2.0f;
-        final float n9 = n2 + n4 / 2.0f;
-        Class116.LSR.start();
-        for (int n10 = 360 / n5, i = (int)n6; i < (int)(n7 + n10); i += n10) {
-            float n11 = (float)i;
-            if (n11 > n7) {
-                n11 = n7;
-            }
-            Class116.LSR.vertex((float)(n8 + Class165.cos(Math.toRadians((double)n11)) * n3 / 2.0), (float)(n9 + Class165.sin(Math.toRadians((double)n11)) * n4 / 2.0));
-        }
-        Class116.LSR.end();
-        this.postdraw();
-    }
-    
-    public void fillOval(final float n, final float n2, final float n3, final float n4) {
-        this.fillOval(n, n2, n3, n4, 50);
-    }
-    
-    public void fillOval(final float n, final float n2, final float n3, final float n4, final int n5) {
-        this.fillArc(n, n2, n3, n4, n5, 0.0f, 360.0f);
-    }
-    
-    public void fillArc(final float n, final float n2, final float n3, final float n4, final float n5, final float n6) {
-        this.fillArc(n, n2, n3, n4, 50, n5, n6);
-    }
-    
-    public void fillArc(final float n, final float n2, final float n3, final float n4, final int n5, final float n6, float n7) {
-        this.predraw();
-        Class85.bindNone();
-        this.currentColor.bind();
-        while (n7 < n6) {
-            n7 += 360.0f;
-        }
-        final float n8 = n + n3 / 2.0f;
-        final float n9 = n2 + n4 / 2.0f;
-        Class116.GL.glBegin(6);
-        final int n10 = 360 / n5;
-        Class116.GL.glVertex2f(n8, n9);
-        for (int i = (int)n6; i < (int)(n7 + n10); i += n10) {
-            float n11 = (float)i;
-            if (n11 > n7) {
-                n11 = n7;
-            }
-            Class116.GL.glVertex2f((float)(n8 + Class165.cos(Math.toRadians((double)n11)) * n3 / 2.0), (float)(n9 + Class165.sin(Math.toRadians((double)n11)) * n4 / 2.0));
-        }
-        Class116.GL.glEnd();
-        if (this.antialias) {
-            Class116.GL.glBegin(6);
-            Class116.GL.glVertex2f(n8, n9);
-            if (n7 != 360.0f) {
-                n7 -= 10.0f;
-            }
-            for (int j = (int)n6; j < (int)(n7 + n10); j += n10) {
-                float n12 = (float)j;
-                if (n12 > n7) {
-                    n12 = n7;
+            
+            @Override
+            public void showDialog() {
+                final JCheckBox checkBox = new JCheckBox();
+                checkBox.setSelected(this.val$currentValue);
+                if (this.showValueDialog(checkBox, this.val$description)) {
+                    this.value = String.valueOf(checkBox.isSelected());
                 }
-                Class116.GL.glVertex2f((float)(n8 + Class165.cos(Math.toRadians((double)(n12 + 10.0f))) * n3 / 2.0), (float)(n9 + Class165.sin(Math.toRadians((double)(n12 + 10.0f))) * n4 / 2.0));
             }
-            Class116.GL.glEnd();
+            
+            @Override
+            public Object getObject() {
+                return Boolean.valueOf(this.value);
+            }
         }
-        this.postdraw();
+        // 
+        // This method could not be decompiled.
+        // 
+        // Original Bytecode:
+        // 
+        //     3: nop            
+        //     4: athrow         
+        //     5: new             LClassSub/Class244;
+        //     8: dup            
+        //     9: aload_0        
+        //    10: iload_1        
+        //    11: invokestatic    java/lang/String.valueOf:(Z)Ljava/lang/String;
+        //    14: iload_1        
+        //    15: aload_2        
+        //    16: invokespecial   ClassSub/Class244.<init>:(Ljava/lang/String;Ljava/lang/String;ZLjava/lang/String;)V
+        //    19: areturn        
+        //    20: nop            
+        //    21: nop            
+        //    22: nop            
+        //    23: athrow         
+        // 
+        // The error that occurred was:
+        // 
+        // java.lang.NullPointerException
+        // 
+        throw new IllegalStateException("An error occurred while decompiling this method.");
     }
     
-    public void drawRoundRect(final float n, final float n2, final float n3, final float n4, final int n5) {
-        this.drawRoundRect(n, n2, n3, n4, n5, 50);
-    }
-    
-    public void drawRoundRect(final float n, final float n2, final float n3, final float n4, int n5, final int n6) {
-        if (n5 < 0) {
-            throw new IllegalArgumentException("corner radius must be > 0");
+    public static Class193.Class111 optionValue(final String s, final String s2, final String[][] array, final String s3) {
+        final class Class207 extends Class354
+        {
+            final String[][] val$options;
+            final String val$currentValue;
+            final String val$description;
+            public static final boolean Cracked_By_Somebody_Dumped_BY_Ganga_SupportedbySucen;
+            
+            Class207(final String s, final String s2, final String[][] val$options, final String val$currentValue, final String val$description) {
+                this.val$options = val$options;
+                this.val$currentValue = val$currentValue;
+                this.val$description = val$description;
+                super(s, s2);
+            }
+            
+            @Override
+            public void showDialog() {
+                int selectedIndex = -1;
+                final DefaultComboBoxModel<Object> defaultComboBoxModel = new DefaultComboBoxModel<Object>();
+                for (int i = 0; i < this.val$options.length; ++i) {
+                    defaultComboBoxModel.addElement(this.val$options[i][0]);
+                    if (this.getValue(i).equals(this.val$currentValue)) {
+                        selectedIndex = i;
+                    }
+                }
+                final JComboBox comboBox = new JComboBox(defaultComboBoxModel);
+                comboBox.setSelectedIndex(selectedIndex);
+                if (this.showValueDialog(comboBox, this.val$description)) {
+                    this.value = this.getValue(comboBox.getSelectedIndex());
+                }
+            }
+            
+            private String getValue(final int n) {
+                if (this.val$options[n].length == 1) {
+                    return this.val$options[n][0];
+                }
+                return this.val$options[n][1];
+            }
+            
+            @Override
+            public String toString() {
+                for (int i = 0; i < this.val$options.length; ++i) {
+                    if (this.getValue(i).equals(this.value)) {
+                        return this.val$options[i][0].toString();
+                    }
+                }
+                return "";
+            }
+            
+            @Override
+            public Object getObject() {
+                return this.value;
+            }
         }
-        if (n5 == 0) {
-            this.drawRect(n, n2, n3, n4);
-            return;
+        // 
+        // This method could not be decompiled.
+        // 
+        // Original Bytecode:
+        // 
+        //     3: nop            
+        //     4: athrow         
+        //     5: new             LClassSub/Class207;
+        //     8: dup            
+        //     9: aload_0        
+        //    10: aload_1        
+        //    11: invokevirtual   java/lang/String.toString:()Ljava/lang/String;
+        //    14: aload_2        
+        //    15: aload_1        
+        //    16: aload_3        
+        //    17: invokespecial   ClassSub/Class207.<init>:(Ljava/lang/String;Ljava/lang/String;[[Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+        //    20: areturn        
+        //    21: nop            
+        //    22: nop            
+        //    23: nop            
+        //    24: nop            
+        //    25: athrow         
+        // 
+        // The error that occurred was:
+        // 
+        // java.lang.NullPointerException
+        // 
+        throw new IllegalStateException("An error occurred while decompiling this method.");
+    }
+    
+    public static String toString(final Color color) {
+        if (color == null) {
+            throw new IllegalArgumentException("color cannot be null.");
         }
-        final int n7 = (int)Math.min(n3, n4) / 2;
-        if (n5 > n7) {
-            n5 = n7;
+        String s = Integer.toHexString(color.getRed());
+        if (s.length() == 1) {
+            s = "0" + s;
         }
-        this.drawLine(n + (float)n5, n2, n + n3 - (float)n5, n2);
-        this.drawLine(n, n2 + (float)n5, n, n2 + n4 - (float)n5);
-        this.drawLine(n + n3, n2 + (float)n5, n + n3, n2 + n4 - (float)n5);
-        this.drawLine(n + (float)n5, n2 + n4, n + n3 - (float)n5, n2 + n4);
-        final float n8 = (float)(n5 * 2);
-        this.drawArc(n + n3 - n8, n2 + n4 - n8, n8, n8, n6, 0.0f, 90.0f);
-        this.drawArc(n, n2 + n4 - n8, n8, n8, n6, 90.0f, 180.0f);
-        this.drawArc(n + n3 - n8, n2, n8, n8, n6, 270.0f, 360.0f);
-        this.drawArc(n, n2, n8, n8, n6, 180.0f, 270.0f);
-    }
-    
-    public void fillRoundRect(final float n, final float n2, final float n3, final float n4, final int n5) {
-        this.fillRoundRect(n, n2, n3, n4, n5, 50);
-    }
-    
-    public void fillRoundRect(final float n, final float n2, final float n3, final float n4, int n5, final int n6) {
-        if (n5 < 0) {
-            throw new IllegalArgumentException("corner radius must be > 0");
+        String s2 = Integer.toHexString(color.getGreen());
+        if (s2.length() == 1) {
+            s2 = "0" + s2;
         }
-        if (n5 == 0) {
-            this.fillRect(n, n2, n3, n4);
-            return;
+        String s3 = Integer.toHexString(color.getBlue());
+        if (s3.length() == 1) {
+            s3 = "0" + s3;
         }
-        final int n7 = (int)Math.min(n3, n4) / 2;
-        if (n5 > n7) {
-            n5 = n7;
+        return s + s2 + s3;
+    }
+    
+    public static Color fromString(final String s) {
+        if (s == null || s.length() != 6) {
+            return Color.white;
         }
-        final float n8 = (float)(n5 * 2);
-        this.fillRect(n + n5, n2, n3 - n8, n5);
-        this.fillRect(n, n2 + n5, n5, n4 - n8);
-        this.fillRect(n + n3 - n5, n2 + n5, n5, n4 - n8);
-        this.fillRect(n + n5, n2 + n4 - n5, n3 - n8, n5);
-        this.fillRect(n + (float)n5, n2 + (float)n5, n3 - n8, n4 - n8);
-        this.fillArc(n + n3 - n8, n2 + n4 - n8, n8, n8, n6, 0.0f, 90.0f);
-        this.fillArc(n, n2 + n4 - n8, n8, n8, n6, 90.0f, 180.0f);
-        this.fillArc(n + n3 - n8, n2, n8, n8, n6, 270.0f, 360.0f);
-        this.fillArc(n, n2, n8, n8, n6, 180.0f, 270.0f);
-    }
-    
-    public void setLineWidth(final float n) {
-        this.predraw();
-        this.lineWidth = n;
-        Class116.LSR.setWidth(n);
-        Class116.GL.glPointSize(n);
-        this.postdraw();
-    }
-    
-    public float getLineWidth() {
-        return this.lineWidth;
-    }
-    
-    public void resetLineWidth() {
-        this.predraw();
-        Class83.getLineStripRenderer().setWidth(1.0f);
-        Class116.GL.glLineWidth(1.0f);
-        Class116.GL.glPointSize(1.0f);
-        this.postdraw();
-    }
-    
-    public void setAntiAlias(final boolean b) {
-        this.predraw();
-        this.antialias = b;
-        Class116.LSR.setAntiAlias(b);
-        if (b) {
-            Class116.GL.glEnable(2881);
-        }
-        else {
-            Class116.GL.glDisable(2881);
-        }
-        this.postdraw();
-    }
-    
-    public boolean isAntiAlias() {
-        return this.antialias;
-    }
-    
-    public void drawString(final String s, final float n, final float n2) {
-        this.predraw();
-        this.font.drawString(n, n2, s, this.currentColor);
-        this.postdraw();
-    }
-    
-    public void drawImage(final Class140 class140, final float n, final float n2, final Class278 class141) {
-        this.predraw();
-        class140.draw(n, n2, class141);
-        this.currentColor.bind();
-        this.postdraw();
-    }
-    
-    public void drawAnimation(final Class173 class173, final float n, final float n2) {
-        this.drawAnimation(class173, n, n2, Class278.white);
-    }
-    
-    public void drawAnimation(final Class173 class173, final float n, final float n2, final Class278 class174) {
-        this.predraw();
-        class173.draw(n, n2, class174);
-        this.currentColor.bind();
-        this.postdraw();
-    }
-    
-    public void drawImage(final Class140 class140, final float n, final float n2) {
-        this.drawImage(class140, n, n2, Class278.white);
-    }
-    
-    public void drawImage(final Class140 class140, final float n, final float n2, final float n3, final float n4, final float n5, final float n6, final float n7, final float n8) {
-        this.predraw();
-        class140.draw(n, n2, n3, n4, n5, n6, n7, n8);
-        this.currentColor.bind();
-        this.postdraw();
-    }
-    
-    public void drawImage(final Class140 class140, final float n, final float n2, final float n3, final float n4, final float n5, final float n6) {
-        this.drawImage(class140, n, n2, n + (float)class140.getWidth(), n2 + (float)class140.getHeight(), n3, n4, n5, n6);
-    }
-    
-    public void copyArea(final Class140 class140, final int n, final int n2) {
-        final int n3 = class140.getTexture().hasAlpha() ? 6408 : 6407;
-        class140.bind();
-        Class116.GL.glCopyTexImage2D(3553, 0, n3, n, this.screenHeight - (n2 + class140.getHeight()), class140.getTexture().getTextureWidth(), class140.getTexture().getTextureHeight(), 0);
-        class140.ensureInverted();
-    }
-    
-    private int translate(final byte b) {
-        if (b < 0) {
-            return 256 + b;
-        }
-        return b;
-    }
-    
-    public Class278 getPixel(final int n, final int n2) {
-        this.predraw();
-        Class116.GL.glReadPixels(n, this.screenHeight - n2, 1, 1, 6408, 5121, this.readBuffer);
-        this.postdraw();
-        return new Class278(this.translate(this.readBuffer.get(0)), this.translate(this.readBuffer.get(1)), this.translate(this.readBuffer.get(2)), this.translate(this.readBuffer.get(3)));
-    }
-    
-    public void getArea(final int n, final int n2, final int n3, final int n4, final ByteBuffer byteBuffer) {
-        if (byteBuffer.capacity() < n3 * n4 * 4) {
-            throw new IllegalArgumentException("Byte buffer provided to get area is not big enough");
-        }
-        this.predraw();
-        Class116.GL.glReadPixels(n, this.screenHeight - n2 - n4, n3, n4, 6408, 5121, byteBuffer);
-        this.postdraw();
-    }
-    
-    public void drawImage(final Class140 class140, final float n, final float n2, final float n3, final float n4, final float n5, final float n6, final float n7, final float n8, final Class278 class141) {
-        this.predraw();
-        class140.draw(n, n2, n3, n4, n5, n6, n7, n8, class141);
-        this.currentColor.bind();
-        this.postdraw();
-    }
-    
-    public void drawImage(final Class140 class140, final float n, final float n2, final float n3, final float n4, final float n5, final float n6, final Class278 class141) {
-        this.drawImage(class140, n, n2, n + (float)class140.getWidth(), n2 + (float)class140.getHeight(), n3, n4, n5, n6, class141);
-    }
-    
-    public void drawGradientLine(final float n, final float n2, final float n3, final float n4, final float n5, final float n6, final float n7, final float n8, final float n9, final float n10, final float n11, final float n12) {
-        this.predraw();
-        Class85.bindNone();
-        Class116.GL.glBegin(1);
-        Class116.GL.glColor4f(n3, n4, n5, n6);
-        Class116.GL.glVertex2f(n, n2);
-        Class116.GL.glColor4f(n9, n10, n11, n12);
-        Class116.GL.glVertex2f(n7, n8);
-        Class116.GL.glEnd();
-        this.postdraw();
-    }
-    
-    public void drawGradientLine(final float n, final float n2, final Class278 class278, final float n3, final float n4, final Class278 class279) {
-        this.predraw();
-        Class85.bindNone();
-        Class116.GL.glBegin(1);
-        class278.bind();
-        Class116.GL.glVertex2f(n, n2);
-        class279.bind();
-        Class116.GL.glVertex2f(n3, n4);
-        Class116.GL.glEnd();
-        this.postdraw();
-    }
-    
-    public void pushTransform() {
-        this.predraw();
-        FloatBuffer floatBuffer;
-        if (this.stackIndex >= this.stack.size()) {
-            floatBuffer = BufferUtils.createFloatBuffer(18);
-            this.stack.add(floatBuffer);
-        }
-        else {
-            floatBuffer = this.stack.get(this.stackIndex);
-        }
-        Class116.GL.glGetFloat(2982, floatBuffer);
-        floatBuffer.put(16, this.sx);
-        floatBuffer.put(17, this.sy);
-        ++this.stackIndex;
-        this.postdraw();
-    }
-    
-    public void popTransform() {
-        if (this.stackIndex == 0) {
-            throw new RuntimeException("Attempt to pop a transform that hasn't be pushed");
-        }
-        this.predraw();
-        --this.stackIndex;
-        final FloatBuffer floatBuffer = (FloatBuffer)this.stack.get(this.stackIndex);
-        Class116.GL.glLoadMatrix(floatBuffer);
-        this.sx = floatBuffer.get(16);
-        this.sy = floatBuffer.get(17);
-        this.postdraw();
-    }
-    
-    public void destroy() {
+        return new Color(Integer.parseInt(s.substring(0, 2), 16), Integer.parseInt(s.substring(2, 4), 16), Integer.parseInt(s.substring(4, 6), 16));
     }
     
     static {
-        Class116.GL = Class83.get();
-        Class116.LSR = Class83.getLineStripRenderer();
-        Class116.MODE_NORMAL = 1;
-        Class116.MODE_ALPHA_MAP = 2;
-        Class116.MODE_ALPHA_BLEND = 3;
-        Class116.MODE_COLOR_MULTIPLY = 4;
-        Class116.MODE_ADD = 5;
-        Class116.MODE_SCREEN = 6;
-        Class116.currentGraphics = null;
+        Class116.scratchImage = new BufferedImage(256, 256, 2);
+    }
+    
+    private abstract static class Class354 implements Class193.Class111
+    {
+        String value;
+        String name;
+        public static final boolean Cracked_By_Somebody_Dumped_BY_Ganga_SupportedbySucen;
+        
+        public Class354(final String name, final String value) {
+            this.value = value;
+            this.name = name;
+        }
+        
+        @Override
+        public void setString(final String value) {
+            this.value = value;
+        }
+        
+        @Override
+        public String getString() {
+            return this.value;
+        }
+        
+        @Override
+        public String getName() {
+            return this.name;
+        }
+        
+        @Override
+        public String toString() {
+            if (this.value == null) {
+                return "";
+            }
+            return this.value.toString();
+        }
+        
+        public boolean showValueDialog(final JComponent component, final String s) {
+            class Class283 implements Runnable
+            {
+                final JComponent val$component;
+                final Class354 this$0;
+                public static final boolean Cracked_By_Somebody_Dumped_BY_Ganga_SupportedbySucen;
+                
+                Class283(final Class354 this$0, final JComponent val$component) {
+                    this.this$0 = this$0;
+                    this.val$component = val$component;
+                }
+                
+                @Override
+                public void run() {
+                    JComponent component = this.val$component;
+                    if (component instanceof JSpinner) {
+                        component = ((JSpinner.DefaultEditor)((JSpinner)this.val$component).getEditor()).getTextField();
+                    }
+                    component.requestFocusInWindow();
+                }
+            }
+            // 
+            // This method could not be decompiled.
+            // 
+            // Original Bytecode:
+            // 
+            //     3: nop            
+            //     4: athrow         
+            //     5: nop            
+            //     6: nop            
+            //     7: nop            
+            //     8: nop            
+            //     9: nop            
+            //    10: nop            
+            //    11: nop            
+            //    12: nop            
+            //    13: nop            
+            //    14: nop            
+            //    15: nop            
+            //    16: nop            
+            //    17: athrow         
+            //    18: new             LClassSub/Class349;
+            //    21: dup            
+            //    22: aload_1        
+            //    23: aload_0        
+            //    24: getfield        ClassSub/Class354.name:Ljava/lang/String;
+            //    27: aload_2        
+            //    28: invokespecial   ClassSub/Class349.<init>:(Ljavax/swing/JComponent;Ljava/lang/String;Ljava/lang/String;)V
+            //    31: astore_3       
+            //    32: aload_3        
+            //    33: aload_0        
+            //    34: getfield        ClassSub/Class354.name:Ljava/lang/String;
+            //    37: invokevirtual   ClassSub/Class349.setTitle:(Ljava/lang/String;)V
+            //    40: aload_3        
+            //    41: aconst_null    
+            //    42: invokevirtual   ClassSub/Class349.setLocationRelativeTo:(Ljava/awt/Component;)V
+            //    45: new             LClassSub/Class283;
+            //    48: dup            
+            //    49: aload_0        
+            //    50: aload_1        
+            //    51: invokespecial   ClassSub/Class283.<init>:(LClassSub/Class354;Ljavax/swing/JComponent;)V
+            //    54: invokestatic    java/awt/EventQueue.invokeLater:(Ljava/lang/Runnable;)V
+            //    57: aload_3        
+            //    58: ldc             1
+            //    60: invokevirtual   ClassSub/Class349.setVisible:(Z)V
+            //    63: aload_3        
+            //    64: getfield        ClassSub/Class349.okPressed:Z
+            //    67: ireturn        
+            //    68: nop            
+            //    69: nop            
+            //    70: nop            
+            //    71: nop            
+            //    72: athrow         
+            // 
+            // The error that occurred was:
+            // 
+            // java.lang.NullPointerException
+            // 
+            throw new IllegalStateException("An error occurred while decompiling this method.");
+        }
+    }
+    
+    private static class Class349 extends JDialog
+    {
+        public boolean okPressed;
+        public static final boolean Cracked_By_Somebody_Dumped_BY_Ganga_SupportedbySucen;
+        
+        public Class349(final JComponent component, final String s, final String s2) {
+            // 
+            // This method could not be decompiled.
+            // 
+            // Original Bytecode:
+            // 
+            //     3: athrow         
+            //     4: aload_0        
+            //     5: invokespecial   javax/swing/JDialog.<init>:()V
+            //     8: aload_0        
+            //     9: ldc             0
+            //    11: putfield        ClassSub/Class349.okPressed:Z
+            //    14: aload_0        
+            //    15: ldc             2
+            //    17: invokevirtual   ClassSub/Class349.setDefaultCloseOperation:(I)V
+            //    20: aload_0        
+            //    21: new             Ljava/awt/GridBagLayout;
+            //    24: dup            
+            //    25: invokespecial   java/awt/GridBagLayout.<init>:()V
+            //    28: invokevirtual   ClassSub/Class349.setLayout:(Ljava/awt/LayoutManager;)V
+            //    31: aload_0        
+            //    32: ldc             1
+            //    34: invokevirtual   ClassSub/Class349.setModal:(Z)V
+            //    37: aload_1        
+            //    38: instanceof      Ljavax/swing/JSpinner;
+            //    41: ifeq            62
+            //    44: aload_1        
+            //    45: checkcast       Ljavax/swing/JSpinner;
+            //    48: invokevirtual   javax/swing/JSpinner.getEditor:()Ljavax/swing/JComponent;
+            //    51: checkcast       Ljavax/swing/JSpinner$DefaultEditor;
+            //    54: invokevirtual   javax/swing/JSpinner$DefaultEditor.getTextField:()Ljavax/swing/JFormattedTextField;
+            //    57: ldc             4
+            //    59: invokevirtual   javax/swing/JFormattedTextField.setColumns:(I)V
+            //    62: new             Ljavax/swing/JPanel;
+            //    65: dup            
+            //    66: invokespecial   javax/swing/JPanel.<init>:()V
+            //    69: astore          4
+            //    71: aload           4
+            //    73: new             Ljava/awt/GridBagLayout;
+            //    76: dup            
+            //    77: invokespecial   java/awt/GridBagLayout.<init>:()V
+            //    80: invokevirtual   javax/swing/JPanel.setLayout:(Ljava/awt/LayoutManager;)V
+            //    83: aload_0        
+            //    84: invokevirtual   ClassSub/Class349.getContentPane:()Ljava/awt/Container;
+            //    87: aload           4
+            //    89: new             Ljava/awt/GridBagConstraints;
+            //    92: dup            
+            //    93: ldc             0
+            //    95: ldc             0
+            //    97: ldc             2
+            //    99: ldc             1
+            //   101: dconst_1       
+            //   102: dconst_0       
+            //   103: ldc             10
+            //   105: ldc             1
+            //   107: new             Ljava/awt/Insets;
+            //   110: dup            
+            //   111: ldc             0
+            //   113: ldc             0
+            //   115: ldc             0
+            //   117: ldc             0
+            //   119: invokespecial   java/awt/Insets.<init>:(IIII)V
+            //   122: ldc             0
+            //   124: ldc             0
+            //   126: invokespecial   java/awt/GridBagConstraints.<init>:(IIIIDDIILjava/awt/Insets;II)V
+            //   129: invokevirtual   java/awt/Container.add:(Ljava/awt/Component;Ljava/lang/Object;)V
+            //   132: aload           4
+            //   134: getstatic       java/awt/Color.white:Ljava/awt/Color;
+            //   137: invokevirtual   javax/swing/JPanel.setBackground:(Ljava/awt/Color;)V
+            //   140: aload           4
+            //   142: ldc             0
+            //   144: ldc             0
+            //   146: ldc             1
+            //   148: ldc             0
+            //   150: getstatic       java/awt/Color.black:Ljava/awt/Color;
+            //   153: invokestatic    javax/swing/BorderFactory.createMatteBorder:(IIIILjava/awt/Color;)Ljavax/swing/border/MatteBorder;
+            //   156: invokevirtual   javax/swing/JPanel.setBorder:(Ljavax/swing/border/Border;)V
+            //   159: new             Ljavax/swing/JTextArea;
+            //   162: dup            
+            //   163: aload_3        
+            //   164: invokespecial   javax/swing/JTextArea.<init>:(Ljava/lang/String;)V
+            //   167: astore          5
+            //   169: aload           4
+            //   171: aload           5
+            //   173: new             Ljava/awt/GridBagConstraints;
+            //   176: dup            
+            //   177: ldc             0
+            //   179: ldc             0
+            //   181: ldc             1
+            //   183: ldc             1
+            //   185: dconst_1       
+            //   186: dconst_0       
+            //   187: ldc             10
+            //   189: ldc             1
+            //   191: new             Ljava/awt/Insets;
+            //   194: dup            
+            //   195: ldc             5
+            //   197: ldc             5
+            //   199: ldc             5
+            //   201: ldc             5
+            //   203: invokespecial   java/awt/Insets.<init>:(IIII)V
+            //   206: ldc             0
+            //   208: ldc             0
+            //   210: invokespecial   java/awt/GridBagConstraints.<init>:(IIIIDDIILjava/awt/Insets;II)V
+            //   213: invokevirtual   javax/swing/JPanel.add:(Ljava/awt/Component;Ljava/lang/Object;)V
+            //   216: aload           5
+            //   218: ldc             1
+            //   220: invokevirtual   javax/swing/JTextArea.setWrapStyleWord:(Z)V
+            //   223: aload           5
+            //   225: ldc             1
+            //   227: invokevirtual   javax/swing/JTextArea.setLineWrap:(Z)V
+            //   230: aload           5
+            //   232: ldc             0
+            //   234: ldc             0
+            //   236: ldc             0
+            //   238: ldc             0
+            //   240: invokestatic    javax/swing/BorderFactory.createEmptyBorder:(IIII)Ljavax/swing/border/Border;
+            //   243: invokevirtual   javax/swing/JTextArea.setBorder:(Ljavax/swing/border/Border;)V
+            //   246: aload           5
+            //   248: ldc             0
+            //   250: invokevirtual   javax/swing/JTextArea.setEditable:(Z)V
+            //   253: new             Ljavax/swing/JPanel;
+            //   256: dup            
+            //   257: invokespecial   javax/swing/JPanel.<init>:()V
+            //   260: astore          5
+            //   262: aload_0        
+            //   263: invokevirtual   ClassSub/Class349.getContentPane:()Ljava/awt/Container;
+            //   266: aload           5
+            //   268: new             Ljava/awt/GridBagConstraints;
+            //   271: dup            
+            //   272: ldc             0
+            //   274: ldc             1
+            //   276: ldc             1
+            //   278: ldc             1
+            //   280: dconst_1       
+            //   281: dconst_1       
+            //   282: ldc             10
+            //   284: ldc             0
+            //   286: new             Ljava/awt/Insets;
+            //   289: dup            
+            //   290: ldc             5
+            //   292: ldc             5
+            //   294: ldc             0
+            //   296: ldc             5
+            //   298: invokespecial   java/awt/Insets.<init>:(IIII)V
+            //   301: ldc             0
+            //   303: ldc             0
+            //   305: invokespecial   java/awt/GridBagConstraints.<init>:(IIIIDDIILjava/awt/Insets;II)V
+            //   308: invokevirtual   java/awt/Container.add:(Ljava/awt/Component;Ljava/lang/Object;)V
+            //   311: aload           5
+            //   313: new             Ljavax/swing/JLabel;
+            //   316: dup            
+            //   317: new             Ljava/lang/StringBuilder;
+            //   320: dup            
+            //   321: invokespecial   java/lang/StringBuilder.<init>:()V
+            //   324: aload_2        
+            //   325: invokevirtual   java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+            //   328: ldc             ":"
+            //   330: invokevirtual   java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+            //   333: invokevirtual   java/lang/StringBuilder.toString:()Ljava/lang/String;
+            //   336: invokespecial   javax/swing/JLabel.<init>:(Ljava/lang/String;)V
+            //   339: invokevirtual   javax/swing/JPanel.add:(Ljava/awt/Component;)Ljava/awt/Component;
+            //   342: pop            
+            //   343: aload           5
+            //   345: aload_1        
+            //   346: invokevirtual   javax/swing/JPanel.add:(Ljava/awt/Component;)Ljava/awt/Component;
+            //   349: pop            
+            //   350: new             Ljavax/swing/JPanel;
+            //   353: dup            
+            //   354: invokespecial   javax/swing/JPanel.<init>:()V
+            //   357: astore          6
+            //   359: aload_0        
+            //   360: invokevirtual   ClassSub/Class349.getContentPane:()Ljava/awt/Container;
+            //   363: aload           6
+            //   365: new             Ljava/awt/GridBagConstraints;
+            //   368: dup            
+            //   369: ldc             0
+            //   371: ldc             2
+            //   373: ldc             2
+            //   375: ldc             1
+            //   377: dconst_0       
+            //   378: dconst_0       
+            //   379: ldc             13
+            //   381: ldc             0
+            //   383: new             Ljava/awt/Insets;
+            //   386: dup            
+            //   387: ldc             0
+            //   389: ldc             0
+            //   391: ldc             0
+            //   393: ldc             0
+            //   395: invokespecial   java/awt/Insets.<init>:(IIII)V
+            //   398: ldc             0
+            //   400: ldc             0
+            //   402: invokespecial   java/awt/GridBagConstraints.<init>:(IIIIDDIILjava/awt/Insets;II)V
+            //   405: invokevirtual   java/awt/Container.add:(Ljava/awt/Component;Ljava/lang/Object;)V
+            //   408: new             Ljavax/swing/JButton;
+            //   411: dup            
+            //   412: ldc             "OK"
+            //   414: invokespecial   javax/swing/JButton.<init>:(Ljava/lang/String;)V
+            //   417: astore          7
+            //   419: aload           6
+            //   421: aload           7
+            //   423: invokevirtual   javax/swing/JPanel.add:(Ljava/awt/Component;)Ljava/awt/Component;
+            //   426: pop            
+            //   427: aload           7
+            //   429: new             LClassSub/Class253;
+            //   432: dup            
+            //   433: aload_0        
+            //   434: invokespecial   ClassSub/Class253.<init>:(LClassSub/Class349;)V
+            //   437: invokevirtual   javax/swing/JButton.addActionListener:(Ljava/awt/event/ActionListener;)V
+            //   440: new             Ljavax/swing/JButton;
+            //   443: dup            
+            //   444: ldc             "Cancel"
+            //   446: invokespecial   javax/swing/JButton.<init>:(Ljava/lang/String;)V
+            //   449: astore          7
+            //   451: aload           6
+            //   453: aload           7
+            //   455: invokevirtual   javax/swing/JPanel.add:(Ljava/awt/Component;)Ljava/awt/Component;
+            //   458: pop            
+            //   459: aload           7
+            //   461: new             LClassSub/Class166;
+            //   464: dup            
+            //   465: aload_0        
+            //   466: invokespecial   ClassSub/Class166.<init>:(LClassSub/Class349;)V
+            //   469: invokevirtual   javax/swing/JButton.addActionListener:(Ljava/awt/event/ActionListener;)V
+            //   472: aload_0        
+            //   473: new             Ljava/awt/Dimension;
+            //   476: dup            
+            //   477: ldc             320
+            //   479: ldc             175
+            //   481: invokespecial   java/awt/Dimension.<init>:(II)V
+            //   484: invokevirtual   ClassSub/Class349.setSize:(Ljava/awt/Dimension;)V
+            //   487: return         
+            //   488: nop            
+            //   489: nop            
+            //   490: nop            
+            //   491: nop            
+            //   492: athrow         
+            // 
+            // The error that occurred was:
+            // 
+            // java.lang.NullPointerException
+            // 
+            throw new IllegalStateException("An error occurred while decompiling this method.");
+        }
     }
 }

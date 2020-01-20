@@ -1,37 +1,29 @@
 package ClassSub;
 
-import net.minecraftforge.fml.relauncher.*;
-import com.google.gson.*;
-import net.minecraft.client.*;
-import net.minecraft.util.*;
-
-@SideOnly(Side.CLIENT)
-public class Class213
+final class Class213 implements Class236.Class2
 {
-    public static final String PRIMARY_COLOR = "§7";
-    public static final String SECONDARY_COLOR = "§1";
-    private static final String PREFIX = "§7[§1Hanabi§7] ";
+    final Class173 val$fill;
+    final float[] val$center;
+    final float val$scaleX;
+    final float val$scaleY;
+    final Class220 val$image;
     public static final boolean Cracked_By_Somebody_Dumped_BY_Ganga_SupportedbySucen;
     
-    public Class213() {
-        super();
+    Class213(final Class173 val$fill, final float[] val$center, final float val$scaleX, final float val$scaleY, final Class220 val$image) {
+        this.val$fill = val$fill;
+        this.val$center = val$center;
+        this.val$scaleX = val$scaleX;
+        this.val$scaleY = val$scaleY;
+        this.val$image = val$image;
     }
     
-    public static void send(final String s) {
-        final JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("text", s);
-        Minecraft.func_71410_x().field_71439_g.func_145747_a(IChatComponent.Serializer.func_150699_a(jsonObject.toString()));
-    }
-    
-    public static void success(final String s) {
-        info(s);
-    }
-    
-    public static void info(final String s) {
-        send("§7[§1Hanabi§7] " + s);
-    }
-    
-    public static void showMessageBox(final String s) {
-        new Class44(s);
+    @Override
+    public float[] preRenderPoint(final Class186 class186, float n, float n2) {
+        this.val$fill.colorAt(class186, n - this.val$center[0], n2 - this.val$center[1]).bind();
+        final Class224 offset = this.val$fill.getOffsetAt(class186, n, n2);
+        n += offset.x;
+        n2 += offset.y;
+        Class236.access$000().glTexCoord2f(this.val$image.getTextureOffsetX() + this.val$image.getTextureWidth() * (n * this.val$scaleX), this.val$image.getTextureOffsetY() + this.val$image.getTextureHeight() * (n2 * this.val$scaleY));
+        return new float[] { offset.x + n, offset.y + n2 };
     }
 }

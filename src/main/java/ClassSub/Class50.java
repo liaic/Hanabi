@@ -1,8 +1,53 @@
 package ClassSub;
 
-private interface Class50
+import net.minecraft.util.*;
+import java.net.*;
+import com.mojang.authlib.yggdrasil.*;
+import com.mojang.authlib.*;
+import cn.Hanabi.*;
+import com.mojang.authlib.exceptions.*;
+
+private class Class50 extends Thread
 {
-    public static final boolean 我这1无情的嘴巴子直接把你踢出国门走向世界你信吗当然你可以继续用你那支离破碎的语言和不要脸的功夫继续和我对话你是不是跟我说一句话要经过大脑半天的思考才敢发出来那么的不堪一击如何的自我安慰吗NMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSL‍  ​ ;
+    private final String password;
+    private final String username;
+    final Class24 this$0;
+    public static final boolean Cracked_By_Somebody_Dumped_BY_Ganga_SupportedbySucen;
     
-    float[] preRenderPoint(final Class68 p0, final float p1, final float p2);
+    public Class50(final Class24 this$0, final String username, final String password) {
+        this.this$0 = this$0;
+        this.username = username;
+        this.password = password;
+        Class24.access$0(this$0, EnumChatFormatting.GRAY + "Idle...");
+    }
+    
+    private final void checkAndAddAlt(final String username, final String password) {
+        final YggdrasilUserAuthentication yggdrasilUserAuthentication = (YggdrasilUserAuthentication)new YggdrasilAuthenticationService(Proxy.NO_PROXY, "").createUserAuthentication(Agent.MINECRAFT);
+        yggdrasilUserAuthentication.setUsername(username);
+        yggdrasilUserAuthentication.setPassword(password);
+        try {
+            yggdrasilUserAuthentication.logIn();
+            Class206.registry.add(new Class309(username, password, yggdrasilUserAuthentication.getSelectedProfile().getName()));
+            try {
+                Hanabi.INSTANCE.altFileMgr.getFile(Class85.class).saveFile();
+            }
+            catch (Exception ex2) {}
+            Class24.access$0(this.this$0, "Alt added. (" + username + ")");
+        }
+        catch (AuthenticationException ex) {
+            Class24.access$0(this.this$0, EnumChatFormatting.RED + "Alt failed!");
+            ex.printStackTrace();
+        }
+    }
+    
+    @Override
+    public void run() {
+        if (this.password.equals("")) {
+            Class206.registry.add(new Class309(this.username, ""));
+            Class24.access$0(this.this$0, EnumChatFormatting.GREEN + "Alt added. (" + this.username + " - offline name)");
+            return;
+        }
+        Class24.access$0(this.this$0, EnumChatFormatting.AQUA + "Trying alt...");
+        this.checkAndAddAlt(this.username, this.password);
+    }
 }

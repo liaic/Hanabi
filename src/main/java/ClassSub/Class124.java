@@ -1,24 +1,39 @@
 package ClassSub;
 
-public enum Class124
+import java.net.*;
+import java.io.*;
+
+public class Class124 extends Thread
 {
-    SUCCESS, 
-    INFO, 
-    WARNING, 
-    ERROR;
-    
-    private static final Class124[] $VALUES;
+    public Socket socket;
+    public PrintWriter writer;
     public static final boolean Cracked_By_Somebody_Dumped_BY_Ganga_SupportedbySucen;
     
-    public static Class124[] values() {
-        return Class124.$VALUES.clone();
+    @Override
+    public void run() {
+        new Class162(this).start();
+    Label_0015_Outer:
+        while (true) {
+            while (true) {
+                try {
+                    while (true) {
+                        Class203.processMessage(getSocketMessage(this.socket));
+                    }
+                }
+                catch (Exception ex) {
+                    if (Class203.heartBeatTimer.lastMs > 5000L) {
+                        Class203.heartBeatTimer.setLastMs(0);
+                        Class203.output("������Ϣʱ���ִ���" + ex.getMessage());
+                        ex.printStackTrace();
+                    }
+                    continue Label_0015_Outer;
+                }
+                continue;
+            }
+        }
     }
     
-    public static Class124 valueOf(final String s) {
-        return Enum.valueOf(Class124.class, s);
-    }
-    
-    static {
-        $VALUES = new Class124[] { Class124.SUCCESS, Class124.INFO, Class124.WARNING, Class124.ERROR };
+    public static String getSocketMessage(final Socket socket) throws IOException {
+        return new BufferedReader(new InputStreamReader(socket.getInputStream(), "GBK")).readLine();
     }
 }

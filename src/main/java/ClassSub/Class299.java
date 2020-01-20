@@ -1,30 +1,18 @@
 package ClassSub;
 
-import javax.swing.*;
-
-final class Class299 extends Class321.Class266
+final class Class299 implements Class236.Class2
 {
-    final boolean val$currentValue;
-    final String val$description;
+    final Class316 val$gen;
     public static final boolean Cracked_By_Somebody_Dumped_BY_Ganga_SupportedbySucen;
     
-    Class299(final String s, final String s2, final boolean val$currentValue, final String val$description) {
-        this.val$currentValue = val$currentValue;
-        this.val$description = val$description;
-        super(s, s2);
+    Class299(final Class316 val$gen) {
+        this.val$gen = val$gen;
     }
     
     @Override
-    public void showDialog() {
-        final JCheckBox checkBox = new JCheckBox();
-        checkBox.setSelected(this.val$currentValue);
-        if (this.showValueDialog(checkBox, this.val$description)) {
-            this.value = String.valueOf(checkBox.isSelected());
-        }
-    }
-    
-    @Override
-    public Object getObject() {
-        return Boolean.valueOf(this.value);
+    public float[] preRenderPoint(final Class186 class186, final float n, final float n2) {
+        final Class224 coord = this.val$gen.getCoordFor(n, n2);
+        Class236.access$000().glTexCoord2f(coord.x, coord.y);
+        return new float[] { n, n2 };
     }
 }

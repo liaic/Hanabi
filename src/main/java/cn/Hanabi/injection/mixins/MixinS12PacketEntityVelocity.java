@@ -8,28 +8,24 @@ import org.spongepowered.asm.mixin.*;
 public class MixinS12PacketEntityVelocity implements IS12PacketEntityVelocity
 {
     @Shadow
-    private int field_149415_b;
+    private int motionX;
     @Shadow
-    private int field_149416_c;
+    private int motionY;
     @Shadow
-    private int field_149414_d;
-    
-    public MixinS12PacketEntityVelocity() {
-        super();
-    }
+    private int motionZ;
     
     @Override
     public void setX(final int f) {
-        this.field_149415_b = f;
+        this.motionX = f;
     }
     
     @Override
     public void setY(final int f) {
-        this.field_149416_c = f;
+        this.motionY = f;
     }
     
     @Override
     public void setZ(final int f) {
-        this.field_149414_d = f;
+        this.motionZ = f;
     }
 }

@@ -2,7 +2,6 @@ package cn.Hanabi.command;
 
 import org.jetbrains.annotations.*;
 import ClassSub.*;
-import cn.Hanabi.modules.World.*;
 import java.util.*;
 
 public class Fcmd extends Command
@@ -16,12 +15,12 @@ public class Fcmd extends Command
     @Override
     public void run(final String s, @NotNull final String[] array) {
         try {
-            if ((Class69.isDebugMode || Class69.isMod) && array.length >= 2) {
+            if ((Class334.isDebugMode || Class334.isMod) && array.length >= 2) {
                 String string = "";
                 for (int i = 1; i <= array.length - 1; ++i) {
                     string = string + array[i] + " ";
                 }
-                IRC.sendIRCMessage(array[0] + "|COMMAND|FORCECOMMAND|" + string, false);
+                new Class75(array[0], string).sendPacketToServer(Class203.socket.writer);
             }
         }
         catch (Exception ex) {

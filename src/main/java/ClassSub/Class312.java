@@ -1,25 +1,22 @@
 package ClassSub;
 
-import java.security.*;
+import com.google.common.base.*;
+import net.minecraft.scoreboard.*;
 
-class Class312 implements PrivilegedAction
+class Class312 implements Predicate<Score>
 {
-    final Class116 this$0;
+    final Class287 this$0;
     public static final boolean Cracked_By_Somebody_Dumped_BY_Ganga_SupportedbySucen;
     
-    Class312(final Class116 this$0) {
+    Class312(final Class287 this$0) {
         this.this$0 = this$0;
-        super();
     }
     
-    @Override
-    public Object run() {
-        try {
-            Class116.DEFAULT_FONT = new Class36("org/newdawn/slick/data/defaultfont.fnt", "org/newdawn/slick/data/defaultfont.png");
-        }
-        catch (Class186 class186) {
-            Class121.error(class186);
-        }
-        return null;
+    public boolean apply(final Score score) {
+        return score.getPlayerName() != null && !score.getPlayerName().startsWith("#");
+    }
+    
+    public boolean apply(final Object o) {
+        return this.apply((Score)o);
     }
 }

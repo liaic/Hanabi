@@ -8,7 +8,6 @@ public class EventAttack implements Event
     public Entity entity;
     
     public EventAttack(final Entity entity) {
-        super();
         this.entity = entity;
     }
     

@@ -1,59 +1,27 @@
 package ClassSub;
 
-import java.util.*;
+import net.minecraft.client.renderer.*;
+import net.minecraft.util.*;
+import java.awt.image.*;
 
-public class Class105
+class Class105 implements IImageBuffer
 {
-    private static Class105 single;
-    private ArrayList deferred;
-    private int total;
+    final Class296 val$track;
+    final ResourceLocation val$rl2;
+    final Class286 this$0;
     public static final boolean Cracked_By_Somebody_Dumped_BY_Ganga_SupportedbySucen;
     
-    public static Class105 get() {
-        return Class105.single;
+    Class105(final Class286 this$0, final Class296 val$track, final ResourceLocation val$rl2) {
+        this.this$0 = this$0;
+        this.val$track = val$track;
+        this.val$rl2 = val$rl2;
     }
     
-    public static void setDeferredLoading(final boolean deferredLoading) {
-        Class105.single = new Class105();
-        Class6.get().setDeferredLoading(deferredLoading);
+    public BufferedImage parseUserSkin(final BufferedImage bufferedImage) {
+        return bufferedImage;
     }
     
-    public static boolean isDeferredLoading() {
-        return Class6.get().isDeferredLoading();
-    }
-    
-    private Class105() {
-        super();
-        this.deferred = new ArrayList();
-    }
-    
-    public void add(final Class288 class288) {
-        ++this.total;
-        this.deferred.add(class288);
-    }
-    
-    public void remove(final Class288 class288) {
-        Class121.info("Early loading of deferred resource due to req: " + class288.getDescription());
-        --this.total;
-        this.deferred.remove(class288);
-    }
-    
-    public int getTotalResources() {
-        return this.total;
-    }
-    
-    public int getRemainingResources() {
-        return this.deferred.size();
-    }
-    
-    public Class288 getNext() {
-        if (this.deferred.size() == 0) {
-            return null;
-        }
-        return this.deferred.remove(0);
-    }
-    
-    static {
-        Class105.single = new Class105();
+    public void skinAvailable() {
+        this.this$0.circleLocations.put(this.val$track.getId(), this.val$rl2);
     }
 }

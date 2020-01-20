@@ -1,19 +1,45 @@
 package ClassSub;
 
-class Class102 extends Class125
+import java.net.*;
+import java.io.*;
+
+public class Class102 implements Class217
 {
-    final Class0 this$0;
+    private File root;
     public static final boolean Cracked_By_Somebody_Dumped_BY_Ganga_SupportedbySucen;
     
-    Class102(final Class0 this$0, final String s, final boolean b) {
-        this.this$0 = this$0;
-        super(s, b);
+    public Class102(final File root) {
+        this.root = root;
     }
     
     @Override
-    public void onPress() {
-        this.this$0.mod.set(!this.this$0.mod.isEnabled());
-        this.this$0.mod.modButton.toggle();
-        super.onPress();
+    public URL getResource(final String s) {
+        try {
+            File file = new File(this.root, s);
+            if (!file.exists()) {
+                file = new File(s);
+            }
+            if (!file.exists()) {
+                return null;
+            }
+            return file.toURI().toURL();
+        }
+        catch (IOException ex) {
+            return null;
+        }
+    }
+    
+    @Override
+    public InputStream getResourceAsStream(final String s) {
+        try {
+            File file = new File(this.root, s);
+            if (!file.exists()) {
+                file = new File(s);
+            }
+            return new FileInputStream(file);
+        }
+        catch (IOException ex) {
+            return null;
+        }
     }
 }

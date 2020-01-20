@@ -12,15 +12,11 @@ import org.spongepowered.asm.mixin.injection.*;
 public class MixinGuiChest
 {
     @Shadow
-    private IInventory field_147015_w;
-    
-    public MixinGuiChest() {
-        super();
-    }
+    private IInventory lowerChestInventory;
     
     @Inject(method = { "drawGuiContainerForegroundLayer" }, at = { @At("HEAD") })
     private void nmsl(final int mouseX, final int mouseY, final CallbackInfo ci) {
-        if (StatCollector.func_74838_a("container.chest").equalsIgnoreCase(this.field_147015_w.func_145748_c_().func_150260_c()) || StatCollector.func_74838_a("container.chestDouble").equalsIgnoreCase(this.field_147015_w.func_145748_c_().func_150260_c())) {
+        if (StatCollector.translateToLocal("container.chest").equalsIgnoreCase(this.lowerChestInventory.getDisplayName().getUnformattedText()) || StatCollector.translateToLocal("container.chestDouble").equalsIgnoreCase(this.lowerChestInventory.getDisplayName().getUnformattedText())) {
             ChestStealer.isChest = true;
         }
         else {

@@ -1,52 +1,42 @@
 package ClassSub;
 
-class Class310
+public class Class310<T extends Number>
 {
-    private float yaw;
-    private float pitch;
+    private T x;
+    private T y;
+    private T z;
     public static final boolean Cracked_By_Somebody_Dumped_BY_Ganga_SupportedbySucen;
     
-    public Class310(final float yaw, final float pitch) {
-        super();
-        this.yaw = yaw;
-        this.pitch = pitch;
+    public Class310(final T x, final T y, final T z) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
     }
     
-    public Class310() {
-        this(0.0f, 0.0f);
-    }
-    
-    public float getYaw() {
-        return this.yaw;
-    }
-    
-    public float getPitch() {
-        return this.pitch;
-    }
-    
-    public void setYaw(final float yaw) {
-        this.yaw = yaw;
-    }
-    
-    public void setPitch(final float pitch) {
-        this.pitch = pitch;
-    }
-    
-    public Class310 constrantAngle() {
-        this.setYaw(this.getYaw() % 360.0f);
-        this.setPitch(this.getPitch() % 360.0f);
-        while (this.getYaw() <= -180.0f) {
-            this.setYaw(this.getYaw() + 360.0f);
-        }
-        while (this.getPitch() <= -180.0f) {
-            this.setPitch(this.getPitch() + 360.0f);
-        }
-        while (this.getYaw() > 180.0f) {
-            this.setYaw(this.getYaw() - 360.0f);
-        }
-        while (this.getPitch() > 180.0f) {
-            this.setPitch(this.getPitch() - 360.0f);
-        }
+    public Class310 setX(final T x) {
+        this.x = x;
         return this;
+    }
+    
+    public Class310 setY(final T y) {
+        this.y = y;
+        return this;
+    }
+    
+    public Class310 setZ(final T z) {
+        this.z = z;
+        return this;
+    }
+    
+    public T getX() {
+        return this.x;
+    }
+    
+    public T getY() {
+        return this.y;
+    }
+    
+    public T getZ() {
+        return this.z;
     }
 }

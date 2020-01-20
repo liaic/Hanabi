@@ -15,7 +15,7 @@ public class NoFall extends Mod
     private boolean c;
     private int d;
     private Value mode;
-    public Class191 timer;
+    public Class205 timer;
     public static final boolean Cracked_By_Somebody_Dumped_BY_Ganga_SupportedbySucen;
     
     public NoFall() {
@@ -23,7 +23,7 @@ public class NoFall extends Mod
         this.b = 1.0f;
         this.c = true;
         this.mode = new Value("NoFall", "Mode", 0);
-        this.timer = new Class191();
+        this.timer = new Class205();
         this.mode.mode.add("Hypixel");
         this.mode.mode.add("Mineplex");
         this.mode.mode.add("AAC");
@@ -31,7 +31,7 @@ public class NoFall extends Mod
     
     @EventTarget
     public void onUpdate(final EventUpdate eventUpdate) {
-        if (Class69.username.length() < 1) {
+        if (Class334.username.length() < 1) {
             System.exit(0);
         }
         if (this.mode.isCurrentMode("Hypixel")) {
@@ -39,9 +39,9 @@ public class NoFall extends Mod
         }
         else if (this.mode.isCurrentMode("Mineplex")) {
             this.setDisplayName("Mineplex");
-            if (NoFall.mc.field_71439_g.field_70143_R > 2.5f) {
-                NoFall.mc.field_71439_g.field_71174_a.func_147297_a((Packet)new C03PacketPlayer(true));
-                NoFall.mc.field_71439_g.field_70143_R = 0.5f;
+            if (NoFall.mc.thePlayer.fallDistance > 2.5f) {
+                NoFall.mc.thePlayer.sendQueue.addToSendQueue((Packet)new C03PacketPlayer(true));
+                NoFall.mc.thePlayer.fallDistance = 0.5f;
             }
         }
     }
@@ -50,14 +50,14 @@ public class NoFall extends Mod
     public void onPacket(final EventPacket eventPacket) {
         if (this.mode.isCurrentMode("Hypixel")) {
             this.setDisplayName("Hypixel");
-            if (eventPacket.getPacket() instanceof C03PacketPlayer && NoFall.mc.field_71439_g.field_70143_R > 3.0f) {
+            if (eventPacket.getPacket() instanceof C03PacketPlayer && NoFall.mc.thePlayer.fallDistance > 3.0f) {
                 ((IC03PacketPlayer)eventPacket.packet).setOnGround(true);
             }
         }
-        else if (this.mode.isCurrentMode("AAC") && eventPacket.getPacket() instanceof C03PacketPlayer && NoFall.mc.field_71439_g.field_70143_R > 3.0f && this.timer.isDelayComplete(200L)) {
-            NoFall.mc.field_71439_g.field_70143_R = 0.5f;
+        else if (this.mode.isCurrentMode("AAC") && eventPacket.getPacket() instanceof C03PacketPlayer && NoFall.mc.thePlayer.fallDistance > 3.0f && this.timer.isDelayComplete(200L)) {
+            NoFall.mc.thePlayer.fallDistance = 0.5f;
             this.timer.reset();
-            NoFall.mc.field_71439_g.field_71174_a.func_147297_a((Packet)new C03PacketPlayer.C04PacketPlayerPosition(NoFall.mc.field_71439_g.field_70165_t, Double.NaN, NoFall.mc.field_71439_g.field_70161_v, true));
+            NoFall.mc.thePlayer.sendQueue.addToSendQueue((Packet)new C03PacketPlayer.C04PacketPlayerPosition(NoFall.mc.thePlayer.posX, Double.NaN, NoFall.mc.thePlayer.posZ, true));
         }
     }
 }

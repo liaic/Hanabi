@@ -15,12 +15,8 @@ public abstract class MixinVisGraph
     @Shadow
     private int field_178611_f;
     
-    public MixinVisGraph() {
-        super();
-    }
-    
     private static int getIndex(final BlockPos pos) {
-        return getIndex(pos.func_177958_n() & 0xF, pos.func_177956_o() & 0xF, pos.func_177952_p() & 0xF);
+        return getIndex(pos.getX() & 0xF, pos.getY() & 0xF, pos.getZ() & 0xF);
     }
     
     private static int getIndex(final int x, final int y, final int z) {

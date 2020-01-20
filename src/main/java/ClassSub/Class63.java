@@ -1,56 +1,29 @@
 package ClassSub;
 
-public class Class63 implements Class247
+public class Class63
 {
-    private Class12 GL;
+    public String text;
+    public long time;
     public static final boolean Cracked_By_Somebody_Dumped_BY_Ganga_SupportedbySucen;
     
-    public Class63() {
-        super();
-        this.GL = Class83.get();
+    public Class63(final String text, final long time) {
+        this.text = text;
+        this.time = time;
     }
     
-    @Override
-    public void end() {
-        this.GL.glEnd();
+    public String getText() {
+        return this.text;
     }
     
-    @Override
-    public void setAntiAlias(final boolean b) {
-        if (b) {
-            this.GL.glEnable(2848);
-        }
-        else {
-            this.GL.glDisable(2848);
-        }
+    public void setText(final String text) {
+        this.text = text;
     }
     
-    @Override
-    public void setWidth(final float n) {
-        this.GL.glLineWidth(n);
+    public long getTime() {
+        return this.time;
     }
     
-    @Override
-    public void start() {
-        this.GL.glBegin(3);
-    }
-    
-    @Override
-    public void vertex(final float n, final float n2) {
-        this.GL.glVertex2f(n, n2);
-    }
-    
-    @Override
-    public void color(final float n, final float n2, final float n3, final float n4) {
-        this.GL.glColor4f(n, n2, n3, n4);
-    }
-    
-    @Override
-    public void setLineCaps(final boolean b) {
-    }
-    
-    @Override
-    public boolean applyGLLineFixes() {
-        return true;
+    public void setTime(final long time) {
+        this.time = time;
     }
 }

@@ -2,201 +2,260 @@ package cn.Hanabi.modules.Render;
 
 import cn.Hanabi.value.*;
 import cn.Hanabi.modules.*;
-import cn.Hanabi.events.*;
-import net.minecraft.entity.player.*;
-import cn.Hanabi.injection.interfaces.*;
 import com.darkmagician6.eventapi.*;
+import cn.Hanabi.events.*;
+import net.minecraft.client.gui.*;
 import net.minecraft.entity.*;
+import net.minecraft.entity.player.*;
+import cn.Hanabi.*;
 import cn.Hanabi.modules.Combat.*;
 import cn.Hanabi.modules.Player.*;
-import cn.Hanabi.modules.World.*;
-import java.util.*;
-import org.lwjgl.opengl.*;
-import java.awt.*;
-import ClassSub.*;
-import net.minecraft.item.*;
-import net.minecraft.client.gui.*;
 import net.minecraft.client.renderer.*;
+import net.minecraft.enchantment.*;
+import net.minecraft.item.*;
+import java.awt.*;
+import cn.Hanabi.utils.fontmanager.*;
+import ClassSub.*;
+import cn.Hanabi.injection.interfaces.*;
+import net.minecraft.client.*;
+import org.lwjgl.*;
+import org.lwjgl.util.glu.*;
+import org.lwjgl.opengl.*;
+import java.nio.*;
+import java.util.*;
 
 public class Nametags extends Mod
 {
-    private Value<Boolean> invisible;
+    public static Map<EntityLivingBase, double[]> entityPositions;
+    public Value<Boolean> invis;
+    public Value<Boolean> armor;
     public static final boolean Cracked_By_Somebody_Dumped_BY_Ganga_SupportedbySucen;
     
     public Nametags() {
         super("Nametags", Category.RENDER);
-        this.invisible = new Value<Boolean>("Nametags_Invisible", false);
+        this.invis = new Value<Boolean>("Nametags_Invisible", false);
+        this.armor = new Value<Boolean>("Nametags_Armor", false);
     }
     
     @EventTarget
-    public void onRender(final EventRender eventRender) {
-        for (final EntityPlayer entityPlayer : Nametags.mc.field_71441_e.field_73010_i) {
-            if (entityPlayer != Nametags.mc.field_71439_g) {
-                this.renderNameTag(entityPlayer, entityPlayer.func_70005_c_(), entityPlayer.field_70142_S + (entityPlayer.field_70165_t - entityPlayer.field_70142_S) * Class296.getTimer().field_74281_c - ((IRenderManager)Nametags.mc.func_175598_ae()).getRenderPosX(), entityPlayer.field_70137_T + (entityPlayer.field_70163_u - entityPlayer.field_70137_T) * Class296.getTimer().field_74281_c - ((IRenderManager)Nametags.mc.func_175598_ae()).getRenderPosY(), entityPlayer.field_70136_U + (entityPlayer.field_70161_v - entityPlayer.field_70136_U) * Class296.getTimer().field_74281_c - ((IRenderManager)Nametags.mc.func_175598_ae()).getRenderPosZ());
-            }
+    public void update(final EventRender eventRender) {
+        try {
+            this.updatePositions();
         }
+        catch (Exception ex) {}
     }
     
-    private void renderNameTag(final EntityPlayer entityPlayer, String func_150260_c, final double n, double n2, final double n3) {
-        if (entityPlayer.func_82150_aj() && !(boolean)this.invisible.getValueState()) {
-            return;
-        }
-        final FontRenderer field_71466_p = Nametags.mc.field_71466_p;
-        float n4 = Nametags.mc.field_71439_g.func_70032_d((Entity)entityPlayer) / 6.0f;
-        if (n4 < 0.8f) {
-            n4 = 0.8f;
-        }
-        n2 += (entityPlayer.func_70093_af() ? 0.5 : 0.7);
-        final float n5 = n4 * 2.0f / 100.0f;
-        func_150260_c = entityPlayer.func_145748_c_().func_150260_c();
-        String s;
-        if (AntiBot.isBot((Entity)entityPlayer)) {
-            s = "§9[BOT]";
-        }
-        else {
-            s = "";
-        }
-        String s2;
-        if (Teams.isOnSameTeam((Entity)entityPlayer)) {
-            s2 = "§b[TEAM]";
-        }
-        else {
-            s2 = "";
-        }
-        if (Teams.isClientFriend((Entity)entityPlayer)) {
-            s2 = "§e[Friend]";
-        }
-        String string = "";
-        for (final String s3 : new ArrayList<Object>(IRC.UserMap.keySet())) {
-            Class295.tellPlayer(s3);
-            if (func_150260_c.contains(s3)) {
-                string = "§e[" + s3 + "]";
-            }
-        }
-        if ((s2 + s).equals("")) {
-            s2 = "§a";
-        }
-        final String string2 = s2 + s + func_150260_c + string;
-        final String string3 = "§7HP:" + (int)entityPlayer.func_110143_aJ();
-        GL11.glPushMatrix();
-        GL11.glTranslatef((float)n, (float)n2 + 1.4f, (float)n3);
-        GL11.glNormal3f(0.0f, 1.0f, 0.0f);
-        GL11.glRotatef(-Nametags.mc.func_175598_ae().field_78735_i, 0.0f, 1.0f, 0.0f);
-        GL11.glRotatef(Nametags.mc.func_175598_ae().field_78732_j, 1.0f, 0.0f, 0.0f);
-        GL11.glScalef(-n5, -n5, n5);
-        Class167.setGLCap(2896, false);
-        Class167.setGLCap(2929, false);
-        final int n6 = Nametags.mc.field_71466_p.func_78256_a(string2) / 2;
-        Class167.setGLCap(3042, true);
-        GL11.glBlendFunc(770, 771);
-        this.drawBorderedRectNameTag(-n6 - 2, -(Nametags.mc.field_71466_p.field_78288_b + 9), n6 + 2, 2.0f, 1.0f, Class128.reAlpha(Color.BLACK.getRGB(), 0.3f), Class128.reAlpha(Color.BLACK.getRGB(), 0.3f));
-        GL11.glColor3f(1.0f, 1.0f, 1.0f);
-        field_71466_p.func_78276_b(string2, -n6, -(Nametags.mc.field_71466_p.field_78288_b + 8), -1);
-        field_71466_p.func_78276_b(string3, -Nametags.mc.field_71466_p.func_78256_a(string3) / 2, -(Nametags.mc.field_71466_p.field_78288_b - 2), -1);
-        int rgb = new Color(188, 0, 0).getRGB();
-        if (entityPlayer.func_110143_aJ() > 20.0f) {
-            rgb = -65292;
-        }
-        Class284.drawRect(n6 + (float)Math.ceil(entityPlayer.func_110143_aJ() + entityPlayer.func_110139_bj()) / (entityPlayer.func_110138_aP() + entityPlayer.func_110139_bj()) * n6 * 2.0f - n6 * 2 + 2.0f, 2.0f, -n6 - 2, 0.9f, rgb);
-        GL11.glPushMatrix();
-        int n7 = 0;
-        final ItemStack[] field_70460_b = entityPlayer.field_71071_by.field_70460_b;
-        for (int length = field_70460_b.length, i = 0; i < length; ++i) {
-            if (field_70460_b[i] != null) {
-                n7 -= 11;
-            }
-        }
-        if (entityPlayer.func_70694_bm() != null) {
-            n7 -= 8;
-            final ItemStack func_77946_l = entityPlayer.func_70694_bm().func_77946_l();
-            if (((ItemStack)func_77946_l).func_77962_s() && (((ItemStack)func_77946_l).func_77973_b() instanceof ItemTool || ((ItemStack)func_77946_l).func_77973_b() instanceof ItemArmor)) {
-                ((ItemStack)func_77946_l).field_77994_a = 1;
-            }
-            this.renderItemStack(func_77946_l, n7, -35);
-            n7 += 20;
-        }
-        for (final ItemStack itemStack : entityPlayer.field_71071_by.field_70460_b) {
-            if (itemStack != null) {
-                final ItemStack func_77946_l2 = itemStack.func_77946_l();
-                if (func_77946_l2.func_77962_s() && (func_77946_l2.func_77973_b() instanceof ItemTool || func_77946_l2.func_77973_b() instanceof ItemArmor)) {
-                    func_77946_l2.field_77994_a = 1;
+    @EventTarget
+    public void onRender2D(final EventRender2D eventRender2D) {
+        GlStateManager.pushMatrix();
+        final ScaledResolution scaledResolution = new ScaledResolution(Nametags.mc);
+        for (final Entity entity : Nametags.entityPositions.keySet()) {
+            if (entity != Nametags.mc.thePlayer && (this.invis.getValueState() || !entity.isInvisible())) {
+                GlStateManager.pushMatrix();
+                if (entity instanceof EntityPlayer) {
+                    final double[] array = Nametags.entityPositions.get(entity);
+                    if (array[3] < 0.0 || array[3] >= 1.0) {
+                        GlStateManager.popMatrix();
+                        continue;
+                    }
+                    final UnicodeFontRenderer wqy18 = Hanabi.INSTANCE.fontManager.wqy18;
+                    GlStateManager.translate(array[0] / scaledResolution.getScaleFactor(), array[1] / scaledResolution.getScaleFactor(), 0.0);
+                    this.scale();
+                    GlStateManager.translate(0.0, -2.5, 0.0);
+                    final String string = "Health: " + String.valueOf(Math.round(((EntityLivingBase)entity).getHealth() * 10.0f) / 10);
+                    final String string2 = (AntiBot.isBot(entity) ? "§9[BOT]" : "") + (Teams.isOnSameTeam(entity) ? "§b[TEAM]" : "") + "§r" + entity.getDisplayName().getUnformattedText();
+                    String string3 = "";
+                    for (final String s : Class203.ignMap.keySet()) {
+                        if (entity.getName().equalsIgnoreCase(s)) {
+                            string3 = "§e[" + Class203.ignMap.get(s) + "]";
+                        }
+                    }
+                    final String string4 = string2 + string3;
+                    final float n = wqy18.getStringWidth(string4.replaceAll("§.", ""));
+                    final float n2 = Hanabi.INSTANCE.fontManager.comfortaa12.getStringWidth(string);
+                    final float n3 = ((n > n2) ? n : n2) + 8.0f;
+                    Class246.drawRect(-n3 / 2.0f, -25.0f, n3 / 2.0f, 0.0f, Class15.getColor(0, 130));
+                    final int n4 = (int)(array[0] + -n3 / 2.0f - 3.0) / 2 - 26;
+                    final int n5 = (int)(array[0] + n3 / 2.0f + 3.0) / 2 + 20;
+                    final int n6 = (int)(array[1] - 30.0) / 2;
+                    final int n7 = (int)(array[1] + 11.0) / 2;
+                    final int n8 = scaledResolution.getScaledHeight() / 2;
+                    final int n9 = scaledResolution.getScaledWidth() / 2;
+                    wqy18.drawStringWithColor(string4, -n3 / 2.0f + 4.0f, -22.0f, Class15.WHITE.c);
+                    Hanabi.INSTANCE.fontManager.comfortaa12.drawString(string, -n3 / 2.0f + 4.0f, -10.0f, Class15.WHITE.c);
+                    final EntityLivingBase entityLivingBase = (EntityLivingBase)entity;
+                    Class246.drawRect(-n3 / 2.0f, -1.0f, n3 / 2.0f - n3 / 2.0f * (1.0f - (float)Math.ceil(entityLivingBase.getHealth() + entityLivingBase.getAbsorptionAmount()) / (entityLivingBase.getMaxHealth() + entityLivingBase.getAbsorptionAmount())) * 2.0f, 0.0f, Class15.RED.c);
+                    if (this.armor.getValueState()) {
+                        final ArrayList<ItemStack> list = new ArrayList<ItemStack>();
+                        for (int i = 0; i < 5; ++i) {
+                            final ItemStack getEquipmentInSlot = ((EntityPlayer)entity).getEquipmentInSlot(i);
+                            if (getEquipmentInSlot != null) {
+                                list.add(getEquipmentInSlot);
+                            }
+                        }
+                        int n10 = -(list.size() * 9);
+                        for (final ItemStack itemStack : list) {
+                            RenderHelper.enableGUIStandardItemLighting();
+                            Nametags.mc.getRenderItem().renderItemIntoGUI(itemStack, n10 + 6, -42);
+                            Nametags.mc.getRenderItem().renderItemOverlays(Nametags.mc.fontRendererObj, itemStack, n10, -42);
+                            n10 += 3;
+                            RenderHelper.disableStandardItemLighting();
+                            if (itemStack != null) {
+                                int n11 = 21;
+                                final int getEnchantmentLevel = EnchantmentHelper.getEnchantmentLevel(Enchantment.sharpness.effectId, itemStack);
+                                final int getEnchantmentLevel2 = EnchantmentHelper.getEnchantmentLevel(Enchantment.fireAspect.effectId, itemStack);
+                                final int getEnchantmentLevel3 = EnchantmentHelper.getEnchantmentLevel(Enchantment.knockback.effectId, itemStack);
+                                if (getEnchantmentLevel > 0) {
+                                    this.drawEnchantTag("Sh" + this.getColor(getEnchantmentLevel) + getEnchantmentLevel, n10, n11);
+                                    n11 += 6;
+                                }
+                                if (getEnchantmentLevel2 > 0) {
+                                    this.drawEnchantTag("Fir" + this.getColor(getEnchantmentLevel2) + getEnchantmentLevel2, n10, n11);
+                                    n11 += 6;
+                                }
+                                if (getEnchantmentLevel3 > 0) {
+                                    this.drawEnchantTag("Kb" + this.getColor(getEnchantmentLevel3) + getEnchantmentLevel3, n10, n11);
+                                }
+                                else if (itemStack.getItem() instanceof ItemArmor) {
+                                    final int getEnchantmentLevel4 = EnchantmentHelper.getEnchantmentLevel(Enchantment.protection.effectId, itemStack);
+                                    final int getEnchantmentLevel5 = EnchantmentHelper.getEnchantmentLevel(Enchantment.thorns.effectId, itemStack);
+                                    final int getEnchantmentLevel6 = EnchantmentHelper.getEnchantmentLevel(Enchantment.unbreaking.effectId, itemStack);
+                                    if (getEnchantmentLevel4 > 0) {
+                                        this.drawEnchantTag("P" + this.getColor(getEnchantmentLevel4) + getEnchantmentLevel4, n10, n11);
+                                        n11 += 6;
+                                    }
+                                    if (getEnchantmentLevel5 > 0) {
+                                        this.drawEnchantTag("Th" + this.getColor(getEnchantmentLevel5) + getEnchantmentLevel5, n10, n11);
+                                        n11 += 6;
+                                    }
+                                    if (getEnchantmentLevel6 > 0) {
+                                        this.drawEnchantTag("Unb" + this.getColor(getEnchantmentLevel6) + getEnchantmentLevel6, n10, n11);
+                                    }
+                                }
+                                else if (itemStack.getItem() instanceof ItemBow) {
+                                    final int getEnchantmentLevel7 = EnchantmentHelper.getEnchantmentLevel(Enchantment.power.effectId, itemStack);
+                                    final int getEnchantmentLevel8 = EnchantmentHelper.getEnchantmentLevel(Enchantment.punch.effectId, itemStack);
+                                    final int getEnchantmentLevel9 = EnchantmentHelper.getEnchantmentLevel(Enchantment.flame.effectId, itemStack);
+                                    if (getEnchantmentLevel7 > 0) {
+                                        this.drawEnchantTag("Pow" + this.getColor(getEnchantmentLevel7) + getEnchantmentLevel7, n10, n11);
+                                        n11 += 6;
+                                    }
+                                    if (getEnchantmentLevel8 > 0) {
+                                        this.drawEnchantTag("Pun" + this.getColor(getEnchantmentLevel8) + getEnchantmentLevel8, n10, n11);
+                                        n11 += 6;
+                                    }
+                                    if (getEnchantmentLevel9 > 0) {
+                                        this.drawEnchantTag("Fir" + this.getColor(getEnchantmentLevel9) + getEnchantmentLevel9, n10, n11);
+                                    }
+                                }
+                                else if (itemStack.getRarity() == EnumRarity.EPIC) {
+                                    this.drawEnchantTag("§6§lGod", n10 - 2, n11);
+                                }
+                                final int n12 = (int)Math.round(255.0 - itemStack.getItemDamage() * 255.0 / itemStack.getMaxDamage());
+                                new Color(255 - n12 << 16 | n12 << 8).brighter();
+                                final float n13 = (float)(n10 * 1.05) - 2.0f;
+                                if (itemStack.getMaxDamage() - itemStack.getItemDamage() > 0) {
+                                    GlStateManager.pushMatrix();
+                                    GlStateManager.disableDepth();
+                                    GlStateManager.enableDepth();
+                                    GlStateManager.popMatrix();
+                                }
+                                n10 += 12;
+                            }
+                        }
+                    }
                 }
-                this.renderItemStack(func_77946_l2, n7, -35);
-                n7 += 20;
+                GlStateManager.popMatrix();
             }
         }
-        GL11.glPopMatrix();
-        Class167.revertAllCaps();
-        GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-        GL11.glPopMatrix();
+        GlStateManager.popMatrix();
     }
     
-    public void renderItemStack(final ItemStack itemStack, final int n, final int n2) {
-        GL11.glPushMatrix();
-        GL11.glDepthMask(true);
-        GlStateManager.func_179086_m(256);
-        RenderHelper.func_74519_b();
-        Nametags.mc.func_175599_af().field_77023_b = -150.0f;
-        this.whatTheFuckOpenGLThisFixesItemGlint();
-        Nametags.mc.func_175599_af().func_180450_b(itemStack, n, n2);
-        Nametags.mc.func_175599_af().func_175030_a(Nametags.mc.field_71466_p, itemStack, n, n2);
-        Nametags.mc.func_175599_af().field_77023_b = 0.0f;
-        RenderHelper.func_74518_a();
-        GlStateManager.func_179129_p();
-        GlStateManager.func_179141_d();
-        GlStateManager.func_179084_k();
-        GlStateManager.func_179140_f();
-        GlStateManager.func_179139_a(0.5, 0.5, 0.5);
-        GlStateManager.func_179097_i();
-        GlStateManager.func_179126_j();
-        GlStateManager.func_179152_a(2.0f, 2.0f, 2.0f);
-        GL11.glPopMatrix();
+    private void drawEnchantTag(final String text, int n, int n2) {
+        GlStateManager.pushMatrix();
+        GlStateManager.disableDepth();
+        n *= (int)1.05;
+        n2 -= 6;
+        Hanabi.INSTANCE.fontManager.comfortaa10.drawStringWithColor(text, n + 9, -30 - n2, Class15.getColor(255));
+        GlStateManager.enableDepth();
+        GlStateManager.popMatrix();
     }
     
-    private void whatTheFuckOpenGLThisFixesItemGlint() {
-        GlStateManager.func_179140_f();
-        GlStateManager.func_179097_i();
-        GlStateManager.func_179084_k();
-        GlStateManager.func_179145_e();
-        GlStateManager.func_179126_j();
-        GlStateManager.func_179140_f();
-        GlStateManager.func_179097_i();
-        GlStateManager.func_179090_x();
-        GlStateManager.func_179118_c();
-        GlStateManager.func_179084_k();
-        GlStateManager.func_179147_l();
-        GlStateManager.func_179141_d();
-        GlStateManager.func_179098_w();
-        GlStateManager.func_179145_e();
-        GlStateManager.func_179126_j();
+    private String getColor(final int n) {
+        if (n != 1) {
+            if (n == 2) {
+                return "§a";
+            }
+            if (n == 3) {
+                return "§3";
+            }
+            if (n == 4) {
+                return "§4";
+            }
+            if (n >= 5) {
+                return "§6";
+            }
+        }
+        return "§f";
     }
     
-    public void drawBorderedRectNameTag(final float n, final float n2, final float n3, final float n4, final float n5, final int n6, final int n7) {
-        Class284.drawRect(n, n2, n3, n4, n7);
-        final float n8 = (n6 >> 24 & 0xFF) / 255.0f;
-        final float n9 = (n6 >> 16 & 0xFF) / 255.0f;
-        final float n10 = (n6 >> 8 & 0xFF) / 255.0f;
-        final float n11 = (n6 & 0xFF) / 255.0f;
-        GL11.glEnable(3042);
-        GL11.glDisable(3553);
-        GL11.glBlendFunc(770, 771);
-        GL11.glEnable(2848);
-        GL11.glPushMatrix();
-        GL11.glColor4f(n9, n10, n11, n8);
-        GL11.glLineWidth(n5);
-        GL11.glBegin(1);
-        GL11.glVertex2d((double)n, (double)n2);
-        GL11.glVertex2d((double)n, (double)n4);
-        GL11.glVertex2d((double)n3, (double)n4);
-        GL11.glVertex2d((double)n3, (double)n2);
-        GL11.glVertex2d((double)n, (double)n2);
-        GL11.glVertex2d((double)n3, (double)n2);
-        GL11.glVertex2d((double)n, (double)n4);
-        GL11.glVertex2d((double)n3, (double)n4);
-        GL11.glEnd();
-        GL11.glPopMatrix();
-        GL11.glEnable(3553);
-        GL11.glDisable(3042);
-        GL11.glDisable(2848);
+    private void scale() {
+        final float n = 1.0f * (Nametags.mc.gameSettings.smoothCamera ? 2.0f : 1.0f);
+        GlStateManager.scale(n, n, n);
+    }
+    
+    private void updatePositions() {
+        Nametags.entityPositions.clear();
+        final float renderPartialTicks = Class211.getTimer().renderPartialTicks;
+        for (final Entity entity : Nametags.mc.theWorld.loadedEntityList) {
+            if (entity != Nametags.mc.thePlayer && entity instanceof EntityPlayer && (!entity.isInvisible() || !this.invis.getValueState())) {
+                final double n = entity.lastTickPosX + (entity.posX - entity.lastTickPosX) * renderPartialTicks - Nametags.mc.getRenderManager().viewerPosX;
+                final double n2 = entity.lastTickPosY + (entity.posY - entity.lastTickPosY) * renderPartialTicks - Nametags.mc.getRenderManager().viewerPosY;
+                final double n3 = entity.lastTickPosZ + (entity.posZ - entity.lastTickPosZ) * renderPartialTicks - Nametags.mc.getRenderManager().viewerPosZ;
+                final double n4 = n2 + (entity.height + 0.2);
+                if (this.convertTo2D(n, n4, n3)[2] < 0.0 || this.convertTo2D(n, n4, n3)[2] >= 1.0) {
+                    continue;
+                }
+                Nametags.entityPositions.put((EntityLivingBase)entity, new double[] { this.convertTo2D(n, n4, n3)[0], this.convertTo2D(n, n4, n3)[1], Math.abs(this.convertTo2D(n, n4 + 1.0, n3, entity)[1] - this.convertTo2D(n, n4, n3, entity)[1]), this.convertTo2D(n, n4, n3)[2] });
+            }
+        }
+    }
+    
+    private double[] convertTo2D(final double n, final double n2, final double n3, final Entity entity) {
+        final float renderPartialTicks = Class211.getTimer().renderPartialTicks;
+        final float rotationYaw = Nametags.mc.thePlayer.rotationYaw;
+        final float prevRotationYaw = Nametags.mc.thePlayer.prevRotationYaw;
+        final float[] array = Class45.getRotationFromPosition(entity.lastTickPosX + (entity.posX - entity.lastTickPosX) * renderPartialTicks, entity.lastTickPosZ + (entity.posZ - entity.lastTickPosZ) * renderPartialTicks, entity.lastTickPosY + (entity.posY - entity.lastTickPosY) * renderPartialTicks - 1.6);
+        final Entity getRenderViewEntity = Nametags.mc.getRenderViewEntity();
+        final Entity getRenderViewEntity2 = Nametags.mc.getRenderViewEntity();
+        final float n4 = array[0];
+        getRenderViewEntity2.prevRotationYaw = n4;
+        getRenderViewEntity.rotationYaw = n4;
+        final Minecraft mc = Nametags.mc;
+        ((IEntityRenderer)Minecraft.getMinecraft().entityRenderer).runSetupCameraTransform(renderPartialTicks, 0);
+        final double[] array2 = this.convertTo2D(n, n2, n3);
+        Nametags.mc.getRenderViewEntity().rotationYaw = rotationYaw;
+        Nametags.mc.getRenderViewEntity().prevRotationYaw = prevRotationYaw;
+        final Minecraft mc2 = Nametags.mc;
+        ((IEntityRenderer)Minecraft.getMinecraft().entityRenderer).runSetupCameraTransform(renderPartialTicks, 0);
+        return array2;
+    }
+    
+    private double[] convertTo2D(final double n, final double n2, final double n3) {
+        final FloatBuffer floatBuffer = BufferUtils.createFloatBuffer(3);
+        final IntBuffer intBuffer = BufferUtils.createIntBuffer(16);
+        final FloatBuffer floatBuffer2 = BufferUtils.createFloatBuffer(16);
+        final FloatBuffer floatBuffer3 = BufferUtils.createFloatBuffer(16);
+        GL11.glGetFloat(2982, floatBuffer2);
+        GL11.glGetFloat(2983, floatBuffer3);
+        GL11.glGetInteger(2978, intBuffer);
+        if (GLU.gluProject((float)n, (float)n2, (float)n3, floatBuffer2, floatBuffer3, intBuffer, floatBuffer)) {
+            return new double[] { floatBuffer.get(0), Display.getHeight() - floatBuffer.get(1), floatBuffer.get(2) };
+        }
+        return null;
+    }
+    
+    static {
+        Nametags.entityPositions = new HashMap<EntityLivingBase, double[]>();
     }
 }

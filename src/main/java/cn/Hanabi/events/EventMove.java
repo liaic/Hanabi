@@ -9,7 +9,6 @@ public class EventMove implements Event
     public double z;
     
     public EventMove(final double a, final double b, final double c) {
-        super();
         this.x = a;
         this.y = b;
         this.z = c;

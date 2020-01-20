@@ -118,7 +118,6 @@ public class FontManager
     public UnicodeFontRenderer wqy25;
     
     public FontManager() {
-        super();
         this.fonts = new HashMap();
     }
     
@@ -211,15 +210,15 @@ public class FontManager
         FontManager.fontName = name;
         UnicodeFontRenderer unicodeFont = null;
         try {
-            if (this.fonts.containsKey(name) && ((HashMap)this.fonts.get(name)).containsKey(size)) {
-                return ((HashMap<Object, UnicodeFontRenderer>)this.fonts.get(name)).get(size);
+            if (this.fonts.containsKey(name) && this.fonts.get(name).containsKey(size)) {
+                return this.fonts.get(name).get(size);
             }
             final InputStream inputStream = this.getClass().getResourceAsStream("/assets/minecraft/Client/fonts/" + name + ".ttf");
             Font font = null;
             font = Font.createFont(0, inputStream);
             unicodeFont = new UnicodeFontRenderer(font.deriveFont(size), fontPageStart, fontPageEnd);
-            unicodeFont.func_78264_a(true);
-            unicodeFont.func_78275_b(((IMinecraft)Minecraft.func_71410_x()).getLanguageManager().func_135044_b());
+            unicodeFont.setUnicodeFlag(true);
+            unicodeFont.setBidiFlag(((IMinecraft)Minecraft.getMinecraft()).getLanguageManager().isCurrentLanguageBidirectional());
             final HashMap map = new HashMap();
             if (this.fonts.containsKey(name)) {
                 map.putAll(this.fonts.get(name));
@@ -237,15 +236,15 @@ public class FontManager
         FontManager.fontName = name;
         UnicodeFontRenderer unicodeFont = null;
         try {
-            if (this.fonts.containsKey(name) && ((HashMap)this.fonts.get(name)).containsKey(size)) {
-                return ((HashMap<Object, UnicodeFontRenderer>)this.fonts.get(name)).get(size);
+            if (this.fonts.containsKey(name) && this.fonts.get(name).containsKey(size)) {
+                return this.fonts.get(name).get(size);
             }
             final InputStream inputStream = this.getClass().getResourceAsStream("/assets/minecraft/Client/fonts/" + name + ".ttf");
             Font font = null;
             font = Font.createFont(0, inputStream);
             unicodeFont = new UnicodeFontRenderer(font.deriveFont(size), true);
-            unicodeFont.func_78264_a(true);
-            unicodeFont.func_78275_b(((IMinecraft)Minecraft.func_71410_x()).getLanguageManager().func_135044_b());
+            unicodeFont.setUnicodeFlag(true);
+            unicodeFont.setBidiFlag(((IMinecraft)Minecraft.getMinecraft()).getLanguageManager().isCurrentLanguageBidirectional());
             final HashMap map = new HashMap();
             if (this.fonts.containsKey(name)) {
                 map.putAll(this.fonts.get(name));
@@ -263,15 +262,15 @@ public class FontManager
         FontManager.fontName = name;
         UnicodeFontRenderer unicodeFont = null;
         try {
-            if (this.fonts.containsKey(name) && ((HashMap)this.fonts.get(name)).containsKey(size)) {
-                return ((HashMap<Object, UnicodeFontRenderer>)this.fonts.get(name)).get(size);
+            if (this.fonts.containsKey(name) && this.fonts.get(name).containsKey(size)) {
+                return this.fonts.get(name).get(size);
             }
             final InputStream inputStream = this.getClass().getResourceAsStream("/assets/minecraft/Client/fonts/" + name + ".otf");
             Font font = null;
             font = Font.createFont(0, inputStream);
             unicodeFont = new UnicodeFontRenderer(font.deriveFont(size));
-            unicodeFont.func_78264_a(true);
-            unicodeFont.func_78275_b(((IMinecraft)Minecraft.func_71410_x()).getLanguageManager().func_135044_b());
+            unicodeFont.setUnicodeFlag(true);
+            unicodeFont.setBidiFlag(((IMinecraft)Minecraft.getMinecraft()).getLanguageManager().isCurrentLanguageBidirectional());
             final HashMap map = new HashMap();
             if (this.fonts.containsKey(name)) {
                 map.putAll(this.fonts.get(name));
@@ -289,15 +288,15 @@ public class FontManager
         FontManager.fontName = name;
         UnicodeFontRenderer unicodeFont = null;
         try {
-            if (this.fonts.containsKey(name) && ((HashMap)this.fonts.get(name)).containsKey(size)) {
-                return ((HashMap<Object, UnicodeFontRenderer>)this.fonts.get(name)).get(size);
+            if (this.fonts.containsKey(name) && this.fonts.get(name).containsKey(size)) {
+                return this.fonts.get(name).get(size);
             }
             final InputStream inputStream = this.getClass().getResourceAsStream("/assets/minecraft/Client/fonts/" + name + ".ttf");
             Font font = null;
             font = Font.createFont(0, inputStream);
             unicodeFont = new UnicodeFontRenderer(font.deriveFont(size));
-            unicodeFont.func_78264_a(true);
-            unicodeFont.func_78275_b(((IMinecraft)Minecraft.func_71410_x()).getLanguageManager().func_135044_b());
+            unicodeFont.setUnicodeFlag(true);
+            unicodeFont.setBidiFlag(((IMinecraft)Minecraft.getMinecraft()).getLanguageManager().isCurrentLanguageBidirectional());
             final HashMap map = new HashMap();
             if (this.fonts.containsKey(name)) {
                 map.putAll(this.fonts.get(name));

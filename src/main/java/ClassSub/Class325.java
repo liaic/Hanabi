@@ -1,76 +1,88 @@
 package ClassSub;
 
+import org.jetbrains.annotations.*;
 import java.util.*;
 
-private class Class325
+public class Class325
 {
-    private Class235 loc;
-    private Class325 parent;
-    private ArrayList<Class235> path;
-    private double squareDistanceToFromTarget;
-    private double cost;
-    private double totalCost;
-    final Class101 this$0;
+    private String panelName;
+    private int x;
+    private int y;
+    private int width;
+    private int height;
+    private int dragX;
+    private int dragY;
+    private boolean drag;
+    @NotNull
+    private List<Class214> buttons;
     public static final boolean Cracked_By_Somebody_Dumped_BY_Ganga_SupportedbySucen;
     
-    public Class325(final Class101 this$0, final Class235 loc, final Class325 parent, final ArrayList<Class235> path, final double squareDistanceToFromTarget, final double cost, final double totalCost) {
-        this.this$0 = this$0;
-        super();
-        this.loc = null;
-        this.parent = null;
-        this.loc = loc;
-        this.parent = parent;
-        this.path = path;
-        this.squareDistanceToFromTarget = squareDistanceToFromTarget;
-        this.cost = cost;
-        this.totalCost = totalCost;
+    public Class325(final String panelName, final int x, final int y, final int width) {
+        this.buttons = new ArrayList<Class214>();
+        this.panelName = panelName;
+        this.x = x;
+        this.y = y;
+        this.width = width;
     }
     
-    public Class235 getLoc() {
-        return this.loc;
+    public String getPanelName() {
+        return this.panelName;
     }
     
-    public Class325 getParent() {
-        return this.parent;
+    public int getX() {
+        return this.x;
     }
     
-    public ArrayList<Class235> getPath() {
-        return this.path;
+    public void setX(final int x) {
+        this.x = x;
     }
     
-    public double getSquareDistanceToFromTarget() {
-        return this.squareDistanceToFromTarget;
+    public int getY() {
+        return this.y;
     }
     
-    public double getCost() {
-        return this.cost;
+    public void setY(final int y) {
+        this.y = y;
     }
     
-    public void setLoc(final Class235 loc) {
-        this.loc = loc;
+    public int getWidth() {
+        return this.width;
     }
     
-    public void setParent(final Class325 parent) {
-        this.parent = parent;
+    public boolean isDrag() {
+        return this.drag;
     }
     
-    public void setPath(final ArrayList<Class235> path) {
-        this.path = path;
+    public void setDrag(final boolean drag) {
+        this.drag = drag;
     }
     
-    public void setSquareDistanceToFromTarget(final double squareDistanceToFromTarget) {
-        this.squareDistanceToFromTarget = squareDistanceToFromTarget;
+    public int getDragX() {
+        return this.dragX;
     }
     
-    public void setCost(final double cost) {
-        this.cost = cost;
+    public void setDragX(final int dragX) {
+        this.dragX = dragX;
     }
     
-    public double getTotalCost() {
-        return this.totalCost;
+    public int getDragY() {
+        return this.dragY;
     }
     
-    public void setTotalCost(final double totalCost) {
-        this.totalCost = totalCost;
+    public void setDragY(final int dragY) {
+        this.dragY = dragY;
+    }
+    
+    public boolean isHoverHead(final int n, final int n2) {
+        return n >= this.getX() && n <= this.getX() + this.getWidth() && n2 >= this.getY() && n2 <= this.getY() + 20;
+    }
+    
+    public void addButton(final Class214 class214) {
+        this.buttons.add(class214);
+    }
+    
+    @NotNull
+    public List<Class214> getButtons() {
+        return this.buttons;
     }
 }

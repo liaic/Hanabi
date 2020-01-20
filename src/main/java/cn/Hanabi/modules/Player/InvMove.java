@@ -25,30 +25,30 @@ public class InvMove extends Mod
     
     @EventTarget
     public void onUpdate(final EventUpdate eventUpdate) {
-        if (InvMove.mc.field_71462_r != null && !(InvMove.mc.field_71462_r instanceof GuiChat)) {
+        if (InvMove.mc.currentScreen != null && !(InvMove.mc.currentScreen instanceof GuiChat)) {
             this.isWalking = true;
             if (this.mode.isCurrentMode("Hypixel")) {
-                InvMove.mc.field_71439_g.field_71174_a.func_147297_a((Packet)new C09PacketHeldItemChange(6));
+                InvMove.mc.thePlayer.sendQueue.addToSendQueue((Packet)new C09PacketHeldItemChange(6));
                 this.setDisplayName("Hypixel");
             }
             else {
                 this.setDisplayName("Vanilla");
             }
-            if (Class69.username.length() < 1) {
+            if (Class334.username.length() < 1) {
                 System.exit(0);
             }
             KeyBinding[] array;
-            for (int length = (array = new KeyBinding[] { InvMove.mc.field_71474_y.field_74351_w, InvMove.mc.field_71474_y.field_74368_y, InvMove.mc.field_71474_y.field_74370_x, InvMove.mc.field_71474_y.field_74366_z, InvMove.mc.field_71474_y.field_151444_V, InvMove.mc.field_71474_y.field_74314_A }).length, i = 0; i < length; ++i) {
-                if (Class21.abuses < 0) {
-                    InvMove.mc.field_71439_g.field_70181_x = 0.3;
+            for (int length = (array = new KeyBinding[] { InvMove.mc.gameSettings.keyBindForward, InvMove.mc.gameSettings.keyBindBack, InvMove.mc.gameSettings.keyBindLeft, InvMove.mc.gameSettings.keyBindRight, InvMove.mc.gameSettings.keyBindSprint, InvMove.mc.gameSettings.keyBindJump }).length, i = 0; i < length; ++i) {
+                if (Class346.abuses < 0) {
+                    InvMove.mc.thePlayer.motionY = 0.3;
                 }
                 final KeyBinding keyBinding = array[i];
-                KeyBinding.func_74510_a(keyBinding.func_151463_i(), Keyboard.isKeyDown(keyBinding.func_151463_i()));
+                KeyBinding.setKeyBindState(keyBinding.getKeyCode(), Keyboard.isKeyDown(keyBinding.getKeyCode()));
             }
         }
         else if (this.isWalking) {
             if (this.mode.isCurrentMode("Hypixel")) {
-                InvMove.mc.field_71439_g.field_71174_a.func_147297_a((Packet)new C09PacketHeldItemChange(InvMove.mc.field_71439_g.field_71071_by.field_70461_c));
+                InvMove.mc.thePlayer.sendQueue.addToSendQueue((Packet)new C09PacketHeldItemChange(InvMove.mc.thePlayer.inventory.currentItem));
                 this.setDisplayName("Hypixel");
             }
             else {

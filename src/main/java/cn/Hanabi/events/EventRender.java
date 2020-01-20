@@ -9,7 +9,6 @@ public class EventRender implements Event
     long finishTimeNano;
     
     public EventRender(final int pass, final float partialTicks, final long finishTimeNano) {
-        super();
         this.pass = pass;
         this.partialTicks = partialTicks;
         this.finishTimeNano = finishTimeNano;

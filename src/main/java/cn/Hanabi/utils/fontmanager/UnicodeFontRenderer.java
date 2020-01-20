@@ -11,60 +11,60 @@ import ClassSub.*;
 
 public class UnicodeFontRenderer extends FontRenderer
 {
-    private final Class135 font;
+    private final Class139 font;
     public HashMap<String, Float> widthMap;
     public HashMap<String, Float> heightMap;
     
     public UnicodeFontRenderer(final Font awtFont) {
-        super(Minecraft.func_71410_x().field_71474_y, new ResourceLocation("textures/font/ascii.png"), Minecraft.func_71410_x().func_110434_K(), false);
+        super(Minecraft.getMinecraft().gameSettings, new ResourceLocation("textures/font/ascii.png"), Minecraft.getMinecraft().getTextureManager(), false);
         this.widthMap = new HashMap<String, Float>();
         this.heightMap = new HashMap<String, Float>();
-        (this.font = new Class135(awtFont)).addAsciiGlyphs();
-        this.font.getEffects().add(new Class29(Color.WHITE));
+        (this.font = new Class139(awtFont)).addAsciiGlyphs();
+        this.font.getEffects().add(new Class38(Color.WHITE));
         try {
             this.font.loadGlyphs();
         }
-        catch (Class186 exception) {
+        catch (Class341 exception) {
             throw new RuntimeException(exception);
         }
         final String alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456789";
-        this.field_78288_b = this.font.getHeight(alphabet) / 2;
+        this.FONT_HEIGHT = this.font.getHeight(alphabet) / 2;
     }
     
     public UnicodeFontRenderer(final Font awtFont, final int fontPageStart, final int fontPageEnd) {
-        super(Minecraft.func_71410_x().field_71474_y, new ResourceLocation("textures/font/ascii.png"), Minecraft.func_71410_x().func_110434_K(), false);
+        super(Minecraft.getMinecraft().gameSettings, new ResourceLocation("textures/font/ascii.png"), Minecraft.getMinecraft().getTextureManager(), false);
         this.widthMap = new HashMap<String, Float>();
         this.heightMap = new HashMap<String, Float>();
-        (this.font = new Class135(awtFont)).addGlyphs(fontPageStart, fontPageEnd);
-        this.font.getEffects().add(new Class29(Color.WHITE));
+        (this.font = new Class139(awtFont)).addGlyphs(fontPageStart, fontPageEnd);
+        this.font.getEffects().add(new Class38(Color.WHITE));
         try {
             this.font.loadGlyphs();
         }
-        catch (Class186 exception) {
+        catch (Class341 exception) {
             throw new RuntimeException(exception);
         }
         final String alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456789";
-        this.field_78288_b = this.font.getHeight(alphabet) / 2;
+        this.FONT_HEIGHT = this.font.getHeight(alphabet) / 2;
     }
     
     public UnicodeFontRenderer(final Font awtFont, final boolean bol) {
-        super(Minecraft.func_71410_x().field_71474_y, new ResourceLocation("textures/font/ascii.png"), Minecraft.func_71410_x().func_110434_K(), false);
+        super(Minecraft.getMinecraft().gameSettings, new ResourceLocation("textures/font/ascii.png"), Minecraft.getMinecraft().getTextureManager(), false);
         this.widthMap = new HashMap<String, Float>();
         this.heightMap = new HashMap<String, Float>();
-        (this.font = new Class135(awtFont)).addAsciiGlyphs();
+        (this.font = new Class139(awtFont)).addAsciiGlyphs();
         this.font.addGlyphs(0, 65535);
-        this.font.getEffects().add(new Class29(Color.WHITE));
+        this.font.getEffects().add(new Class38(Color.WHITE));
         try {
             this.font.loadGlyphs();
         }
-        catch (Class186 exception) {
+        catch (Class341 exception) {
             throw new RuntimeException(exception);
         }
         final String alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456789";
-        this.field_78288_b = this.font.getHeight(alphabet) / 2;
+        this.FONT_HEIGHT = this.font.getHeight(alphabet) / 2;
     }
     
-    public int func_78276_b(final String string, final int x, final int y, final int color) {
+    public int drawString(final String string, final int x, final int y, final int color) {
         return this.drawString(string, x, y, color);
     }
     
@@ -88,7 +88,7 @@ public class UnicodeFontRenderer extends FontRenderer
         }
         x *= 2.0f;
         y *= 2.0f;
-        this.font.drawString(x, y, string, new Class278(color));
+        this.font.drawString(x, y, string, new Class26(color));
         if (texture) {
             GL11.glEnable(3553);
         }
@@ -98,26 +98,26 @@ public class UnicodeFontRenderer extends FontRenderer
         if (!blend) {
             GL11.glDisable(3042);
         }
-        GlStateManager.func_179124_c(0.0f, 0.0f, 0.0f);
+        GlStateManager.color(0.0f, 0.0f, 0.0f);
         GL11.glPopMatrix();
-        GlStateManager.func_179144_i(0);
+        GlStateManager.bindTexture(0);
         return (int)x;
     }
     
-    public int func_175063_a(final String text, final float x, final float y, final int color) {
-        this.drawString(text, x + 1.0f, y + 1.0f, Class59.BLACK.c);
+    public int drawStringWithShadow(final String text, final float x, final float y, final int color) {
+        this.drawString(text, x + 1.0f, y + 1.0f, Class15.BLACK.c);
         return this.drawString(text, x, y, color);
     }
     
-    public int func_78263_a(final char c) {
-        return this.func_78256_a(Character.toString(c));
+    public int getCharWidth(final char c) {
+        return this.getStringWidth(Character.toString(c));
     }
     
-    public int func_78256_a(final String string) {
+    public int getStringWidth(final String string) {
         if (this.widthMap.containsKey(string)) {
             return (int)(Object)this.widthMap.get(string);
         }
-        final float width = (float)(this.font.getWidth(string) / 2);
+        final float width = this.font.getWidth(string) / 2;
         this.widthMap.put(string, width);
         return (int)width;
     }
@@ -126,7 +126,7 @@ public class UnicodeFontRenderer extends FontRenderer
         if (this.heightMap.containsKey(string)) {
             return this.heightMap.get(string);
         }
-        final float height = (float)(this.font.getHeight(string) / 2);
+        final float height = this.font.getHeight(string) / 2;
         this.heightMap.put(string, height);
         return height;
     }
@@ -210,9 +210,9 @@ public class UnicodeFontRenderer extends FontRenderer
                 }
                 final Color col = new Color(color);
                 str = str.substring(1, str.length());
-                this.drawString(str, x + len + 0.5f, y + 0.5f, Class59.BLACK.c);
+                this.drawString(str, x + len + 0.5f, y + 0.5f, Class15.BLACK.c);
                 this.drawString(str, x + len, y, this.getColor(col.getRed(), col.getGreen(), col.getBlue(), alpha));
-                len += this.func_78256_a(str) + 1;
+                len += this.getStringWidth(str) + 1;
             }
         }
         return (int)len;
@@ -296,9 +296,9 @@ public class UnicodeFontRenderer extends FontRenderer
                     }
                 }
                 str = str.substring(1, str.length());
-                this.drawString(str, x + len + 0.5f, y + 0.5f, Class59.BLACK.c);
+                this.drawString(str, x + len + 0.5f, y + 0.5f, Class15.BLACK.c);
                 this.drawString(str, x + len, y, color);
-                len += this.func_78256_a(str) + 1;
+                len += this.getStringWidth(str) + 1;
             }
         }
         return (int)len;
@@ -318,7 +318,7 @@ public class UnicodeFontRenderer extends FontRenderer
     }
     
     public void drawCenteredString(final String text, final float x, final float y, final int color) {
-        this.drawString(text, x - (float)(this.func_78256_a(text) / 2), y, color);
+        this.drawString(text, x - this.getStringWidth(text) / 2, y, color);
     }
     
     public void drawOutlinedString(final String text, final float x, final float y, final int borderColor, final int color) {
@@ -330,10 +330,10 @@ public class UnicodeFontRenderer extends FontRenderer
     }
     
     public void drawCenterOutlinedString(final String text, final float x, final float y, final int borderColor, final int color) {
-        this.drawString(text, x - this.func_78256_a(text) / 2 - 0.5f, y, borderColor);
-        this.drawString(text, x - this.func_78256_a(text) / 2 + 0.5f, y, borderColor);
-        this.drawString(text, x - (float)(this.func_78256_a(text) / 2), y - 0.5f, borderColor);
-        this.drawString(text, x - (float)(this.func_78256_a(text) / 2), y + 0.5f, borderColor);
-        this.drawString(text, x - (float)(this.func_78256_a(text) / 2), y, color);
+        this.drawString(text, x - this.getStringWidth(text) / 2 - 0.5f, y, borderColor);
+        this.drawString(text, x - this.getStringWidth(text) / 2 + 0.5f, y, borderColor);
+        this.drawString(text, x - this.getStringWidth(text) / 2, y - 0.5f, borderColor);
+        this.drawString(text, x - this.getStringWidth(text) / 2, y + 0.5f, borderColor);
+        this.drawString(text, x - this.getStringWidth(text) / 2, y, color);
     }
 }

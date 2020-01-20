@@ -9,10 +9,6 @@ public class HMLManager
 {
     public static ArrayList<HMLHook> hooks;
     
-    public HMLManager() {
-        super();
-    }
-    
     public static boolean registerHook(final HMLHook hook) {
         HMLManager.hooks.add(hook);
         System.out.println("Hook " + hook.name + " Registered!");

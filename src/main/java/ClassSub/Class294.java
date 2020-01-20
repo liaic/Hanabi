@@ -1,24 +1,24 @@
 package ClassSub;
 
-final class Class294 extends Thread
+import java.util.*;
+
+public class Class294
 {
-    final Class218 val$hud;
+    public static ArrayList<Class59> types;
     public static final boolean Cracked_By_Somebody_Dumped_BY_Ganga_SupportedbySucen;
     
-    Class294(final Class218 val$hud) {
-        this.val$hud = val$hud;
-        super();
+    public static Class59 getTypeByName(final String s) {
+        for (final Class59 class59 : Class294.types) {
+            if (class59.getClientName().equals(s)) {
+                return class59;
+            }
+        }
+        return null;
     }
     
-    @Override
-    public void run() {
-        this.val$hud.set(false);
-        try {
-            Thread.sleep(500L);
-        }
-        catch (InterruptedException ex) {
-            ex.printStackTrace();
-        }
-        this.val$hud.set(true);
+    static {
+        (Class294.types = new ArrayList<Class59>()).add(new Class201());
+        Class294.types.add(new Class350());
+        Class294.types.add(new Class230());
     }
 }

@@ -1,26 +1,8 @@
 package ClassSub;
 
-final class Class316 implements Class163.Class50
+public interface Class316
 {
-    final float val$scaleX;
-    final float val$scaleY;
-    final Class140 val$image;
-    public static final boolean Cracked_By_Somebody_Dumped_BY_Ganga_SupportedbySucen;
+    public static final boolean 你�?�么可以妄自菲薄啊�?�么�?么都不懂啊回去继续修炼吧好吗你以为你可以大言不惭啊我看你都没速度和我唠嗑你晓得啥你别虎了吗NMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSL �?��?��?��?��?��?��?��??;
     
-    Class316(final float val$scaleX, final float val$scaleY, final Class140 val$image) {
-        this.val$scaleX = val$scaleX;
-        this.val$scaleY = val$scaleY;
-        this.val$image = val$image;
-        super();
-    }
-    
-    @Override
-    public float[] preRenderPoint(final Class68 class68, float n, float n2) {
-        n -= class68.getMinX();
-        n2 -= class68.getMinY();
-        n /= class68.getMaxX() - class68.getMinX();
-        n2 /= class68.getMaxY() - class68.getMinY();
-        Class163.access$000().glTexCoord2f(this.val$image.getTextureOffsetX() + this.val$image.getTextureWidth() * (n * this.val$scaleX), this.val$image.getTextureOffsetY() + this.val$image.getTextureHeight() * (n2 * this.val$scaleY));
-        return null;
-    }
+    Class224 getCoordFor(final float p0, final float p1);
 }

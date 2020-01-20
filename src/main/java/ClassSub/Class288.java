@@ -1,12 +1,46 @@
-package ClassSub;
+package cn.Hanabi.modules.World;
 
 import java.io.*;
 
-public interface Class288
+class Class288 extends Thread
 {
-    public static final boolean 你以为你真的才华横溢秒世绝笔了是不是窝囊废井底之蛙你明白我的意思么你在你大哥我面前是永远抬不起头的你知道不看看你现在的样子面目狰狞想忤逆你亲爹是吗那请你先想想后果对于我的攻击你无法抵挡NMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSL    ;
+    final IRC_ this$0;
+    public static final boolean Cracked_By_Somebody_Dumped_BY_Ganga_SupportedbySucen;
     
-    void load() throws IOException;
+    Class288(final IRC_ this$0) {
+        ((Class288)this).this$0 = this$0;
+    }
     
-    String getDescription();
+    @Override
+    public void run() {
+        this.setName("Reconnect");
+        new IRC_.Class10(((Class288)this).this$0).start();
+    Label_0024_Outer:
+        while (true) {
+            while (true) {
+                try {
+                    while (true) {
+                        Thread.sleep(1000L);
+                        ((Class288)this).this$0.socket.sendUrgentData(255);
+                    }
+                }
+                catch (IOException ex3) {
+                    if (IRC_.access$100(((Class288)this).this$0).isDelayComplete(2000L)) {
+                        IRC_.access$100(((Class288)this).this$0).reset();
+                        new IRC_.Class10(((Class288)this).this$0).start();
+                    }
+                    continue Label_0024_Outer;
+                }
+                catch (NullPointerException ex) {
+                    ex.printStackTrace();
+                    continue Label_0024_Outer;
+                }
+                catch (InterruptedException ex2) {
+                    ex2.printStackTrace();
+                    continue Label_0024_Outer;
+                }
+                continue;
+            }
+        }
+    }
 }

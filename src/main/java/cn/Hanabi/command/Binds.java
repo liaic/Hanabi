@@ -19,7 +19,7 @@ public class Binds extends Command
         try {
             for (final Mod mod : ModManager.modules) {
                 if (mod.getKeybind() != 0) {
-                    Class295.tellPlayer("§b[Hanabi]§a" + mod.getName() + " - " + Keyboard.getKeyName(mod.getKeybind()));
+                    Class200.tellPlayer("§b[Hanabi]§a" + mod.getName() + " - " + Keyboard.getKeyName(mod.getKeybind()));
                 }
             }
         }

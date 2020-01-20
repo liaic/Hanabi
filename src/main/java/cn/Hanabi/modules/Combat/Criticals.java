@@ -12,15 +12,15 @@ import net.minecraft.network.*;
 public class Criticals extends Mod
 {
     int onGroundState;
-    Class191 timer;
-    Class191 stepTimer;
+    Class205 timer;
+    Class205 stepTimer;
     public Value<String> modes;
     public static final boolean Cracked_By_Somebody_Dumped_BY_Ganga_SupportedbySucen;
     
     public Criticals() {
         super("Criticals", Category.COMBAT);
-        this.timer = new Class191();
-        this.stepTimer = new Class191();
+        this.timer = new Class205();
+        this.stepTimer = new Class205();
         (this.modes = new Value<String>("Criticals", "Mode", 0)).addValue("HypixelPacket");
         this.modes.addValue("NoGround");
     }
@@ -29,7 +29,7 @@ public class Criticals extends Mod
     public void onStep(final EventStep eventStep) {
         if (!eventStep.isPre()) {
             this.stepTimer.reset();
-            if (Class69.username.length() < 1) {
+            if (Class334.username.length() < 1) {
                 System.exit(0);
             }
         }
@@ -38,10 +38,10 @@ public class Criticals extends Mod
     @EventTarget
     public void onUpdate(final EventUpdate eventUpdate) {
         this.setDisplayName(this.modes.getModeAt(this.modes.getCurrentMode()));
-        if (Class206.isOnGround(0.001)) {
+        if (Class180.isOnGround(0.001)) {
             ++this.onGroundState;
         }
-        else if (!Criticals.mc.field_71439_g.field_70122_E) {
+        else if (!Criticals.mc.thePlayer.onGround) {
             this.onGroundState = 0;
         }
     }
@@ -54,21 +54,21 @@ public class Criticals extends Mod
     @EventTarget
     public void onPacket(final EventPacket eventPacket) {
         if (this.modes.isCurrentMode("NoGround")) {
-            if (ModManager.getModule("Killaura").isEnabled() && KillAura.target != null && Criticals.mc.field_71439_g.field_70122_E && Class206.isOnGround(0.001) && !ModManager.getModule("Fly").isEnabled() && !ModManager.getModule("Longjump").isEnabled() && !ModManager.getModule("Speed").isEnabled() && this.onGroundState > 1 && eventPacket.getPacket() instanceof C03PacketPlayer) {
+            if (ModManager.getModule("Killaura").isEnabled() && KillAura.target != null && Criticals.mc.thePlayer.onGround && Class180.isOnGround(0.001) && !ModManager.getModule("Fly").isEnabled() && !ModManager.getModule("Longjump").isEnabled() && !ModManager.getModule("Speed").isEnabled() && this.onGroundState > 1 && eventPacket.getPacket() instanceof C03PacketPlayer) {
                 ((IC03PacketPlayer)eventPacket.getPacket()).setOnGround(false);
                 this.timer.reset();
             }
         }
-        else if (this.modes.isCurrentMode("HypixelPacket") && eventPacket.getPacket() instanceof C02PacketUseEntity && ((C02PacketUseEntity)eventPacket.getPacket()).func_149565_c() == C02PacketUseEntity.Action.ATTACK && Criticals.mc.field_71439_g.field_70122_E && Class206.isOnGround(0.001) && !ModManager.getModule("LongJump").isEnabled() && !ModManager.getModule("Speed").isEnabled() && this.stepTimer.isDelayComplete(20L) && this.timer.isDelayComplete(500L) && Criticals.mc.field_71439_g.field_70124_G && this.onGroundState > 1) {
+        else if (this.modes.isCurrentMode("HypixelPacket") && eventPacket.getPacket() instanceof C02PacketUseEntity && ((C02PacketUseEntity)eventPacket.getPacket()).getAction() == C02PacketUseEntity.Action.ATTACK && Criticals.mc.thePlayer.onGround && Class180.isOnGround(0.001) && !ModManager.getModule("LongJump").isEnabled() && !ModManager.getModule("Speed").isEnabled() && this.stepTimer.isDelayComplete(20L) && this.timer.isDelayComplete(500L) && Criticals.mc.thePlayer.isCollidedVertically && this.onGroundState > 1) {
             this.doCrit();
             this.timer.reset();
         }
     }
     
     public void doCrit() {
-        Criticals.mc.field_71439_g.field_71174_a.func_147297_a((Packet)new C03PacketPlayer.C04PacketPlayerPosition(Criticals.mc.field_71439_g.field_70165_t, Criticals.mc.field_71439_g.field_70163_u + 0.0624218713251234 + Math.random() * 2.0 / 1000.0, Criticals.mc.field_71439_g.field_70161_v, false));
-        Criticals.mc.field_71439_g.field_71174_a.func_147297_a((Packet)new C03PacketPlayer.C04PacketPlayerPosition(Criticals.mc.field_71439_g.field_70165_t, Criticals.mc.field_71439_g.field_70163_u, Criticals.mc.field_71439_g.field_70161_v, false));
-        Criticals.mc.field_71439_g.field_71174_a.func_147297_a((Packet)new C03PacketPlayer.C04PacketPlayerPosition(Criticals.mc.field_71439_g.field_70165_t, Criticals.mc.field_71439_g.field_70163_u + 0.012511000037193298 + Math.random() * 2.0 / 10000.0, Criticals.mc.field_71439_g.field_70161_v, false));
-        Criticals.mc.field_71439_g.field_71174_a.func_147297_a((Packet)new C03PacketPlayer.C04PacketPlayerPosition(Criticals.mc.field_71439_g.field_70165_t, Criticals.mc.field_71439_g.field_70163_u, Criticals.mc.field_71439_g.field_70161_v, false));
+        Criticals.mc.thePlayer.sendQueue.addToSendQueue((Packet)new C03PacketPlayer.C04PacketPlayerPosition(Criticals.mc.thePlayer.posX, Criticals.mc.thePlayer.posY + 0.0624218713251234 + Math.random() * 2.0 / 1000.0, Criticals.mc.thePlayer.posZ, false));
+        Criticals.mc.thePlayer.sendQueue.addToSendQueue((Packet)new C03PacketPlayer.C04PacketPlayerPosition(Criticals.mc.thePlayer.posX, Criticals.mc.thePlayer.posY, Criticals.mc.thePlayer.posZ, false));
+        Criticals.mc.thePlayer.sendQueue.addToSendQueue((Packet)new C03PacketPlayer.C04PacketPlayerPosition(Criticals.mc.thePlayer.posX, Criticals.mc.thePlayer.posY + 0.012511000037193298 + Math.random() * 2.0 / 10000.0, Criticals.mc.thePlayer.posZ, false));
+        Criticals.mc.thePlayer.sendQueue.addToSendQueue((Packet)new C03PacketPlayer.C04PacketPlayerPosition(Criticals.mc.thePlayer.posX, Criticals.mc.thePlayer.posY, Criticals.mc.thePlayer.posZ, false));
     }
 }

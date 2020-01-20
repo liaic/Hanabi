@@ -1,68 +1,57 @@
 package ClassSub;
 
-import cn.Hanabi.command.*;
-import org.jetbrains.annotations.*;
-import cn.Hanabi.*;
-import cn.Hanabi.modules.*;
-import java.util.function.*;
-import java.util.stream.*;
-import java.util.*;
+import javax.swing.*;
 
-public class Class207 extends Command
+final class Class207 extends Class116.Class354
 {
+    final String[][] val$options;
+    final String val$currentValue;
+    final String val$description;
     public static final boolean Cracked_By_Somebody_Dumped_BY_Ganga_SupportedbySucen;
     
-    public Class207() {
-        super("toggle", new String[] { "t" });
+    Class207(final String s, final String s2, final String[][] val$options, final String val$currentValue, final String val$description) {
+        this.val$options = val$options;
+        this.val$currentValue = val$currentValue;
+        this.val$description = val$description;
+        super(s, s2);
     }
     
     @Override
-    public void run(final String s, @NotNull final String[] array) {
-        if (array.length < 1) {
-            throw new Class58("Usage: ." + s + " <module> [<on/off>]");
-        }
-        final ModManager moduleManager = Hanabi.INSTANCE.moduleManager;
-        final Mod module = ModManager.getModule(array[0], false);
-        if (module == null) {
-            throw new Class58("The module '" + array[0] + "' does not exist");
-        }
-        boolean state = !module.getState();
-        if (array.length >= 2) {
-            if (array[1].equalsIgnoreCase("on")) {
-                state = true;
-            }
-            else {
-                if (!array[1].equalsIgnoreCase("off")) {
-                    throw new Class58("Usage: ." + s + " <module> <on/off>");
-                }
-                state = false;
+    public void showDialog() {
+        int selectedIndex = -1;
+        final DefaultComboBoxModel<Object> defaultComboBoxModel = new DefaultComboBoxModel<Object>();
+        for (int i = 0; i < this.val$options.length; ++i) {
+            defaultComboBoxModel.addElement(this.val$options[i][0]);
+            if (this.getValue(i).equals(this.val$currentValue)) {
+                selectedIndex = i;
             }
         }
-        module.setState(state);
-        Class213.success(module.getName() + " was " + "§7" + (state ? "enabled" : "disabled"));
+        final JComboBox comboBox = new JComboBox(defaultComboBoxModel);
+        comboBox.setSelectedIndex(selectedIndex);
+        if (this.showValueDialog(comboBox, this.val$description)) {
+            this.value = this.getValue(comboBox.getSelectedIndex());
+        }
+    }
+    
+    private String getValue(final int n) {
+        if (this.val$options[n].length == 1) {
+            return this.val$options[n][0];
+        }
+        return this.val$options[n][1];
     }
     
     @Override
-    public List<String> autocomplete(final int n, final String[] array) {
-        String s = "";
-        boolean b = false;
-        try {
-            if (n == 0) {
-                b = true;
-            }
-            else if (n == 1) {
-                b = true;
-                s = array[0];
+    public String toString() {
+        for (int i = 0; i < this.val$options.length; ++i) {
+            if (this.getValue(i).equals(this.value)) {
+                return this.val$options[i][0].toString();
             }
         }
-        catch (Exception ex) {}
-        if (b) {
-            return Hanabi.INSTANCE.moduleManager.getModules().stream().filter((Predicate<? super Object>)Class207::lambda$autocomplete$0).map((Function<? super Object, ?>)Mod::getName).collect((Collector<? super Object, ?, List<String>>)Collectors.toList());
-        }
-        return new ArrayList<String>();
+        return "";
     }
     
-    private static boolean lambda$autocomplete$0(final String s, final Mod mod) {
-        return mod.getName().toLowerCase().startsWith(s);
+    @Override
+    public Object getObject() {
+        return this.value;
     }
 }

@@ -1,21 +1,18 @@
 package ClassSub;
 
-import net.minecraftforge.fml.common.*;
-
-final class Class66 extends Thread
+private static class Class66
 {
+    int id;
+    Short yOffset;
+    Short width;
+    Short height;
+    String text;
     public static final boolean Cracked_By_Somebody_Dumped_BY_Ganga_SupportedbySucen;
     
-    Class66() {
-        super();
+    private Class66() {
     }
     
-    @Override
-    public void run() {
-        try {
-            Thread.sleep(3000L);
-            FMLCommonHandler.instance().exitJava(0, true);
-        }
-        catch (InterruptedException ex) {}
+    Class66(final Class69 class69) {
+        this();
     }
 }

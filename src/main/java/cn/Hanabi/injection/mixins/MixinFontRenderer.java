@@ -7,9 +7,5 @@ import org.spongepowered.asm.mixin.*;
 public abstract class MixinFontRenderer
 {
     @Shadow
-    private int[] field_78285_g;
-    
-    public MixinFontRenderer() {
-        super();
-    }
+    private int[] colorCode;
 }

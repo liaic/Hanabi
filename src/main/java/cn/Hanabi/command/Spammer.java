@@ -48,7 +48,7 @@ public class Spammer extends Command
     @Override
     public void run(final String s, final String[] array) {
         if (array.length == 0) {
-            Class128.sendClientMessage("Failed", Class67.Class124.WARNING);
+            Class120.sendClientMessage("Failed", Class84.Class307.WARNING);
         }
         else {
             String string = "";
@@ -57,7 +57,7 @@ public class Spammer extends Command
             }
             cn.Hanabi.modules.Player.Spammer.text = string;
             saveText();
-            Class128.sendClientMessage("Changed to " + string, Class67.Class124.SUCCESS);
+            Class120.sendClientMessage("Changed to " + string, Class84.Class307.SUCCESS);
         }
     }
     
@@ -67,6 +67,6 @@ public class Spammer extends Command
     }
     
     static {
-        Spammer.fileDir = Minecraft.func_71410_x().field_71412_D.getAbsolutePath() + "/Hanabi";
+        Spammer.fileDir = Minecraft.getMinecraft().mcDataDir.getAbsolutePath() + "/Hanabi";
     }
 }

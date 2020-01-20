@@ -34,10 +34,10 @@ public class ESP extends Mod
     public void onRender(final EventRender eventRender) {
         if (this.mode.isCurrentMode("Box")) {
             this.setDisplayName("Box");
-            for (final EntityPlayer next : ESP.mc.field_71441_e.field_72996_f) {
+            for (final EntityPlayer next : ESP.mc.theWorld.loadedEntityList) {
                 if (next instanceof EntityPlayer) {
-                    final EntityPlayer entityPlayer = (EntityPlayer)next;
-                    if (entityPlayer == ESP.mc.field_71439_g || entityPlayer.field_70128_L) {
+                    final EntityPlayer entityPlayer = next;
+                    if (entityPlayer == ESP.mc.thePlayer || entityPlayer.isDead) {
                         continue;
                     }
                     this.renderBox((Entity)entityPlayer, 0.0, 1.0, 0.0);
@@ -51,53 +51,53 @@ public class ESP extends Mod
     }
     
     private boolean isValid(final EntityLivingBase entityLivingBase) {
-        return entityLivingBase != ESP.mc.field_71439_g && entityLivingBase.func_110143_aJ() > 0.0f && entityLivingBase instanceof EntityPlayer;
+        return entityLivingBase != ESP.mc.thePlayer && entityLivingBase.getHealth() > 0.0f && entityLivingBase instanceof EntityPlayer;
     }
     
     public void renderBox(final Entity entity, final double n, final double n2, final double n3) {
-        if ((entity.func_82150_aj() && !(boolean)this.invisible.getValueState()) || (KillAura.targets.contains(entity) && ((KillAura)ModManager.getModule("Killaura")).esp.getValueState())) {
+        if ((entity.isInvisible() && !this.invisible.getValueState()) || (KillAura.targets.contains(entity) && ((KillAura)ModManager.getModule("Killaura")).esp.getValueState())) {
             return;
         }
-        ESP.mc.func_175598_ae();
-        final double n4 = entity.field_70142_S + (entity.field_70165_t - entity.field_70142_S) * Class296.getTimer().field_74281_c - ((IRenderManager)ESP.mc.func_175598_ae()).getRenderPosX();
-        ESP.mc.func_175598_ae();
-        final double n5 = entity.field_70137_T + (entity.field_70163_u - entity.field_70137_T) * Class296.getTimer().field_74281_c - ((IRenderManager)ESP.mc.func_175598_ae()).getRenderPosY();
-        ESP.mc.func_175598_ae();
-        Class284.drawEntityESP(n4, n5, entity.field_70136_U + (entity.field_70161_v - entity.field_70136_U) * Class296.getTimer().field_74281_c - ((IRenderManager)ESP.mc.func_175598_ae()).getRenderPosZ(), entity.func_174813_aQ().field_72336_d - entity.func_174813_aQ().field_72340_a - 0.1, entity.func_174813_aQ().field_72337_e - entity.func_174813_aQ().field_72338_b + 0.25, 1.0f, 1.0f, 1.0f, 0.2f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f);
+        ESP.mc.getRenderManager();
+        final double n4 = entity.lastTickPosX + (entity.posX - entity.lastTickPosX) * Class211.getTimer().renderPartialTicks - ((IRenderManager)ESP.mc.getRenderManager()).getRenderPosX();
+        ESP.mc.getRenderManager();
+        final double n5 = entity.lastTickPosY + (entity.posY - entity.lastTickPosY) * Class211.getTimer().renderPartialTicks - ((IRenderManager)ESP.mc.getRenderManager()).getRenderPosY();
+        ESP.mc.getRenderManager();
+        Class246.drawEntityESP(n4, n5, entity.lastTickPosZ + (entity.posZ - entity.lastTickPosZ) * Class211.getTimer().renderPartialTicks - ((IRenderManager)ESP.mc.getRenderManager()).getRenderPosZ(), entity.getEntityBoundingBox().maxX - entity.getEntityBoundingBox().minX - 0.1, entity.getEntityBoundingBox().maxY - entity.getEntityBoundingBox().minY + 0.25, 1.0f, 1.0f, 1.0f, 0.2f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f);
     }
     
-    public static void func_181561_a(final AxisAlignedBB axisAlignedBB) {
-        final Tessellator func_178181_a = Tessellator.func_178181_a();
-        final WorldRenderer func_178180_c = func_178181_a.func_178180_c();
-        func_178180_c.func_181668_a(3, DefaultVertexFormats.field_181705_e);
-        func_178180_c.func_181662_b(axisAlignedBB.field_72340_a, axisAlignedBB.field_72338_b, axisAlignedBB.field_72339_c).func_181675_d();
-        func_178180_c.func_181662_b(axisAlignedBB.field_72336_d, axisAlignedBB.field_72338_b, axisAlignedBB.field_72339_c).func_181675_d();
-        func_178180_c.func_181662_b(axisAlignedBB.field_72336_d, axisAlignedBB.field_72338_b, axisAlignedBB.field_72334_f).func_181675_d();
-        func_178180_c.func_181662_b(axisAlignedBB.field_72340_a, axisAlignedBB.field_72338_b, axisAlignedBB.field_72334_f).func_181675_d();
-        func_178180_c.func_181662_b(axisAlignedBB.field_72340_a, axisAlignedBB.field_72338_b, axisAlignedBB.field_72339_c).func_181675_d();
-        func_178181_a.func_78381_a();
-        func_178180_c.func_181668_a(3, DefaultVertexFormats.field_181705_e);
-        func_178180_c.func_181662_b(axisAlignedBB.field_72340_a, axisAlignedBB.field_72337_e, axisAlignedBB.field_72339_c).func_181675_d();
-        func_178180_c.func_181662_b(axisAlignedBB.field_72336_d, axisAlignedBB.field_72337_e, axisAlignedBB.field_72339_c).func_181675_d();
-        func_178180_c.func_181662_b(axisAlignedBB.field_72336_d, axisAlignedBB.field_72337_e, axisAlignedBB.field_72334_f).func_181675_d();
-        func_178180_c.func_181662_b(axisAlignedBB.field_72340_a, axisAlignedBB.field_72337_e, axisAlignedBB.field_72334_f).func_181675_d();
-        func_178180_c.func_181662_b(axisAlignedBB.field_72340_a, axisAlignedBB.field_72337_e, axisAlignedBB.field_72339_c).func_181675_d();
-        func_178181_a.func_78381_a();
-        func_178180_c.func_181668_a(1, DefaultVertexFormats.field_181705_e);
-        func_178180_c.func_181662_b(axisAlignedBB.field_72340_a, axisAlignedBB.field_72338_b, axisAlignedBB.field_72339_c).func_181675_d();
-        func_178180_c.func_181662_b(axisAlignedBB.field_72340_a, axisAlignedBB.field_72337_e, axisAlignedBB.field_72339_c).func_181675_d();
-        func_178180_c.func_181662_b(axisAlignedBB.field_72336_d, axisAlignedBB.field_72338_b, axisAlignedBB.field_72339_c).func_181675_d();
-        func_178180_c.func_181662_b(axisAlignedBB.field_72336_d, axisAlignedBB.field_72337_e, axisAlignedBB.field_72339_c).func_181675_d();
-        func_178180_c.func_181662_b(axisAlignedBB.field_72336_d, axisAlignedBB.field_72338_b, axisAlignedBB.field_72334_f).func_181675_d();
-        func_178180_c.func_181662_b(axisAlignedBB.field_72336_d, axisAlignedBB.field_72337_e, axisAlignedBB.field_72334_f).func_181675_d();
-        func_178180_c.func_181662_b(axisAlignedBB.field_72340_a, axisAlignedBB.field_72338_b, axisAlignedBB.field_72334_f).func_181675_d();
-        func_178180_c.func_181662_b(axisAlignedBB.field_72340_a, axisAlignedBB.field_72337_e, axisAlignedBB.field_72334_f).func_181675_d();
-        func_178181_a.func_78381_a();
+    public static void drawSelectionBoundingBox(final AxisAlignedBB axisAlignedBB) {
+        final Tessellator getInstance = Tessellator.getInstance();
+        final WorldRenderer getWorldRenderer = getInstance.getWorldRenderer();
+        getWorldRenderer.begin(3, DefaultVertexFormats.POSITION);
+        getWorldRenderer.pos(axisAlignedBB.minX, axisAlignedBB.minY, axisAlignedBB.minZ).endVertex();
+        getWorldRenderer.pos(axisAlignedBB.maxX, axisAlignedBB.minY, axisAlignedBB.minZ).endVertex();
+        getWorldRenderer.pos(axisAlignedBB.maxX, axisAlignedBB.minY, axisAlignedBB.maxZ).endVertex();
+        getWorldRenderer.pos(axisAlignedBB.minX, axisAlignedBB.minY, axisAlignedBB.maxZ).endVertex();
+        getWorldRenderer.pos(axisAlignedBB.minX, axisAlignedBB.minY, axisAlignedBB.minZ).endVertex();
+        getInstance.draw();
+        getWorldRenderer.begin(3, DefaultVertexFormats.POSITION);
+        getWorldRenderer.pos(axisAlignedBB.minX, axisAlignedBB.maxY, axisAlignedBB.minZ).endVertex();
+        getWorldRenderer.pos(axisAlignedBB.maxX, axisAlignedBB.maxY, axisAlignedBB.minZ).endVertex();
+        getWorldRenderer.pos(axisAlignedBB.maxX, axisAlignedBB.maxY, axisAlignedBB.maxZ).endVertex();
+        getWorldRenderer.pos(axisAlignedBB.minX, axisAlignedBB.maxY, axisAlignedBB.maxZ).endVertex();
+        getWorldRenderer.pos(axisAlignedBB.minX, axisAlignedBB.maxY, axisAlignedBB.minZ).endVertex();
+        getInstance.draw();
+        getWorldRenderer.begin(1, DefaultVertexFormats.POSITION);
+        getWorldRenderer.pos(axisAlignedBB.minX, axisAlignedBB.minY, axisAlignedBB.minZ).endVertex();
+        getWorldRenderer.pos(axisAlignedBB.minX, axisAlignedBB.maxY, axisAlignedBB.minZ).endVertex();
+        getWorldRenderer.pos(axisAlignedBB.maxX, axisAlignedBB.minY, axisAlignedBB.minZ).endVertex();
+        getWorldRenderer.pos(axisAlignedBB.maxX, axisAlignedBB.maxY, axisAlignedBB.minZ).endVertex();
+        getWorldRenderer.pos(axisAlignedBB.maxX, axisAlignedBB.minY, axisAlignedBB.maxZ).endVertex();
+        getWorldRenderer.pos(axisAlignedBB.maxX, axisAlignedBB.maxY, axisAlignedBB.maxZ).endVertex();
+        getWorldRenderer.pos(axisAlignedBB.minX, axisAlignedBB.minY, axisAlignedBB.maxZ).endVertex();
+        getWorldRenderer.pos(axisAlignedBB.minX, axisAlignedBB.maxY, axisAlignedBB.maxZ).endVertex();
+        getInstance.draw();
     }
     
     private void doOther2DESP() {
-        for (final EntityPlayer entityPlayer : ESP.mc.field_71441_e.field_73010_i) {
-            if ((entityPlayer.func_82150_aj() && !(boolean)this.invisible.getValueState()) || (KillAura.targets.contains(entityPlayer) && ((KillAura)ModManager.getModule("Killaura")).esp.getValueState())) {
+        for (final EntityPlayer entityPlayer : ESP.mc.theWorld.playerEntities) {
+            if ((entityPlayer.isInvisible() && !this.invisible.getValueState()) || (KillAura.targets.contains(entityPlayer) && ((KillAura)ModManager.getModule("Killaura")).esp.getValueState())) {
                 return;
             }
             if (!this.isValid((EntityLivingBase)entityPlayer)) {
@@ -107,39 +107,39 @@ public class ESP extends Mod
             GL11.glEnable(3042);
             GL11.glDisable(2929);
             GL11.glNormal3f(0.0f, 1.0f, 0.0f);
-            GlStateManager.func_179147_l();
+            GlStateManager.enableBlend();
             GL11.glBlendFunc(770, 771);
             GL11.glDisable(3553);
-            final float field_74281_c = Class296.getTimer().field_74281_c;
-            ESP.mc.func_175598_ae();
-            final double n = entityPlayer.field_70142_S + (entityPlayer.field_70165_t - entityPlayer.field_70142_S) * field_74281_c - ((IRenderManager)ESP.mc.func_175598_ae()).getRenderPosX();
-            ESP.mc.func_175598_ae();
-            final double n2 = entityPlayer.field_70137_T + (entityPlayer.field_70163_u - entityPlayer.field_70137_T) * field_74281_c - ((IRenderManager)ESP.mc.func_175598_ae()).getRenderPosY();
-            ESP.mc.func_175598_ae();
-            final double n3 = entityPlayer.field_70136_U + (entityPlayer.field_70161_v - entityPlayer.field_70136_U) * field_74281_c - ((IRenderManager)ESP.mc.func_175598_ae()).getRenderPosZ();
-            final float func_70032_d = ESP.mc.field_71439_g.func_70032_d((Entity)entityPlayer);
-            Math.min(func_70032_d * 0.15f, 0.15f);
+            final float renderPartialTicks = Class211.getTimer().renderPartialTicks;
+            ESP.mc.getRenderManager();
+            final double n = entityPlayer.lastTickPosX + (entityPlayer.posX - entityPlayer.lastTickPosX) * renderPartialTicks - ((IRenderManager)ESP.mc.getRenderManager()).getRenderPosX();
+            ESP.mc.getRenderManager();
+            final double n2 = entityPlayer.lastTickPosY + (entityPlayer.posY - entityPlayer.lastTickPosY) * renderPartialTicks - ((IRenderManager)ESP.mc.getRenderManager()).getRenderPosY();
+            ESP.mc.getRenderManager();
+            final double n3 = entityPlayer.lastTickPosZ + (entityPlayer.posZ - entityPlayer.lastTickPosZ) * renderPartialTicks - ((IRenderManager)ESP.mc.getRenderManager()).getRenderPosZ();
+            final float getDistanceToEntity = ESP.mc.thePlayer.getDistanceToEntity((Entity)entityPlayer);
+            Math.min(getDistanceToEntity * 0.15f, 0.15f);
             final float n4 = 0.035f / 2.0f;
             final float n5 = (float)n;
-            final float n6 = (float)n2 + entityPlayer.field_70131_O + 0.5f - (entityPlayer.func_70631_g_() ? (entityPlayer.field_70131_O / 2.0f) : 0.0f);
+            final float n6 = (float)n2 + entityPlayer.height + 0.5f - (entityPlayer.isChild() ? (entityPlayer.height / 2.0f) : 0.0f);
             final float n7 = (float)n3;
-            GlStateManager.func_179109_b((float)n, (float)n2 + entityPlayer.field_70131_O + 0.5f - (entityPlayer.func_70631_g_() ? (entityPlayer.field_70131_O / 2.0f) : 0.0f), (float)n3);
+            GlStateManager.translate((float)n, (float)n2 + entityPlayer.height + 0.5f - (entityPlayer.isChild() ? (entityPlayer.height / 2.0f) : 0.0f), (float)n3);
             GL11.glNormal3f(0.0f, 1.0f, 0.0f);
-            GlStateManager.func_179114_b(-ESP.mc.func_175598_ae().field_78735_i, 0.0f, 1.0f, 0.0f);
+            GlStateManager.rotate(-ESP.mc.getRenderManager().playerViewY, 0.0f, 1.0f, 0.0f);
             GL11.glScalef(-n4, -n4, -n4);
-            Tessellator.func_178181_a().func_178180_c();
-            final float func_110143_aJ = entityPlayer.func_110143_aJ();
-            if (func_110143_aJ <= 20.0) {
-                if (func_110143_aJ < 10.0) {
-                    if (func_110143_aJ >= 3.0) {}
+            Tessellator.getInstance().getWorldRenderer();
+            final float getHealth = entityPlayer.getHealth();
+            if (getHealth <= 20.0) {
+                if (getHealth < 10.0) {
+                    if (getHealth >= 3.0) {}
                 }
             }
             final Color color = new Color(0, 0, 0);
-            final double n8 = (double)(1.5f + func_70032_d * 0.01f);
-            Class284.drawRect(-30.0f, 15.0f, 30.0f, 140.0f, Class128.reAlpha(new Color(255, 255, 255).getRGB(), 0.2f));
+            final double n8 = 1.5f + getDistanceToEntity * 0.01f;
+            Class246.drawRect(-30.0f, 15.0f, 30.0f, 140.0f, Class120.reAlpha(new Color(255, 255, 255).getRGB(), 0.2f));
             GL11.glEnable(3553);
             GL11.glEnable(2929);
-            GlStateManager.func_179084_k();
+            GlStateManager.disableBlend();
             GL11.glDisable(3042);
             GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
             GL11.glNormal3f(1.0f, 1.0f, 1.0f);

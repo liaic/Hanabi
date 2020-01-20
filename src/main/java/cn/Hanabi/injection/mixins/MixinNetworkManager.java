@@ -17,18 +17,14 @@ import io.netty.util.concurrent.*;
 public abstract class MixinNetworkManager implements INetworkManager
 {
     @Shadow
-    private Channel field_150746_k;
+    private Channel channel;
     @Shadow
-    private Queue field_150745_j;
-    
-    public MixinNetworkManager() {
-        super();
-    }
+    private Queue outboundPacketsQueue;
     
     @Inject(method = { "channelRead0" }, at = { @At(value = "INVOKE", target = "Lnet/minecraft/network/Packet;processPacket(Lnet/minecraft/network/INetHandler;)V", shift = At.Shift.BEFORE) }, cancellable = true)
     private void packetReceived(final ChannelHandlerContext p_channelRead0_1_, final Packet packet, final CallbackInfo ci) {
         final EventPacket event = new EventPacket(EventType.RECIEVE, packet);
-        EventManager.call((Event)event);
+        EventManager.call(event);
         if (event.isCancelled()) {
             ci.cancel();
         }
@@ -37,7 +33,7 @@ public abstract class MixinNetworkManager implements INetworkManager
     @Inject(method = { "sendPacket(Lnet/minecraft/network/Packet;)V" }, at = { @At("HEAD") }, cancellable = true)
     private void sendPacket(final Packet packetIn, final CallbackInfo ci) {
         final EventPacket event = new EventPacket(EventType.SEND, packetIn);
-        EventManager.call((Event)event);
+        EventManager.call(event);
         if (event.isCancelled()) {
             ci.cancel();
         }
@@ -45,18 +41,29 @@ public abstract class MixinNetworkManager implements INetworkManager
     
     @Override
     public void sendPacketNoEvent(final Packet a) {
-        if (this.field_150746_k != null && this.field_150746_k.isOpen()) {
+        if (this.channel != null && this.channel.isOpen()) {
             final GenericFutureListener[] a2 = null;
-            this.func_150733_h();
-            this.func_150732_b(a, a2);
+            this.flushOutboundQueue();
+            this.dispatchPacket(a, a2);
             return;
         }
-        this.field_150745_j.add(new InboundHandlerTuplePacketListener(a, (GenericFutureListener<? extends Future<? super Void>>[])null));
+        this.outboundPacketsQueue.add(new InboundHandlerTuplePacketListener(a, (GenericFutureListener<? extends Future<? super Void>>[])null));
     }
     
     @Shadow
-    protected abstract void func_150732_b(final Packet p0, final GenericFutureListener[] p1);
+    protected abstract void dispatchPacket(final Packet p0, final GenericFutureListener[] p1);
     
     @Shadow
-    protected abstract void func_150733_h();
+    protected abstract void flushOutboundQueue();
+    
+    static class InboundHandlerTuplePacketListener
+    {
+        private final Packet packet;
+        private final GenericFutureListener<? extends Future<? super Void>>[] futureListeners;
+        
+        public InboundHandlerTuplePacketListener(final Packet inPacket, final GenericFutureListener<? extends Future<? super Void>>... inFutureListeners) {
+            this.packet = inPacket;
+            this.futureListeners = inFutureListeners;
+        }
+    }
 }

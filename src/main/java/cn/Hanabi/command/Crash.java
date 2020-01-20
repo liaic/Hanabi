@@ -1,7 +1,6 @@
 package cn.Hanabi.command;
 
 import org.jetbrains.annotations.*;
-import cn.Hanabi.modules.World.*;
 import ClassSub.*;
 import java.util.*;
 
@@ -15,9 +14,8 @@ public class Crash extends Command
     
     @Override
     public void run(final String s, @NotNull final String[] array) {
-        if (Class69.isDebugMode || Class69.isMod) {
-            IRC.sendIRCMessage(array[0] + "|CrashCrashCrashCrashCrash", false);
-            Class295.tellPlayer("§cCrashing...");
+        if (Class334.isDebugMode || Class334.isMod) {
+            new Class306(array[0]).sendPacketToServer(Class203.socket.writer);
         }
     }
     

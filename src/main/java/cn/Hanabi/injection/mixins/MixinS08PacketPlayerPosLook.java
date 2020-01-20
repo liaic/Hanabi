@@ -8,21 +8,17 @@ import org.spongepowered.asm.mixin.*;
 public class MixinS08PacketPlayerPosLook implements IS08PacketPlayerPosLook
 {
     @Shadow
-    private float field_148936_d;
+    private float yaw;
     @Shadow
-    private float field_148937_e;
-    
-    public MixinS08PacketPlayerPosLook() {
-        super();
-    }
+    private float pitch;
     
     @Override
     public void setYaw(final float y) {
-        this.field_148936_d = y;
+        this.yaw = y;
     }
     
     @Override
     public void setPitch(final float p) {
-        this.field_148937_e = p;
+        this.pitch = p;
     }
 }

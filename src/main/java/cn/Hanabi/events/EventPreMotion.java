@@ -11,7 +11,6 @@ public class EventPreMotion extends EventCancellable
     public boolean cancel;
     
     public EventPreMotion(final double y, final float yaw, final float pitch, final boolean onGround) {
-        super();
         this.y = y;
         this.yaw = yaw;
         this.pitch = pitch;
@@ -58,10 +57,12 @@ public class EventPreMotion extends EventCancellable
         this.cancel = cancel;
     }
     
+    @Override
     public boolean isCancelled() {
         return this.cancel;
     }
     
+    @Override
     public void setCancelled(final boolean state) {
         this.cancel = state;
     }

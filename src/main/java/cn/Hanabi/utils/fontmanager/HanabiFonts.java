@@ -25,32 +25,28 @@ public class HanabiFonts
     public static String ICON_PLAYER_PLAY;
     public static String ICON_PLAYER_PAUSE;
     
-    public HanabiFonts() {
-        super();
-    }
-    
     static {
-        HanabiFonts.ICON_CLICKGUI_RENDER = "Ó§Ä";
-        HanabiFonts.ICON_CLICKGUI_COMBAT = "Ó§Å";
-        HanabiFonts.ICON_CLICKGUI_WORLD = "Ó§É";
-        HanabiFonts.ICON_CLICKGUI_MOVEMENT = "Ó§Ö";
-        HanabiFonts.ICON_CLICKGUI_PLAYER = "Ó§Ü";
-        HanabiFonts.ICON_CLICKGUI_GHOST = "Ó§á";
-        HanabiFonts.ICON_CLICKGUI_ARROW_UP = "Ó§ô";
-        HanabiFonts.ICON_CLICKGUI_ARROW_DOWN = "Ó§ò";
-        HanabiFonts.ICON_HANABI_LOGO = "Ó§Ñ";
-        HanabiFonts.ICON_MAINMENU_SINGLE = "Ó§ä";
-        HanabiFonts.ICON_MAINMENU_MULTI = "Ó§å";
-        HanabiFonts.ICON_MAINMENU_ALTMANAGER = "Ó§í";
-        HanabiFonts.ICON_MAINMENU_SETTINGS = "Ó§ç";
-        HanabiFonts.ICON_MAINMENU_QUITGAME = "Ó§ê";
-        HanabiFonts.ICON_NOTIFY_INFO = "Ó§ã";
-        HanabiFonts.ICON_NOTIFY_SUCCESS = "Ó§ñ";
-        HanabiFonts.ICON_NOTIFY_WARN = "Ó§ó";
-        HanabiFonts.ICON_NOTIFY_ERROR = "Ó§â";
-        HanabiFonts.ICON_PLAYER_REPEAT = "Ó§è";
-        HanabiFonts.ICON_PLAYER_NEXT = "Ó§ë";
-        HanabiFonts.ICON_PLAYER_PLAY = "Ó§à";
-        HanabiFonts.ICON_PLAYER_PAUSE = "Ó§ï";
+        HanabiFonts.ICON_CLICKGUI_RENDER = "Ó§?";
+        HanabiFonts.ICON_CLICKGUI_COMBAT = "Ó§?";
+        HanabiFonts.ICON_CLICKGUI_WORLD = "Ó§?";
+        HanabiFonts.ICON_CLICKGUI_MOVEMENT = "Ó§?";
+        HanabiFonts.ICON_CLICKGUI_PLAYER = "Ó§?";
+        HanabiFonts.ICON_CLICKGUI_GHOST = "Ó§?";
+        HanabiFonts.ICON_CLICKGUI_ARROW_UP = "Ó§?";
+        HanabiFonts.ICON_CLICKGUI_ARROW_DOWN = "Ó§?";
+        HanabiFonts.ICON_HANABI_LOGO = "Ó§?";
+        HanabiFonts.ICON_MAINMENU_SINGLE = "Ó§?";
+        HanabiFonts.ICON_MAINMENU_MULTI = "Ó§?";
+        HanabiFonts.ICON_MAINMENU_ALTMANAGER = "Ó§?";
+        HanabiFonts.ICON_MAINMENU_SETTINGS = "Ó§?";
+        HanabiFonts.ICON_MAINMENU_QUITGAME = "Ó§?";
+        HanabiFonts.ICON_NOTIFY_INFO = "Ó§?";
+        HanabiFonts.ICON_NOTIFY_SUCCESS = "Ó§?";
+        HanabiFonts.ICON_NOTIFY_WARN = "Ó§?";
+        HanabiFonts.ICON_NOTIFY_ERROR = "Ó§?";
+        HanabiFonts.ICON_PLAYER_REPEAT = "Ó§?";
+        HanabiFonts.ICON_PLAYER_NEXT = "Ó§?";
+        HanabiFonts.ICON_PLAYER_PLAY = "Ó§?";
+        HanabiFonts.ICON_PLAYER_PAUSE = "Ó§?";
     }
 }

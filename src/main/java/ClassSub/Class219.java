@@ -1,23 +1,23 @@
 package ClassSub;
 
-import java.util.concurrent.*;
-import javafx.embed.swing.*;
+import java.util.*;
 
-class Class219 implements Runnable
+public class Class219 implements Comparator<Class93>
 {
-    final CountDownLatch val$latch;
-    final Class108 this$0;
+    final Class171 this$0;
     public static final boolean Cracked_By_Somebody_Dumped_BY_Ganga_SupportedbySucen;
     
-    Class219(final Class108 this$0, final CountDownLatch val$latch) {
+    public Class219(final Class171 this$0) {
         this.this$0 = this$0;
-        this.val$latch = val$latch;
-        super();
     }
     
     @Override
-    public void run() {
-        new JFXPanel();
-        this.val$latch.countDown();
+    public int compare(final Class93 class93, final Class93 class94) {
+        return (int)(class93.getSquareDistanceToFromTarget() + class93.getTotalCost() - (class94.getSquareDistanceToFromTarget() + class94.getTotalCost()));
+    }
+    
+    @Override
+    public int compare(final Object o, final Object o2) {
+        return this.compare((Class93)o, (Class93)o2);
     }
 }

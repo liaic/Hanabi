@@ -1,242 +1,279 @@
 package ClassSub;
 
+import net.minecraft.util.*;
+import cn.Hanabi.*;
 import java.io.*;
-import java.nio.*;
-import org.lwjgl.*;
+import net.minecraft.client.gui.*;
+import net.minecraft.client.renderer.*;
+import org.lwjgl.opengl.*;
+import org.lwjgl.input.*;
+import java.awt.*;
+import java.util.*;
 
-public class Class7 implements Class232
+public class Class7 extends GuiScreen
 {
-    private int texWidth;
-    private int texHeight;
-    private int width;
-    private int height;
-    private short pixelDepth;
+    private GuiButton login;
+    private GuiButton remove;
+    private GuiButton rename;
+    private Class82 loginThread;
+    private int offset;
+    public Class309 selectedAlt;
+    private String status;
+    private ResourceLocation background;
+    private GuiTextField seatchField;
     public static final boolean Cracked_By_Somebody_Dumped_BY_Ganga_SupportedbySucen;
     
     public Class7() {
-        super();
+        this.background = new ResourceLocation("textures/mainmenubackground.png");
+        this.selectedAlt = null;
+        this.status = EnumChatFormatting.GRAY + "Idle...";
     }
     
-    private short flipEndian(final short n) {
-        final int n2 = n & 0xFFFF;
-        return (short)(n2 << 8 | (n2 & 0xFF00) >>> 8);
-    }
-    
-    @Override
-    public int getDepth() {
-        return this.pixelDepth;
-    }
-    
-    @Override
-    public int getWidth() {
-        return this.width;
-    }
-    
-    @Override
-    public int getHeight() {
-        return this.height;
-    }
-    
-    @Override
-    public int getTexWidth() {
-        return this.texWidth;
-    }
-    
-    @Override
-    public int getTexHeight() {
-        return this.texHeight;
-    }
-    
-    @Override
-    public ByteBuffer loadImage(final InputStream inputStream) throws IOException {
-        return this.loadImage(inputStream, true, null);
-    }
-    
-    @Override
-    public ByteBuffer loadImage(final InputStream inputStream, final boolean b, final int[] array) throws IOException {
-        return this.loadImage(inputStream, b, false, array);
-    }
-    
-    @Override
-    public ByteBuffer loadImage(final InputStream inputStream, boolean b, boolean b2, final int[] array) throws IOException {
-        if (array != null) {
-            b2 = true;
+    public void actionPerformed(final GuiButton guiButton) {
+        switch (guiButton.id) {
+            case 1: {
+                (this.loginThread = new Class82(this.selectedAlt)).start();
+                Hanabi.INSTANCE.altFileMgr.saveFiles();
+                break;
+            }
+            case 2: {
+                if (this.loginThread != null) {
+                    this.loginThread = null;
+                }
+                Class206.registry.remove(this.selectedAlt);
+                this.status = "§aRemoved.";
+                try {
+                    Hanabi.INSTANCE.altFileMgr.getFile(Class85.class).saveFile();
+                }
+                catch (Exception ex2) {}
+                this.selectedAlt = null;
+                break;
+            }
+            case 3: {
+                this.mc.displayGuiScreen((GuiScreen)new Class24(this));
+                break;
+            }
+            case 4: {
+                this.mc.displayGuiScreen((GuiScreen)new Class179(this));
+                break;
+            }
+            case 5: {
+                final ArrayList<Class309> registry = Class206.registry;
+                final Random random = new Random();
+                if (registry.size() > 1) {
+                    (this.loginThread = new Class82(registry.get(random.nextInt(Class206.registry.size())))).start();
+                    break;
+                }
+                this.status = EnumChatFormatting.RED + "There's no any alts!";
+                break;
+            }
+            case 6: {
+                this.mc.displayGuiScreen((GuiScreen)new Class189(this));
+                break;
+            }
+            case 7: {
+                this.mc.displayGuiScreen((GuiScreen)null);
+                break;
+            }
+            case 8: {
+                Class206.registry.clear();
+                try {
+                    Hanabi.INSTANCE.altFileMgr.getFile(Class85.class).loadFile();
+                }
+                catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+                this.status = "§bReloaded!";
+                break;
+            }
         }
-        final BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream, 100000);
-        final DataInputStream dataInputStream = new DataInputStream(bufferedInputStream);
-        final short n = (short)dataInputStream.read();
-        final short n2 = (short)dataInputStream.read();
-        final short n3 = (short)dataInputStream.read();
-        this.flipEndian(dataInputStream.readShort());
-        this.flipEndian(dataInputStream.readShort());
-        final short n4 = (short)dataInputStream.read();
-        this.flipEndian(dataInputStream.readShort());
-        this.flipEndian(dataInputStream.readShort());
-        if (n3 != 2) {
-            throw new IOException("Slick only supports uncompressed RGB(A) TGA images");
+    }
+    
+    public void drawScreen(final int n, final int n2, final float n3) {
+        this.drawDefaultBackground();
+        if (Mouse.hasWheel()) {
+            final int dWheel = Mouse.getDWheel();
+            if (dWheel < 0) {
+                this.offset += 26;
+                if (this.offset < 0) {
+                    this.offset = 0;
+                }
+            }
+            else if (dWheel > 0) {
+                this.offset -= 26;
+                if (this.offset < 0) {
+                    this.offset = 0;
+                }
+            }
         }
-        this.width = this.flipEndian(dataInputStream.readShort());
-        this.height = this.flipEndian(dataInputStream.readShort());
-        this.pixelDepth = (short)dataInputStream.read();
-        if (this.pixelDepth == 32) {
-            b2 = false;
+        final ScaledResolution scaledResolution = new ScaledResolution(this.mc);
+        scaledResolution.getScaledWidth();
+        scaledResolution.getScaledHeight();
+        GlStateManager.bindTexture(0);
+        Class246.drawRect(0.0f, 0.0f, scaledResolution.getScaledWidth(), scaledResolution.getScaledHeight(), getColor(0, 50));
+        this.drawString(this.fontRendererObj, this.mc.getSession().getUsername(), 10, 10, 14540253);
+        this.drawCenteredString(this.fontRendererObj, "Account Manager - " + Class206.registry.size() + " alts", this.width / 2, 10, -1);
+        this.drawCenteredString(this.fontRendererObj, (this.loginThread == null) ? this.status : this.loginThread.getStatus(), this.width / 2, 20, -1);
+        Class246.drawOutlinedRect(50.0f, 33.0f, this.width - 50, this.height - 50, 1.0f, getColor(225, 50), getColor(160, 150));
+        GL11.glPushMatrix();
+        this.prepareScissorBox(0.0f, 33.0f, this.width, this.height - 50);
+        GL11.glEnable(3089);
+        int n4 = 38;
+        for (final Class309 class309 : this.getAlts()) {
+            if (this.isAltInArea(n4)) {
+                String s;
+                if (class309.getMask().equals("")) {
+                    s = class309.getUsername();
+                }
+                else {
+                    s = class309.getMask();
+                }
+                String replaceAll;
+                if (class309.getPassword().equals("")) {
+                    replaceAll = "§cCracked";
+                }
+                else {
+                    replaceAll = class309.getPassword().replaceAll(".", "*");
+                }
+                if (class309 == this.selectedAlt) {
+                    if (this.isMouseOverAlt(n, n2, n4 - this.offset) && Mouse.isButtonDown(0)) {
+                        Class246.drawOutlinedRect(52.0f, n4 - this.offset - 4, this.width - 52, n4 - this.offset + 20, 1.0f, getColor(145, 50), -2142943931);
+                    }
+                    else if (this.isMouseOverAlt(n, n2, n4 - this.offset)) {
+                        Class246.drawOutlinedRect(52.0f, n4 - this.offset - 4, this.width - 52, n4 - this.offset + 20, 1.0f, getColor(145, 50), -2142088622);
+                    }
+                    else {
+                        Class246.drawOutlinedRect(52.0f, n4 - this.offset - 4, this.width - 52, n4 - this.offset + 20, 1.0f, getColor(145, 50), -2144259791);
+                    }
+                }
+                else if (this.isMouseOverAlt(n, n2, n4 - this.offset) && Mouse.isButtonDown(0)) {
+                    Class246.drawOutlinedRect(52.0f, n4 - this.offset - 4, this.width - 52, n4 - this.offset + 20, 1.0f, -getColor(145, 50), -2146101995);
+                }
+                else if (this.isMouseOverAlt(n, n2, n4 - this.offset)) {
+                    Class246.drawOutlinedRect(52.0f, n4 - this.offset - 4, this.width - 52, n4 - this.offset + 20, 1.0f, getColor(145, 50), -2145180893);
+                }
+                this.drawCenteredString(this.fontRendererObj, s, this.width / 2, n4 - this.offset, -1);
+                this.drawCenteredString(this.fontRendererObj, replaceAll, this.width / 2, n4 - this.offset + 10, getColor(110));
+                n4 += 26;
+            }
         }
-        this.texWidth = this.get2Fold(this.width);
-        this.texHeight = this.get2Fold(this.height);
-        if (((short)dataInputStream.read() & 0x20) == 0x0) {
-            b = !b;
-        }
-        if (n > 0) {
-            bufferedInputStream.skip(n);
-        }
-        byte[] array2;
-        if (this.pixelDepth == 32 || b2) {
-            this.pixelDepth = 32;
-            array2 = new byte[this.texWidth * this.texHeight * 4];
+        GL11.glDisable(3089);
+        GL11.glPopMatrix();
+        super.drawScreen(n, n2, n3);
+        if (this.selectedAlt == null) {
+            this.login.enabled = false;
+            this.remove.enabled = false;
+            this.rename.enabled = false;
         }
         else {
-            if (this.pixelDepth != 24) {
-                throw new RuntimeException("Only 24 and 32 bit TGAs are supported");
-            }
-            array2 = new byte[this.texWidth * this.texHeight * 3];
+            this.login.enabled = true;
+            this.remove.enabled = true;
+            this.rename.enabled = true;
         }
-        if (this.pixelDepth == 24) {
-            if (b) {
-                for (int i = this.height - 1; i >= 0; --i) {
-                    for (int j = 0; j < this.width; ++j) {
-                        final byte byte1 = dataInputStream.readByte();
-                        final byte byte2 = dataInputStream.readByte();
-                        final byte byte3 = dataInputStream.readByte();
-                        final int n5 = (j + i * this.texWidth) * 3;
-                        array2[n5] = byte3;
-                        array2[n5 + 1] = byte2;
-                        array2[n5 + 2] = byte1;
-                    }
-                }
-            }
-            else {
-                for (int k = 0; k < this.height; ++k) {
-                    for (int l = 0; l < this.width; ++l) {
-                        final byte byte4 = dataInputStream.readByte();
-                        final byte byte5 = dataInputStream.readByte();
-                        final byte byte6 = dataInputStream.readByte();
-                        final int n6 = (l + k * this.texWidth) * 3;
-                        array2[n6] = byte6;
-                        array2[n6 + 1] = byte5;
-                        array2[n6 + 2] = byte4;
-                    }
-                }
-            }
+        if (Keyboard.isKeyDown(200)) {
+            this.offset -= 26;
         }
-        else if (this.pixelDepth == 32) {
-            if (b) {
-                for (int n7 = this.height - 1; n7 >= 0; --n7) {
-                    for (int n8 = 0; n8 < this.width; ++n8) {
-                        final byte byte7 = dataInputStream.readByte();
-                        final byte byte8 = dataInputStream.readByte();
-                        final byte byte9 = dataInputStream.readByte();
-                        byte byte10;
-                        if (b2) {
-                            byte10 = -1;
-                        }
-                        else {
-                            byte10 = dataInputStream.readByte();
-                        }
-                        final int n9 = (n8 + n7 * this.texWidth) * 4;
-                        array2[n9] = byte9;
-                        array2[n9 + 1] = byte8;
-                        array2[n9 + 2] = byte7;
-                        array2[n9 + 3] = byte10;
-                        if (byte10 == 0) {
-                            array2[n9 + 2] = 0;
-                            array2[n9] = (array2[n9 + 1] = 0);
-                        }
-                    }
-                }
-            }
-            else {
-                for (int n10 = 0; n10 < this.height; ++n10) {
-                    for (int n11 = 0; n11 < this.width; ++n11) {
-                        final byte byte11 = dataInputStream.readByte();
-                        final byte byte12 = dataInputStream.readByte();
-                        final byte byte13 = dataInputStream.readByte();
-                        byte byte14;
-                        if (b2) {
-                            byte14 = -1;
-                        }
-                        else {
-                            byte14 = dataInputStream.readByte();
-                        }
-                        final int n12 = (n11 + n10 * this.texWidth) * 4;
-                        if (ByteOrder.nativeOrder() == ByteOrder.BIG_ENDIAN) {
-                            array2[n12] = byte13;
-                            array2[n12 + 1] = byte12;
-                            array2[n12 + 2] = byte11;
-                            array2[n12 + 3] = byte14;
-                        }
-                        else {
-                            array2[n12] = byte13;
-                            array2[n12 + 1] = byte12;
-                            array2[n12 + 2] = byte11;
-                            array2[n12 + 3] = byte14;
-                        }
-                        if (byte14 == 0) {
-                            array2[n12 + 2] = 0;
-                            array2[n12] = (array2[n12 + 1] = 0);
-                        }
-                    }
-                }
-            }
+        else if (Keyboard.isKeyDown(208)) {
+            this.offset += 26;
         }
-        inputStream.close();
-        if (array != null) {
-            for (int n13 = 0; n13 < array2.length; n13 += 4) {
-                boolean b3 = true;
-                for (int n14 = 0; n14 < 3; ++n14) {
-                    if (array2[n13 + n14] != array[n14]) {
-                        b3 = false;
-                    }
-                }
-                if (b3) {
-                    array2[n13 + 3] = 0;
-                }
-            }
+        if (this.offset < 0) {
+            this.offset = 0;
         }
-        final ByteBuffer byteBuffer = BufferUtils.createByteBuffer(array2.length);
-        byteBuffer.put(array2);
-        final short n15 = (short)(this.pixelDepth / 8);
-        if (this.height < this.texHeight - 1) {
-            final int n16 = (this.texHeight - 1) * (this.texWidth * n15);
-            final int n17 = (this.height - 1) * (this.texWidth * n15);
-            for (int n18 = 0; n18 < this.texWidth * n15; ++n18) {
-                byteBuffer.put(n16 + n18, byteBuffer.get(n18));
-                byteBuffer.put(n17 + this.texWidth * n15 + n18, byteBuffer.get(this.texWidth * n15 + n18));
-            }
+        this.seatchField.drawTextBox();
+        if (this.seatchField.getText().isEmpty() && !this.seatchField.isFocused()) {
+            this.drawString(this.mc.fontRendererObj, "Search Alt", this.width / 2 - 264, this.height - 18, -1);
         }
-        if (this.width < this.texWidth - 1) {
-            for (int n19 = 0; n19 < this.texHeight; ++n19) {
-                for (short n20 = 0; n20 < n15; ++n20) {
-                    byteBuffer.put((n19 + 1) * (this.texWidth * n15) - n15 + n20, byteBuffer.get(n19 * (this.texWidth * n15) + n20));
-                    byteBuffer.put(n19 * (this.texWidth * n15) + this.width * n15 + n20, byteBuffer.get(n19 * (this.texWidth * n15) + (this.width - 1) * n15 + n20));
-                }
-            }
-        }
-        byteBuffer.flip();
-        return byteBuffer;
     }
     
-    private int get2Fold(final int n) {
-        int i;
-        for (i = 2; i < n; i *= 2) {}
-        return i;
+    public static int getColor(final int n, final int n2, final int n3, final int n4) {
+        return 0x0 | n4 << 24 | n << 16 | n2 << 8 | n3;
     }
     
-    @Override
-    public ByteBuffer getImageBufferData() {
-        throw new RuntimeException("TGAImageData doesn't store it's image.");
+    public static int getColor(final Color color) {
+        return getColor(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
     }
     
-    @Override
-    public void configureEdging(final boolean b) {
+    public static int getColor(final int n) {
+        return getColor(n, n, n, 255);
+    }
+    
+    public static int getColor(final int n, final int n2) {
+        return getColor(n, n, n, n2);
+    }
+    
+    public void initGui() {
+        this.buttonList.add(this.login = new GuiButton(1, this.width / 2 - 122, this.height - 48, 100, 20, "Login"));
+        this.buttonList.add(this.remove = new GuiButton(2, this.width / 2 - 16, this.height - 24, 100, 20, "Remove"));
+        this.buttonList.add(new GuiButton(3, this.width / 2 + 4 + 86, this.height - 48, 100, 20, "Add"));
+        this.buttonList.add(new GuiButton(4, this.width / 2 - 16, this.height - 48, 100, 20, "Direct Login"));
+        this.buttonList.add(new GuiButton(5, this.width / 2 - 122, this.height - 24, 100, 20, "Random"));
+        this.buttonList.add(this.rename = new GuiButton(6, this.width / 2 + 90, this.height - 24, 100, 20, "Edit"));
+        this.buttonList.add(new GuiButton(7, this.width / 2 - 190, this.height - 24, 60, 20, "Back"));
+        this.buttonList.add(new GuiButton(8, this.width / 2 - 190, this.height - 48, 60, 20, "Reload"));
+        this.seatchField = new GuiTextField(99998, this.mc.fontRendererObj, this.width / 2 - 268, this.height - 21, 68, 14);
+        this.login.enabled = false;
+        this.remove.enabled = false;
+        this.rename.enabled = false;
+    }
+    
+    protected void keyTyped(final char c, final int n) {
+        this.seatchField.textboxKeyTyped(c, n);
+        if ((c == '\t' || c == '\r') && this.seatchField.isFocused()) {
+            this.seatchField.setFocused(!this.seatchField.isFocused());
+        }
+        try {
+            super.keyTyped(c, n);
+        }
+        catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    private boolean isAltInArea(final int n) {
+        return n - this.offset <= this.height - 50;
+    }
+    
+    private boolean isMouseOverAlt(final int n, final int n2, final int n3) {
+        return n >= 52 && n2 >= n3 - 4 && n <= this.width - 52 && n2 <= n3 + 20 && n >= 0 && n2 >= 33 && n <= this.width && n2 <= this.height - 50;
+    }
+    
+    protected void mouseClicked(final int n, final int n2, final int n3) {
+        this.seatchField.mouseClicked(n, n2, n3);
+        if (this.offset < 0) {
+            this.offset = 0;
+        }
+        int n4 = 38 - this.offset;
+        for (final Class309 selectedAlt : this.getAlts()) {
+            if (this.isMouseOverAlt(n, n2, n4)) {
+                if (selectedAlt == this.selectedAlt) {
+                    this.actionPerformed(this.buttonList.get(0));
+                    return;
+                }
+                this.selectedAlt = selectedAlt;
+            }
+            n4 += 26;
+        }
+        try {
+            super.mouseClicked(n, n2, n3);
+        }
+        catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    private List<Class309> getAlts() {
+        final ArrayList<Class309> list = new ArrayList<Class309>();
+        for (final Class309 class309 : Class206.registry) {
+            if (this.seatchField.getText().isEmpty() || class309.getMask().toLowerCase().contains(this.seatchField.getText().toLowerCase()) || class309.getUsername().toLowerCase().contains(this.seatchField.getText().toLowerCase())) {
+                list.add(class309);
+            }
+        }
+        return list;
+    }
+    
+    public void prepareScissorBox(final float n, final float n2, final float n3, final float n4) {
+        final ScaledResolution scaledResolution = new ScaledResolution(this.mc);
+        final int getScaleFactor = scaledResolution.getScaleFactor();
+        GL11.glScissor((int)(n * getScaleFactor), (int)((scaledResolution.getScaledHeight() - n4) * getScaleFactor), (int)((n3 - n) * getScaleFactor), (int)((n4 - n2) * getScaleFactor));
     }
 }

@@ -13,12 +13,8 @@ import org.spongepowered.asm.mixin.injection.*;
 @Mixin({ GuiSpectator.class })
 public class MixinGuiSpectator
 {
-    public MixinGuiSpectator() {
-        super();
-    }
-    
     @Inject(method = { "renderTooltip" }, at = { @At("RETURN") })
     private void renderTooltip(final ScaledResolution sr, final float partialTicks, final CallbackInfo ci) {
-        EventManager.call((Event)new EventRender2D(partialTicks));
+        EventManager.call(new EventRender2D(partialTicks));
     }
 }

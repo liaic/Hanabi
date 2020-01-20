@@ -1,20 +1,28 @@
-package ClassSub;
+package cn.Hanabi.modules.Player;
 
-import java.nio.*;
+import java.util.*;
 
-public interface Class290
+public class Class290
 {
-    public static final boolean 怎么这么幼稚用那些无关痛痒一笑而过的话死不要脸的复制粘贴就以为天下无敌了是不是你这个摆弄是非的东西是畏惧我了吗我想看你是如何跟我对话的你怎么可以妄自菲薄自称大手窝囊废的存在呵呵NMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSL​​  ‍  ‎;
+    final Spammer this$0;
+    public static final boolean Cracked_By_Somebody_Dumped_BY_Ganga_SupportedbySucen;
     
-    int getDepth();
+    public Class290(final Spammer this$0) {
+        ((Class290)this).this$0 = this$0;
+    }
     
-    int getWidth();
-    
-    int getHeight();
-    
-    int getTexWidth();
-    
-    int getTexHeight();
-    
-    ByteBuffer getImageBufferData();
+    public String getStringRandom(final int n) {
+        String s = "";
+        final Random random = new Random();
+        for (int i = 0; i < n; ++i) {
+            final String s2 = (random.nextInt(2) % 2 == 0) ? "char" : "num";
+            if ("char".equalsIgnoreCase(s2)) {
+                s += (char)(random.nextInt(26) + ((random.nextInt(2) % 2 == 0) ? 65 : 97));
+            }
+            else if ("num".equalsIgnoreCase(s2)) {
+                s += String.valueOf(random.nextInt(10));
+            }
+        }
+        return s;
+    }
 }

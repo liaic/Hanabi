@@ -47,8 +47,8 @@ public class KillAura_ extends Mod
     public Value<Double> turnspeed;
     public static EntityLivingBase attackingEntity;
     public int targetIndex;
-    public Class191 attackTimer;
-    public Class191 switchTimer;
+    public Class205 attackTimer;
+    public Class205 switchTimer;
     public float[] lastRotations;
     public boolean isBlocking;
     public static ArrayList<EntityLivingBase> attackingEntityList;
@@ -73,8 +73,8 @@ public class KillAura_ extends Mod
         this.switchDelay = new Value<Double>("KillAura_SwitchDelay", 350.0, 10.0, 1000.0, 10.0);
         this.switchHurttime = new Value<Double>("KillAura_SwitchHurttime", 10.0, 1.0, 10.0, 1.0);
         this.turnspeed = new Value<Double>("KillAura_TurnHeadSpeed", 90.0, 60.0, 120.0, 1.0);
-        this.attackTimer = new Class191();
-        this.switchTimer = new Class191();
+        this.attackTimer = new Class205();
+        this.switchTimer = new Class205();
         this.isBlocking = false;
         this.attackedEntity = new ArrayList<EntityLivingBase>();
     }
@@ -84,7 +84,7 @@ public class KillAura_ extends Mod
         KillAura_.attackingEntity = null;
         this.targetIndex = 0;
         this.isBlocking = false;
-        this.lastRotations = new float[] { KillAura_.mc.field_71439_g.field_70177_z, KillAura_.mc.field_71439_g.field_70125_A };
+        this.lastRotations = new float[] { KillAura_.mc.thePlayer.rotationYaw, KillAura_.mc.thePlayer.rotationPitch };
         this.attackedEntity = new ArrayList<EntityLivingBase>();
         super.onEnable();
     }
@@ -102,39 +102,39 @@ public class KillAura_ extends Mod
             if (KillAura_.attackingEntity != null) {
                 GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
                 final UnicodeFontRenderer wqy18 = Hanabi.INSTANCE.fontManager.wqy18;
-                wqy18.func_175063_a(KillAura_.attackingEntity.func_70005_c_(), scaledResolution.func_78326_a() / 2.0f - wqy18.func_78256_a(KillAura_.attackingEntity.func_70005_c_()) / 2.0f, scaledResolution.func_78328_b() / 2.0f - 33.0f, 16777215);
-                RenderHelper.func_74520_c();
-                KillAura_.mc.func_110434_K().func_110577_a(new ResourceLocation("textures/gui/icons.png"));
+                wqy18.drawStringWithShadow(KillAura_.attackingEntity.getName(), scaledResolution.getScaledWidth() / 2.0f - wqy18.getStringWidth(KillAura_.attackingEntity.getName()) / 2.0f, scaledResolution.getScaledHeight() / 2.0f - 33.0f, 16777215);
+                RenderHelper.enableGUIStandardItemLighting();
+                KillAura_.mc.getTextureManager().bindTexture(new ResourceLocation("textures/gui/icons.png"));
                 GL11.glDisable(2929);
                 GL11.glEnable(3042);
                 GL11.glDepthMask(false);
-                OpenGlHelper.func_148821_a(770, 771, 1, 0);
-                for (int n = 0; n < KillAura_.attackingEntity.func_110138_aP() / 2.0f; ++n) {
-                    KillAura_.mc.field_71456_v.func_175174_a(scaledResolution.func_78326_a() / 2 - KillAura_.attackingEntity.func_110138_aP() / 2.0f * 10.0f / 2.0f + (float)(n * 10), (float)(scaledResolution.func_78328_b() / 2 - 20), 16, 0, 9, 9);
+                OpenGlHelper.glBlendFunc(770, 771, 1, 0);
+                for (int n = 0; n < KillAura_.attackingEntity.getMaxHealth() / 2.0f; ++n) {
+                    KillAura_.mc.ingameGUI.drawTexturedModalRect(scaledResolution.getScaledWidth() / 2 - KillAura_.attackingEntity.getMaxHealth() / 2.0f * 10.0f / 2.0f + n * 10, (float)(scaledResolution.getScaledHeight() / 2 - 20), 16, 0, 9, 9);
                 }
-                for (int n2 = 0; n2 < KillAura_.attackingEntity.func_110143_aJ() / 2.0f; ++n2) {
-                    KillAura_.mc.field_71456_v.func_175174_a(scaledResolution.func_78326_a() / 2 - KillAura_.attackingEntity.func_110138_aP() / 2.0f * 10.0f / 2.0f + (float)(n2 * 10), (float)(scaledResolution.func_78328_b() / 2 - 20), 52, 0, 9, 9);
+                for (int n2 = 0; n2 < KillAura_.attackingEntity.getHealth() / 2.0f; ++n2) {
+                    KillAura_.mc.ingameGUI.drawTexturedModalRect(scaledResolution.getScaledWidth() / 2 - KillAura_.attackingEntity.getMaxHealth() / 2.0f * 10.0f / 2.0f + n2 * 10, (float)(scaledResolution.getScaledHeight() / 2 - 20), 52, 0, 9, 9);
                 }
                 GL11.glDepthMask(true);
                 GL11.glDisable(3042);
                 GL11.glEnable(2929);
-                GlStateManager.func_179084_k();
-                GlStateManager.func_179124_c(1.0f, 1.0f, 1.0f);
-                RenderHelper.func_74518_a();
+                GlStateManager.disableBlend();
+                GlStateManager.color(1.0f, 1.0f, 1.0f);
+                RenderHelper.disableStandardItemLighting();
             }
         }
     }
     
     @EventTarget
     public void onRender(final EventRender eventRender) {
-        if ((boolean)this.esp.getValueState()) {
+        if (this.esp.getValueState()) {
             for (final EntityLivingBase entityLivingBase : KillAura_.attackingEntityList) {
-                KillAura_.mc.func_175598_ae();
-                final double n = entityLivingBase.field_70142_S + (entityLivingBase.field_70165_t - entityLivingBase.field_70142_S) * Class296.getTimer().field_74281_c - ((IRenderManager)KillAura_.mc.func_175598_ae()).getRenderPosX();
-                KillAura_.mc.func_175598_ae();
-                final double n2 = entityLivingBase.field_70137_T + (entityLivingBase.field_70163_u - entityLivingBase.field_70137_T) * Class296.getTimer().field_74281_c - ((IRenderManager)KillAura_.mc.func_175598_ae()).getRenderPosY();
-                KillAura_.mc.func_175598_ae();
-                Class284.drawEntityESP(n, n2, entityLivingBase.field_70136_U + (entityLivingBase.field_70161_v - entityLivingBase.field_70136_U) * Class296.getTimer().field_74281_c - ((IRenderManager)KillAura_.mc.func_175598_ae()).getRenderPosZ(), entityLivingBase.func_174813_aQ().field_72336_d - entityLivingBase.func_174813_aQ().field_72340_a, entityLivingBase.func_174813_aQ().field_72337_e - entityLivingBase.func_174813_aQ().field_72338_b + 0.25, (entityLivingBase.field_70737_aN > 1) ? 1.0f : 0.0f, (entityLivingBase.field_70737_aN > 1) ? 0.0f : 1.0f, 0.0f, 0.2f, (entityLivingBase.field_70737_aN > 1) ? 1.0f : 0.0f, (entityLivingBase.field_70737_aN > 1) ? 0.0f : 1.0f, 0.0f, 1.0f, 2.0f);
+                KillAura_.mc.getRenderManager();
+                final double n = entityLivingBase.lastTickPosX + (entityLivingBase.posX - entityLivingBase.lastTickPosX) * Class211.getTimer().renderPartialTicks - ((IRenderManager)KillAura_.mc.getRenderManager()).getRenderPosX();
+                KillAura_.mc.getRenderManager();
+                final double n2 = entityLivingBase.lastTickPosY + (entityLivingBase.posY - entityLivingBase.lastTickPosY) * Class211.getTimer().renderPartialTicks - ((IRenderManager)KillAura_.mc.getRenderManager()).getRenderPosY();
+                KillAura_.mc.getRenderManager();
+                Class246.drawEntityESP(n, n2, entityLivingBase.lastTickPosZ + (entityLivingBase.posZ - entityLivingBase.lastTickPosZ) * Class211.getTimer().renderPartialTicks - ((IRenderManager)KillAura_.mc.getRenderManager()).getRenderPosZ(), entityLivingBase.getEntityBoundingBox().maxX - entityLivingBase.getEntityBoundingBox().minX, entityLivingBase.getEntityBoundingBox().maxY - entityLivingBase.getEntityBoundingBox().minY + 0.25, (entityLivingBase.hurtTime > 1) ? 1.0f : 0.0f, (entityLivingBase.hurtTime > 1) ? 0.0f : 1.0f, 0.0f, 0.2f, (entityLivingBase.hurtTime > 1) ? 1.0f : 0.0f, (entityLivingBase.hurtTime > 1) ? 0.0f : 1.0f, 0.0f, 1.0f, 2.0f);
             }
         }
     }
@@ -146,26 +146,26 @@ public class KillAura_ extends Mod
         }
         KillAura_.attackingEntity = this.getTarget();
         if (KillAura_.attackingEntity != null) {
-            if ((boolean)this.autoblock.getValueState()) {
+            if (this.autoblock.getValueState()) {
                 this.doBlock();
             }
-            final float[] array = (float[])getEntityRotations(KillAura_.attackingEntity, this.lastRotations, this.aac.getValueState(), (int)(Object)this.turnspeed.getValueState());
+            final float[] array = getEntityRotations(KillAura_.attackingEntity, this.lastRotations, this.aac.getValueState(), (int)(Object)this.turnspeed.getValueState());
             this.lastRotations = new float[] { array[0], array[1] };
             eventPreMotion.setYaw(array[0]);
             eventPreMotion.setPitch(array[1]);
-            KillAura_.mc.field_71439_g.field_70759_as = eventPreMotion.getYaw();
+            KillAura_.mc.thePlayer.rotationYawHead = eventPreMotion.getYaw();
         }
         else {
             this.unBlock();
         }
-        if ((boolean)this.aac.getValueState()) {
+        if (this.aac.getValueState()) {
             this.attackEntity();
         }
     }
     
     @EventTarget
     public void onPost(final EventPostMotion eventPostMotion) {
-        if (!(boolean)this.aac.getValueState()) {
+        if (!this.aac.getValueState()) {
             this.attackEntity();
         }
     }
@@ -174,41 +174,41 @@ public class KillAura_ extends Mod
     private void onPacket(final EventPacket eventPacket) {
         if (eventPacket.getPacket() instanceof S08PacketPlayerPosLook) {
             final IS08PacketPlayerPosLook is08PacketPlayerPosLook = (IS08PacketPlayerPosLook)eventPacket.getPacket();
-            is08PacketPlayerPosLook.setYaw(KillAura_.mc.field_71439_g.field_70177_z);
-            is08PacketPlayerPosLook.setPitch(KillAura_.mc.field_71439_g.field_70125_A);
+            is08PacketPlayerPosLook.setYaw(KillAura_.mc.thePlayer.rotationYaw);
+            is08PacketPlayerPosLook.setPitch(KillAura_.mc.thePlayer.rotationPitch);
         }
     }
     
     public void doBlock() {
-        if (KillAura_.mc.field_71439_g.func_70632_aY() || (KillAura_.mc.field_71439_g.func_70694_bm() != null && KillAura_.mc.field_71439_g.func_70694_bm().func_77973_b() instanceof ItemSword && !this.isBlocking)) {
-            KillAura_.mc.func_147114_u().func_147297_a((Packet)new C08PacketPlayerBlockPlacement(new BlockPos(0, 0, 0), 255, KillAura_.mc.field_71439_g.field_71071_by.func_70448_g(), 0.0f, 0.0f, 0.0f));
-            ((IEntityPlayer)KillAura_.mc.field_71439_g).setItemInUseCount(KillAura_.mc.field_71439_g.func_70694_bm().func_77988_m());
+        if (KillAura_.mc.thePlayer.isBlocking() || (KillAura_.mc.thePlayer.getHeldItem() != null && KillAura_.mc.thePlayer.getHeldItem().getItem() instanceof ItemSword && !this.isBlocking)) {
+            KillAura_.mc.getNetHandler().addToSendQueue((Packet)new C08PacketPlayerBlockPlacement(new BlockPos(0, 0, 0), 255, KillAura_.mc.thePlayer.inventory.getCurrentItem(), 0.0f, 0.0f, 0.0f));
+            ((IEntityPlayer)KillAura_.mc.thePlayer).setItemInUseCount(KillAura_.mc.thePlayer.getHeldItem().getMaxItemUseDuration());
             this.isBlocking = true;
         }
     }
     
     public void unBlock() {
-        if (((KillAura_.mc.field_71439_g.func_70694_bm() != null && KillAura_.mc.field_71439_g.func_70694_bm().func_77973_b() instanceof ItemSword) || KillAura_.mc.field_71439_g.func_70632_aY()) && this.isBlocking) {
-            ((IEntityPlayer)KillAura_.mc.field_71439_g).setItemInUseCount(0);
-            KillAura_.mc.func_147114_u().func_147297_a((Packet)new C07PacketPlayerDigging(C07PacketPlayerDigging.Action.RELEASE_USE_ITEM, BlockPos.field_177992_a, EnumFacing.DOWN));
+        if (((KillAura_.mc.thePlayer.getHeldItem() != null && KillAura_.mc.thePlayer.getHeldItem().getItem() instanceof ItemSword) || KillAura_.mc.thePlayer.isBlocking()) && this.isBlocking) {
+            ((IEntityPlayer)KillAura_.mc.thePlayer).setItemInUseCount(0);
+            KillAura_.mc.getNetHandler().addToSendQueue((Packet)new C07PacketPlayerDigging(C07PacketPlayerDigging.Action.RELEASE_USE_ITEM, BlockPos.ORIGIN, EnumFacing.DOWN));
             this.isBlocking = false;
         }
     }
     
     public void attackEntity() {
-        if (KillAura_.attackingEntity != null && this.isValidEntity((Entity)KillAura_.attackingEntity) && KillAura_.mc.field_71439_g.func_70032_d((Entity)KillAura_.attackingEntity) < this.range.getValueState() && this.attackTimer.isDelayComplete(Double.valueOf(this.cpsToDelay((double)this.cps.getValueState())))) {
-            if ((boolean)this.autoblock.getValueState()) {
+        if (KillAura_.attackingEntity != null && this.isValidEntity((Entity)KillAura_.attackingEntity) && KillAura_.mc.thePlayer.getDistanceToEntity((Entity)KillAura_.attackingEntity) < this.range.getValueState() && this.attackTimer.isDelayComplete(Double.valueOf(this.cpsToDelay(this.cps.getValueState())))) {
+            if (this.autoblock.getValueState()) {
                 this.unBlock();
             }
-            KillAura_.mc.field_71439_g.func_71009_b((Entity)KillAura_.attackingEntity);
-            KillAura_.mc.field_71439_g.func_71047_c((Entity)KillAura_.attackingEntity);
-            KillAura_.mc.field_71439_g.func_71038_i();
-            EventManager.call((Event)new EventAttack((Entity)KillAura_.attackingEntity));
-            KillAura_.mc.field_71439_g.field_71174_a.func_147297_a((Packet)new C02PacketUseEntity((Entity)KillAura_.attackingEntity, C02PacketUseEntity.Action.ATTACK));
+            KillAura_.mc.thePlayer.onCriticalHit((Entity)KillAura_.attackingEntity);
+            KillAura_.mc.thePlayer.onEnchantmentCritical((Entity)KillAura_.attackingEntity);
+            KillAura_.mc.thePlayer.swingItem();
+            EventManager.call(new EventAttack((Entity)KillAura_.attackingEntity));
+            KillAura_.mc.thePlayer.sendQueue.addToSendQueue((Packet)new C02PacketUseEntity((Entity)KillAura_.attackingEntity, C02PacketUseEntity.Action.ATTACK));
             if (!this.attackedEntity.contains(KillAura_.attackingEntity)) {
                 this.attackedEntity.add(KillAura_.attackingEntity);
             }
-            if ((boolean)this.autoblock.getValueState()) {
+            if (this.autoblock.getValueState()) {
                 this.doBlock();
             }
             this.attackTimer.reset();
@@ -219,7 +219,7 @@ public class KillAura_ extends Mod
         if (KillAura_.attackingEntityList.size() <= 1 || this.maxTarget.getValueState() <= 1.0) {
             return false;
         }
-        if (entityLivingBase.field_70737_aN <= this.switchHurttime.getValueState() && this.switchTimer.isDelayComplete(this.switchDelay.getValueState()) && KillAura_.attackingEntityList.size() > this.targetIndex) {
+        if (entityLivingBase.hurtTime <= this.switchHurttime.getValueState() && this.switchTimer.isDelayComplete(this.switchDelay.getValueState()) && KillAura_.attackingEntityList.size() > this.targetIndex) {
             this.switchTimer.reset();
             return true;
         }
@@ -249,7 +249,7 @@ public class KillAura_ extends Mod
     
     public ArrayList<EntityLivingBase> getValidEntityList() {
         final ArrayList<EntityLivingBase> attackingEntityList = new ArrayList<EntityLivingBase>();
-        final ArrayList<Entity> list = new ArrayList<Entity>(KillAura_.mc.field_71441_e.field_72996_f);
+        final ArrayList<Entity> list = new ArrayList<Entity>(KillAura_.mc.theWorld.loadedEntityList);
         list.sort(KillAura_::lambda$getValidEntityList$0);
         for (final Entity entity : list) {
             if (this.isValidEntity(entity) && attackingEntityList.size() < this.maxTarget.getValueState()) {
@@ -261,7 +261,7 @@ public class KillAura_ extends Mod
     
     private boolean isValidEntity(final Entity entity) {
         if (entity != null && entity instanceof EntityLivingBase) {
-            if (entity.field_70128_L || ((EntityLivingBase)entity).func_110143_aJ() <= 0.0f) {
+            if (entity.isDead || ((EntityLivingBase)entity).getHealth() <= 0.0f) {
                 if (ModManager.getModule("AutoL").isEnabled() && this.attackedEntity.contains(entity)) {
                     this.attackedEntity.remove(entity);
                     String s = "";
@@ -270,31 +270,31 @@ public class KillAura_ extends Mod
                         s = "我四川广安白治军当场屠杀绿色玩家婊子亲妈";
                     }
                     else if (nextInt == 1) {
-                        s = "我在四川广安，四川广安特产Power Client屠杀绿色玩家！";
+                        s = "我在四川广安，四川广安特产Power Client屠杀绿色玩家�?";
                     }
                     else if (nextInt == 2) {
-                        s = "你好！我叫白治军四川特产Power杀绿色玩家亲妈昂。";
+                        s = "你好！我叫白治军四川特产Power�?绿色玩家亲妈昂�??";
                     }
                     else if (nextInt == 3) {
-                        s = "对不起我叫白治军来自四川广安我今年当兵兵检没过我只能上完初中回家辍学写端圈钱求求你们可怜可怜我吧";
+                        s = "对不起我叫白治军来自四川广安我今年当兵兵�?没过我只能上完初中回家辍学写端圈钱求求你们可怜可怜我�?";
                     }
                     else if (nextInt == 4) {
-                        s = "电话预定购买四川广安特产Power客户端请拨打15397699681。";
+                        s = "电话预定购买四川广安特产Power客户端请拨打15397699681�?";
                     }
                     else if (nextInt == 5) {
                         s = "我叫白治军我在四川广安用邻水脐橙给你妈妈洗B呢购买Power拨打热线15397699681";
                     }
-                    if (AutoL.wdr.getValueState() && !AutoL.wdred.contains(KillAura_.attackingEntity.func_70005_c_())) {
-                        AutoL.wdred.add(KillAura_.attackingEntity.func_70005_c_());
-                        KillAura_.mc.field_71439_g.func_71165_d("/wdr " + KillAura_.attackingEntity.func_70005_c_() + " ka fly reach nokb jesus ac");
+                    if (AutoL.wdr.getValueState() && !AutoL.wdred.contains(KillAura_.attackingEntity.getName())) {
+                        AutoL.wdred.add(KillAura_.attackingEntity.getName());
+                        KillAura_.mc.thePlayer.sendChatMessage("/wdr " + KillAura_.attackingEntity.getName() + " ka fly reach nokb jesus ac");
                     }
-                    KillAura_.mc.field_71439_g.func_71165_d(AutoAbuse.prefix + entity.func_70005_c_() + " L" + (((boolean)AutoL.abuse.getValueState()) ? (" " + s) : "") + (((boolean)AutoL.ad.getValueState()) ? " Buy Hanabi at mcheika.com" : ""));
+                    KillAura_.mc.thePlayer.sendChatMessage(AutoAbuse.prefix + entity.getName() + " L" + (AutoL.abuse.getValueState() ? (" " + s) : "") + (AutoL.ad.getValueState() ? " Buy Hanabi at mcheika.com" : ""));
                 }
                 return false;
             }
-            if (KillAura_.mc.field_71439_g.func_70032_d(entity) < this.range.getValueState() + this.blockRange.getValueState() && entity != KillAura_.mc.field_71439_g && !KillAura_.mc.field_71439_g.field_70128_L && !(entity instanceof EntityArmorStand) && !(entity instanceof EntitySnowman)) {
+            if (KillAura_.mc.thePlayer.getDistanceToEntity(entity) < this.range.getValueState() + this.blockRange.getValueState() && entity != KillAura_.mc.thePlayer && !KillAura_.mc.thePlayer.isDead && !(entity instanceof EntityArmorStand) && !(entity instanceof EntitySnowman)) {
                 if (entity instanceof EntityPlayer && this.attackPlayers.getValueState()) {
-                    return entity.field_70173_aa >= 30 && (KillAura_.mc.field_71439_g.func_70685_l(entity) || this.throughblock.getValueState()) && (!entity.func_82150_aj() || this.invisible.getValueState()) && !AntiBot.isBot(entity) && !Teams.isOnSameTeam(entity);
+                    return entity.ticksExisted >= 30 && (KillAura_.mc.thePlayer.canEntityBeSeen(entity) || this.throughblock.getValueState()) && (!entity.isInvisible() || this.invisible.getValueState()) && !AntiBot.isBot(entity) && !Teams.isOnSameTeam(entity);
                 }
                 if (entity instanceof EntityMob && this.attackMobs.getValueState()) {
                     return !AntiBot.isBot(entity);
@@ -308,12 +308,12 @@ public class KillAura_ extends Mod
     }
     
     public static float[] getEntityRotations(final EntityLivingBase entityLivingBase, final float[] array, final boolean b, final int n) {
-        final Class211 class211 = new Class211(b, n);
-        final Class310 smoothAngle = class211.smoothAngle(class211.calculateAngle(new Vector3d(entityLivingBase.field_70165_t, entityLivingBase.field_70163_u + entityLivingBase.func_70047_e(), entityLivingBase.field_70161_v), new Vector3d(KillAura_.mc.field_71439_g.field_70165_t, KillAura_.mc.field_71439_g.field_70163_u + KillAura_.mc.field_71439_g.func_70047_e(), KillAura_.mc.field_71439_g.field_70161_v)), new Class310(array[0], array[1]));
-        return new float[] { KillAura_.mc.field_71439_g.field_70177_z + MathHelper.func_76142_g(smoothAngle.getYaw() - KillAura_.mc.field_71439_g.field_70177_z), smoothAngle.getPitch() };
+        final Class128 class128 = new Class128(b, n);
+        final Class94 smoothAngle = class128.smoothAngle(class128.calculateAngle(new Vector3d(entityLivingBase.posX, entityLivingBase.posY + entityLivingBase.getEyeHeight(), entityLivingBase.posZ), new Vector3d(KillAura_.mc.thePlayer.posX, KillAura_.mc.thePlayer.posY + KillAura_.mc.thePlayer.getEyeHeight(), KillAura_.mc.thePlayer.posZ)), new Class94(array[0], array[1]));
+        return new float[] { KillAura_.mc.thePlayer.rotationYaw + MathHelper.wrapAngleTo180_float(smoothAngle.getYaw() - KillAura_.mc.thePlayer.rotationYaw), smoothAngle.getPitch() };
     }
     
     private static int lambda$getValidEntityList$0(final Entity entity, final Entity entity2) {
-        return (int)(KillAura_.mc.field_71439_g.field_70177_z - ((float[])Class198.getRotations(entity))[0] - (KillAura_.mc.field_71439_g.field_70177_z - ((float[])Class198.getRotations(entity2))[0]));
+        return (int)(KillAura_.mc.thePlayer.rotationYaw - Class45.getRotations(entity)[0] - (KillAura_.mc.thePlayer.rotationYaw - Class45.getRotations(entity2)[0]));
     }
 }

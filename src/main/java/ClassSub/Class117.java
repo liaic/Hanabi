@@ -1,23 +1,46 @@
 package ClassSub;
 
-import com.google.common.base.*;
-import net.minecraft.scoreboard.*;
+import java.nio.*;
+import org.lwjgl.*;
 
-class Class117 implements Predicate<Score>
+public class Class117 implements Class257
 {
-    final Class78 this$0;
+    private int width;
+    private int height;
     public static final boolean Cracked_By_Somebody_Dumped_BY_Ganga_SupportedbySucen;
     
-    Class117(final Class78 this$0) {
-        this.this$0 = this$0;
-        super();
+    public Class117(final int width, final int height) {
+        this.width = width;
+        this.height = height;
     }
     
-    public boolean apply(final Score score) {
-        return score.func_96653_e() != null && !score.func_96653_e().startsWith("#");
+    @Override
+    public int getDepth() {
+        return 32;
     }
     
-    public boolean apply(final Object o) {
-        return this.apply((Score)o);
+    @Override
+    public int getHeight() {
+        return this.height;
+    }
+    
+    @Override
+    public ByteBuffer getImageBufferData() {
+        return BufferUtils.createByteBuffer(this.getTexWidth() * this.getTexHeight() * 4);
+    }
+    
+    @Override
+    public int getTexHeight() {
+        return Class144.get2Fold(this.height);
+    }
+    
+    @Override
+    public int getTexWidth() {
+        return Class144.get2Fold(this.width);
+    }
+    
+    @Override
+    public int getWidth() {
+        return this.width;
     }
 }

@@ -31,7 +31,6 @@ public class Value<T>
     private String modeTitle;
     
     public Value(final String classname, final String modeTitle, final int current) {
-        super();
         this.set = false;
         this.currentRadius = 4.0f;
         this.isValueBoolean = false;
@@ -45,13 +44,12 @@ public class Value<T>
         this.step = 0.1;
         this.mode = new ArrayList<String>();
         this.current = current;
-        this.name = String.valueOf((Object)classname) + "_Mode";
+        this.name = String.valueOf(classname) + "_Mode";
         this.modeTitle = modeTitle;
         Value.list.add(this);
     }
     
     public Value(final String name, final T defaultValue, final T valueMin, final T valueMax) {
-        super();
         this.set = false;
         this.currentRadius = 4.0f;
         this.isValueBoolean = false;
@@ -73,7 +71,6 @@ public class Value<T>
     }
     
     public Value(final String name, final T value, final T valueMin, final T valueMax, final double steps) {
-        super();
         this.set = false;
         this.currentRadius = 4.0f;
         this.isValueBoolean = false;
@@ -95,7 +92,6 @@ public class Value<T>
     }
     
     public Value(final String name, final T value) {
-        super();
         this.set = false;
         this.currentRadius = 4.0f;
         this.isValueBoolean = false;
@@ -126,7 +122,6 @@ public class Value<T>
     }
     
     public Value(final String name, final String name2, final String nam3, final T value, final T value2, final T value3) {
-        super();
         this.set = false;
         this.currentRadius = 4.0f;
         this.isValueBoolean = false;
@@ -194,7 +189,7 @@ public class Value<T>
     
     public String getModeAt(final String modeName) {
         for (int i = 0; i < this.mode.size(); ++i) {
-            if (((String)this.mode.get(i)).equalsIgnoreCase(modeName)) {
+            if (this.mode.get(i).equalsIgnoreCase(modeName)) {
                 return this.mode.get(i);
             }
         }
@@ -203,7 +198,7 @@ public class Value<T>
     
     public int getModeInt(final String modeName) {
         for (int i = 0; i < this.mode.size(); ++i) {
-            if (((String)this.mode.get(i)).equalsIgnoreCase(modeName)) {
+            if (this.mode.get(i).equalsIgnoreCase(modeName)) {
                 return i;
             }
         }
@@ -217,7 +212,7 @@ public class Value<T>
     public String getAllModes() {
         String all = "";
         for (int i = 0; i < this.mode.size(); ++i) {
-            all = String.valueOf((Object)all) + ((String)this.mode.get(i)).toString();
+            all = String.valueOf(all) + this.mode.get(i).toString();
         }
         return all;
     }

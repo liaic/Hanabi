@@ -1,6 +1,46 @@
 package ClassSub;
 
-class Class274
+public class Class274 extends Class284<Float>
 {
-    public static final boolean 怎么怎么怎么你这么自以为是我一直都是你的爹呢什么什么什么你这么垃圾你为什么连最基本的词汇都忘的一干二净了呢你为什么总是这样呢NMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSL ‏​ ‍;
+    public static final boolean Cracked_By_Somebody_Dumped_BY_Ganga_SupportedbySucen;
+    
+    public Class274(final Float n, final Float n2) {
+        super(n, n2);
+    }
+    
+    public Class274 setYaw(final Float x) {
+        ((Class310<Float>)this).setX(x);
+        return this;
+    }
+    
+    public Class274 setPitch(final Float y) {
+        ((Class310<Float>)this).setY(y);
+        return this;
+    }
+    
+    public Float getYaw() {
+        return this.getX().floatValue();
+    }
+    
+    public Float getPitch() {
+        return this.getY().floatValue();
+    }
+    
+    public Class274 constrantAngle() {
+        this.setYaw(this.getYaw() % 360.0f);
+        this.setPitch(this.getPitch() % 360.0f);
+        while (this.getYaw() <= -180.0f) {
+            this.setYaw(this.getYaw() + 360.0f);
+        }
+        while (this.getPitch() <= -180.0f) {
+            this.setPitch(this.getPitch() + 360.0f);
+        }
+        while (this.getYaw() > 180.0f) {
+            this.setYaw(this.getYaw() - 360.0f);
+        }
+        while (this.getPitch() > 180.0f) {
+            this.setPitch(this.getPitch() - 360.0f);
+        }
+        return this;
+    }
 }

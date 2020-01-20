@@ -1,71 +1,43 @@
 package ClassSub;
 
-import net.minecraft.client.*;
-import net.minecraft.util.*;
-import java.net.*;
-import com.mojang.authlib.yggdrasil.*;
-import com.mojang.authlib.*;
-import com.mojang.authlib.exceptions.*;
-import cn.Hanabi.injection.interfaces.*;
-import cn.Hanabi.*;
-
-public final class Class133 extends Thread
+class Class133 implements Runnable
 {
-    private Class98 alt;
-    private String status;
-    private Minecraft mc;
+    final Class286 this$0;
     public static final boolean Cracked_By_Somebody_Dumped_BY_Ganga_SupportedbySucen;
     
-    public Class133(final Class98 alt) {
-        super("Alt Login Thread");
-        this.mc = Minecraft.func_71410_x();
-        this.alt = alt;
-        this.status = EnumChatFormatting.GRAY + "Waiting...";
-    }
-    
-    private Session createSession(final String username, final String password) {
-        final YggdrasilUserAuthentication yggdrasilUserAuthentication = (YggdrasilUserAuthentication)new YggdrasilAuthenticationService(Proxy.NO_PROXY, "").createUserAuthentication(Agent.MINECRAFT);
-        yggdrasilUserAuthentication.setUsername(username);
-        yggdrasilUserAuthentication.setPassword(password);
-        try {
-            yggdrasilUserAuthentication.logIn();
-            return new Session(yggdrasilUserAuthentication.getSelectedProfile().getName(), yggdrasilUserAuthentication.getSelectedProfile().getId().toString(), yggdrasilUserAuthentication.getAuthenticatedToken(), "mojang");
-        }
-        catch (AuthenticationException ex) {
-            ex.printStackTrace();
-            return null;
-        }
-    }
-    
-    public String getStatus() {
-        return this.status;
+    Class133(final Class286 this$0) {
+        this.this$0 = this$0;
     }
     
     @Override
     public void run() {
-        if (this.alt.getPassword().equals("")) {
-            ((IMinecraft)Minecraft.func_71410_x()).setSession(new Session(this.alt.getUsername(), "", "", "mojang"));
-            this.status = EnumChatFormatting.GREEN + "Logged in. (" + this.alt.getUsername() + " - offline name)";
-            return;
-        }
-        this.status = EnumChatFormatting.AQUA + "Logging in...";
-        final Session session = this.createSession(this.alt.getUsername(), this.alt.getPassword());
-        if (session == null) {
-            this.status = EnumChatFormatting.RED + "Login failed!";
-        }
-        else {
-            Class91.lastAlt = new Class98(this.alt.getUsername(), this.alt.getPassword());
-            this.status = EnumChatFormatting.GREEN + "Logged in. (" + session.func_111285_a() + ")";
-            this.alt.setMask(session.func_111285_a());
-            ((IMinecraft)Minecraft.func_71410_x()).setSession(session);
+        int n = 1;
+        int n2 = 0;
+        final Class296 currentTrack = Class286.getInstance().getCurrentTrack();
+        while (true) {
+            final long n3 = (long)Class286.getInstance().getMediaPlayer().getCurrentTime().toMillis();
             try {
-                Hanabi.INSTANCE.altFileMgr.getFile(Class169.class).saveFile();
+                if (n3 <= Class286.getInstance().tLyric.get(n).getTime()) {
+                    if (n2 == 0) {
+                        Class344.INSTANCE.tly = Class286.getInstance().tLyric.get(n - 1).getText();
+                    }
+                    n2 = 1;
+                }
+                else {
+                    ++n;
+                    n2 = 0;
+                }
             }
-            catch (Exception ex) {}
+            catch (Exception ex) {
+                Class344.INSTANCE.tly = "";
+            }
+            if (n - 1 > Class286.getInstance().tLyric.size() || Class286.getInstance().getCurrentTrack() != currentTrack || !this.this$0.playTranslateLyric) {
+                break;
+            }
+            try {
+                Thread.sleep(50L);
+            }
+            catch (Exception ex2) {}
         }
-    }
-    
-    public void setStatus(final String status) {
-        this.status = status;
     }
 }

@@ -9,7 +9,6 @@ import java.util.*;
 public class MixinLoader implements IFMLLoadingPlugin
 {
     public MixinLoader() {
-        super();
         MixinBootstrap.init();
         Mixins.addConfiguration("mixins.hanabi.json");
         MixinEnvironment.getDefaultEnvironment().setSide(MixinEnvironment.Side.CLIENT);

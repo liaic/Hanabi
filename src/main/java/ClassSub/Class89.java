@@ -1,107 +1,88 @@
 package ClassSub;
 
-import net.minecraft.client.gui.*;
-import cn.Hanabi.injection.interfaces.*;
-import net.minecraft.util.*;
-import cn.Hanabi.modules.*;
-import java.util.*;
-import cn.Hanabi.modules.Player.*;
-import cn.Hanabi.*;
-import java.io.*;
+import java.security.*;
 
-public class Class89 extends GuiScreen
+public class Class89
 {
-    Class309 sideBar;
-    List<Class79> windows;
+    private static boolean usePngLoader;
+    private static boolean pngLoaderPropertyChecked;
+    private static final String PNG_LOADER = "org.newdawn.slick.pngloader";
     public static final boolean Cracked_By_Somebody_Dumped_BY_Ganga_SupportedbySucen;
     
-    public Class89() {
-        super();
-        this.windows = new ArrayList<Class79>();
-        try {
-            this.sideBar = new Class309();
-            for (int i = 0; i < ((Category[])Category.values()).length; ++i) {
-                this.windows.add(new Class79(((Category[])Category.values())[i]));
-            }
-        }
-        catch (Throwable t) {}
-    }
-    
-    public void func_73866_w_() {
-        try {
-            if (this.field_146297_k.field_71441_e != null) {
-                ((IEntityRenderer)this.field_146297_k.field_71460_t).loadShader2(new ResourceLocation("shaders/post/blur.json"));
-            }
-            final Iterator<Mod> iterator = ModManager.getModList().iterator();
-            while (iterator.hasNext()) {
-                ((Mod)iterator.next()).modButton = null;
-            }
-            final Iterator<Class79> iterator2 = this.windows.iterator();
-            while (iterator2.hasNext()) {
-                ((Class79)iterator2.next()).createModUI();
-            }
-            Class79.booleanValueMap.clear();
-        }
-        catch (Throwable t) {
-            Class295.tellPlayer("§b[Hanabi]§a加载Blur出现异常，建议关闭快速渲染。");
-        }
-    }
-    
-    public void func_73863_a(final int n, final int n2, final float n3) {
-        if (ModManager.getModule("StaffAnalyzer").isEnabled() && StaffAnalyzer.ui != null) {
-            StaffAnalyzer.ui.mouseListener(n, n2);
-        }
-        if (Hanabi.INSTANCE.sbm != null) {
-            Hanabi.INSTANCE.sbm.moveWindow(n, n2);
-        }
-        try {
-            this.sideBar.draw();
-            for (final Class120 class120 : this.sideBar.button) {
-                if ((boolean)class120.active) {
-                    for (final Class79 class121 : this.windows) {
-                        if (class121.category.toString().equals(class120.title)) {
-                            class121.draw(n, n2);
-                            break;
-                        }
-                    }
-                    break;
+    private static void checkProperty() {
+        final class Class4 implements PrivilegedAction
+        {
+            public static final boolean Cracked_By_Somebody_Dumped_BY_Ganga_SupportedbySucen;
+            
+            @Override
+            public Object run() {
+                if ("false".equalsIgnoreCase(System.getProperty("org.newdawn.slick.pngloader"))) {
+                    Class89.access$002(false);
                 }
+                Class301.info("Use Java PNG Loader = " + Class89.access$000());
+                return null;
             }
         }
-        catch (Throwable t) {}
+        // 
+        // This method could not be decompiled.
+        // 
+        // Original Bytecode:
+        // 
+        //     3: athrow         
+        //     4: getstatic       ClassSub/Class89.pngLoaderPropertyChecked:Z
+        //     7: ifne            32
+        //    10: ldc             1
+        //    12: putstatic       ClassSub/Class89.pngLoaderPropertyChecked:Z
+        //    15: new             LClassSub/Class4;
+        //    18: dup            
+        //    19: invokespecial   ClassSub/Class4.<init>:()V
+        //    22: invokestatic    java/security/AccessController.doPrivileged:(Ljava/security/PrivilegedAction;)Ljava/lang/Object;
+        //    25: pop            
+        //    26: goto            32
+        //    29: nop            
+        //    30: athrow         
+        //    31: astore_0       
+        //    32: return         
+        //    Exceptions:
+        //  Try           Handler
+        //  Start  End    Start  End    Type                 
+        //  -----  -----  -----  -----  ---------------------
+        //  15     26     31     32     Ljava/lang/Throwable;
+        // 
+        // The error that occurred was:
+        // 
+        // java.lang.NullPointerException
+        // 
+        throw new IllegalStateException("An error occurred while decompiling this method.");
     }
     
-    protected void func_146286_b(final int n, final int n2, final int n3) {
-    }
-    
-    protected void func_73864_a(final int n, final int n2, final int n3) throws IOException {
-        try {
-            this.sideBar.onMouseClick(n, n2);
-            for (final Class120 class120 : this.sideBar.button) {
-                if ((boolean)class120.active) {
-                    for (final Class79 class121 : this.windows) {
-                        if (class121.category.toString().equals(class120.title)) {
-                            class121.onMouseClick(n, n2);
-                            break;
-                        }
-                    }
-                    break;
-                }
+    public static Class96 getImageDataFor(String lowerCase) {
+        checkProperty();
+        lowerCase = lowerCase.toLowerCase();
+        if (lowerCase.endsWith(".tga")) {
+            return new Class129();
+        }
+        if (lowerCase.endsWith(".png")) {
+            final Class58 class58 = new Class58();
+            if (Class89.usePngLoader) {
+                class58.add(new Class321());
             }
+            class58.add(new Class293());
+            return class58;
         }
-        catch (Throwable t) {}
+        return new Class293();
     }
     
-    private boolean isHovering(final int n, final int n2, final int n3, final int n4, final int n5, final int n6) {
-        return n > n3 && n < n5 && n2 > n4 && n2 < n6;
+    static boolean access$002(final boolean usePngLoader) {
+        return Class89.usePngLoader = usePngLoader;
     }
     
-    public void func_146281_b() {
-        try {
-            this.field_146297_k.field_71460_t.func_181022_b();
-        }
-        catch (Throwable t) {
-            Class295.tellPlayer("§b[Hanabi]§a加载Blur出现异常，建议关闭快速渲染。");
-        }
+    static boolean access$000() {
+        return Class89.usePngLoader;
+    }
+    
+    static {
+        Class89.usePngLoader = true;
+        Class89.pngLoaderPropertyChecked = false;
     }
 }

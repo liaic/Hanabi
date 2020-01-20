@@ -19,13 +19,13 @@ public class Prefix extends Command
     @Override
     public void run(final String s, @NotNull final String[] array) {
         if (array.length != 1) {
-            Class128.sendClientMessage("Failed", Class67.Class124.WARNING);
+            Class120.sendClientMessage("Failed", Class84.Class307.WARNING);
         }
         else {
             Spammer.prefix = array[0];
             AutoAbuse.prefix = array[0];
             saveText();
-            Class128.sendClientMessage("Changed to " + array[0], Class67.Class124.SUCCESS);
+            Class120.sendClientMessage("Changed to " + array[0], Class84.Class307.SUCCESS);
         }
     }
     
@@ -67,6 +67,6 @@ public class Prefix extends Command
     }
     
     static {
-        Prefix.fileDir = Minecraft.func_71410_x().field_71412_D.getAbsolutePath() + "/HanabiAzureWare";
+        Prefix.fileDir = Minecraft.getMinecraft().mcDataDir.getAbsolutePath() + "/HanabiAzureWare";
     }
 }

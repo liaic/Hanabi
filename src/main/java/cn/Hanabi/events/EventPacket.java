@@ -13,11 +13,10 @@ public class EventPacket extends EventCancellable
     public Packet packet;
     
     public EventPacket(final EventType eventType, final Packet packet) {
-        super();
         this.eventType = eventType;
         this.packet = packet;
         if (this.packet instanceof S08PacketPlayerPosLook) {
-            EventManager.call((Event)new EventPullback());
+            EventManager.call(new EventPullback());
         }
     }
     

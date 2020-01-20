@@ -7,7 +7,6 @@ public class EventSafeWalk extends EventCancellable
     public boolean safe;
     
     public EventSafeWalk(final boolean safe) {
-        super();
         this.safe = safe;
     }
     

@@ -8,19 +8,15 @@ import org.spongepowered.asm.mixin.*;
 public class MixinKeyBinding implements IKeyBinding
 {
     @Shadow
-    private boolean field_74513_e;
-    
-    public MixinKeyBinding() {
-        super();
-    }
+    private boolean pressed;
     
     @Override
     public boolean getPress() {
-        return this.field_74513_e;
+        return this.pressed;
     }
     
     @Override
     public void setPress(final Boolean b) {
-        this.field_74513_e = b;
+        this.pressed = b;
     }
 }

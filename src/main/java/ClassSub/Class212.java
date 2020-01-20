@@ -1,96 +1,105 @@
 package ClassSub;
 
-import cn.Hanabi.modules.*;
-import org.jetbrains.annotations.*;
-import cn.Hanabi.value.*;
-import java.util.*;
-import net.minecraft.client.gui.*;
+import org.lwjgl.input.*;
+import org.lwjgl.*;
+import java.io.*;
+import java.nio.*;
 
 public class Class212
 {
-    private Class86 panel;
-    private Mod module;
-    private boolean isExtended;
-    @NotNull
-    private List<Class179<?>> settings;
+    private static Class212 single;
     public static final boolean Cracked_By_Somebody_Dumped_BY_Ganga_SupportedbySucen;
     
-    public Class212(final Class86 panel, final Mod module) {
-        super();
-        this.isExtended = false;
-        this.settings = new ArrayList<Class179<?>>();
-        this.panel = panel;
-        this.module = module;
-        final ArrayList<Value> list = new ArrayList<Value>();
-        for (final Value value : Value.list) {
-            if (((String[])value.getValueName().split("_"))[0].contains(module.getName())) {
-                list.add(value);
-            }
+    public static Class212 get() {
+        return Class212.single;
+    }
+    
+    public Cursor getCursor(final String s, final int n, final int n2) throws IOException, LWJGLException {
+        final Class96 imageData = Class89.getImageDataFor(s);
+        imageData.configureEdging(false);
+        final ByteBuffer loadImage = imageData.loadImage(Class337.getResourceAsStream(s), true, true, null);
+        for (int i = 0; i < loadImage.limit(); i += 4) {
+            final byte value = loadImage.get(i);
+            final byte value2 = loadImage.get(i + 1);
+            final byte value3 = loadImage.get(i + 2);
+            final byte value4 = loadImage.get(i + 3);
+            loadImage.put(i + 2, value);
+            loadImage.put(i + 1, value2);
+            loadImage.put(i, value3);
+            loadImage.put(i + 3, value4);
         }
-        if (list == null) {
-            return;
+        try {
+            int n3 = imageData.getHeight() - n2 - 1;
+            if (n3 < 0) {
+                n3 = 0;
+            }
+            return new Cursor(imageData.getTexWidth(), imageData.getTexHeight(), n, n3, 1, loadImage.asIntBuffer(), (IntBuffer)null);
         }
-        for (final Value value2 : list) {
-            if (value2.isValueBoolean) {
-                this.settings.add(new Class277((Value)value2));
-            }
-            if (value2.isValueMode) {
-                this.settings.add(new Class3((Value)value2));
-            }
-            if (value2.isValueDouble || value2.isValueFloat || value2.isValueInteger || value2.isValueLong) {
-                this.settings.add(new Class155((Value)value2));
-            }
+        catch (Throwable t) {
+            Class301.info("Chances are you cursor is too small for this platform");
+            throw new LWJGLException(t);
         }
     }
     
-    public void click() {
-        this.module.setState(!this.module.getState());
-    }
-    
-    public Mod getModule() {
-        return this.module;
-    }
-    
-    public boolean isHover(final int n, final int n2, final int n3, final int n4, final int n5, final int n6) {
-        return n5 >= n && n5 <= n + n3 && n6 >= n2 && n6 <= n2 + n4;
-    }
-    
-    public int renderExtended(final int x, final int n) {
-        int y = n + 1;
-        int max = 0;
-        if (this.isExtended) {
-            for (final Class179<?> class179 : this.settings) {
-                class179.update();
-                class179.setX(x);
-                class179.setY(y);
-                y += class179.getHeight() + 2;
-                max = Math.max(class179.getWidth(), max);
-            }
-            ++y;
-            Gui.func_73734_a(x, n, max + x, y, Class8.PANEL_MAIN_COLOR.getRGB());
-            final Iterator<Class179<?>> iterator2 = this.settings.iterator();
-            while (iterator2.hasNext()) {
-                ((Class179<?>)iterator2.next()).draw();
-            }
+    public Cursor getCursor(final ByteBuffer byteBuffer, final int n, final int n2, final int n3, final int n4) throws IOException, LWJGLException {
+        for (int i = 0; i < byteBuffer.limit(); i += 4) {
+            final byte value = byteBuffer.get(i);
+            final byte value2 = byteBuffer.get(i + 1);
+            final byte value3 = byteBuffer.get(i + 2);
+            final byte value4 = byteBuffer.get(i + 3);
+            byteBuffer.put(i + 2, value);
+            byteBuffer.put(i + 1, value2);
+            byteBuffer.put(i, value3);
+            byteBuffer.put(i + 3, value4);
         }
-        return y;
-    }
-    
-    public boolean isExtended() {
-        return this.isExtended;
-    }
-    
-    public void setExtended(final boolean isExtended) {
-        this.isExtended = isExtended;
-    }
-    
-    public boolean onMouseClick(final int n, final int n2, final int n3) {
-        boolean b = false;
-        for (final Class179<?> class179 : this.settings) {
-            if (this.isExtended && class179.onMouseClick(n, n2, n3)) {
-                b = true;
+        try {
+            int n5 = n4 - n2 - 1;
+            if (n5 < 0) {
+                n5 = 0;
             }
+            return new Cursor(n3, n4, n, n5, 1, byteBuffer.asIntBuffer(), (IntBuffer)null);
         }
-        return b;
+        catch (Throwable t) {
+            Class301.info("Chances are you cursor is too small for this platform");
+            throw new LWJGLException(t);
+        }
+    }
+    
+    public Cursor getCursor(final Class257 class257, final int n, final int n2) throws IOException, LWJGLException {
+        final ByteBuffer imageBufferData = class257.getImageBufferData();
+        for (int i = 0; i < imageBufferData.limit(); i += 4) {
+            final byte value = imageBufferData.get(i);
+            final byte value2 = imageBufferData.get(i + 1);
+            final byte value3 = imageBufferData.get(i + 2);
+            final byte value4 = imageBufferData.get(i + 3);
+            imageBufferData.put(i + 2, value);
+            imageBufferData.put(i + 1, value2);
+            imageBufferData.put(i, value3);
+            imageBufferData.put(i + 3, value4);
+        }
+        try {
+            int n3 = class257.getHeight() - n2 - 1;
+            if (n3 < 0) {
+                n3 = 0;
+            }
+            return new Cursor(class257.getTexWidth(), class257.getTexHeight(), n, n3, 1, imageBufferData.asIntBuffer(), (IntBuffer)null);
+        }
+        catch (Throwable t) {
+            Class301.info("Chances are you cursor is too small for this platform");
+            throw new LWJGLException(t);
+        }
+    }
+    
+    public Cursor getAnimatedCursor(final String s, final int n, final int n2, final int n3, final int n4, final int[] array) throws IOException, LWJGLException {
+        final IntBuffer intBuffer = ByteBuffer.allocateDirect(array.length * 4).order(ByteOrder.nativeOrder()).asIntBuffer();
+        for (int i = 0; i < array.length; ++i) {
+            intBuffer.put(array[i]);
+        }
+        intBuffer.flip();
+        return new Cursor(n3, n4, n, n2, array.length, new Class129().loadImage(Class337.getResourceAsStream(s), false, null).asIntBuffer(), intBuffer);
+    }
+    
+    static {
+        Class212.single = new Class212();
     }
 }

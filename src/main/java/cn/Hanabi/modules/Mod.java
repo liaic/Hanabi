@@ -28,8 +28,8 @@ public abstract class Mod
     public int valueSize;
     public static String fuck;
     public static String me;
-    public Class125 modButton;
-    static Class191 saveTimer;
+    public Class204 modButton;
+    static Class205 saveTimer;
     public boolean keepReg;
     public boolean isReg;
     
@@ -38,7 +38,6 @@ public abstract class Mod
     }
     
     public Mod(final String name, final Category Category, final boolean canBeEnabled, final boolean hidden, final int keybind) {
-        super();
         this.valueSize = 0;
         this.keepReg = false;
         this.isReg = false;
@@ -86,7 +85,7 @@ public abstract class Mod
     }
     
     public double getAnimationState(double animation, final double finalState, final double speed) {
-        final float add = (float)(Class284.delta * speed);
+        final float add = (float)(Class246.delta * speed);
         if (animation < finalState) {
             if (animation + add < finalState) {
                 animation += add;
@@ -106,7 +105,7 @@ public abstract class Mod
     
     public void onRenderArray() {
         if (this.namewidth == 0.0f) {
-            this.namewidth = Hanabi.INSTANCE.fontManager.raleway17.func_78256_a(this.name);
+            this.namewidth = Hanabi.INSTANCE.fontManager.raleway17.getStringWidth(this.name);
         }
         if (this.lastY - this.posY > 0.0f) {
             this.posYRend = 10.0f;
@@ -133,14 +132,13 @@ public abstract class Mod
     }
     
     public void setState(final boolean state, final boolean save) {
-        class Class281 extends Thread
+        class Class17 extends Thread
         {
             final Mod this$0;
             public static final boolean Cracked_By_Somebody_Dumped_BY_Ganga_SupportedbySucen;
             
-            Class281(final Mod this$0) {
+            Class17(final Mod this$0) {
                 this.this$0 = this$0;
-                super();
             }
             
             @Override
@@ -156,11 +154,11 @@ public abstract class Mod
         // Original Bytecode:
         // 
         //     3: ifeq            50
-        //     6: getstatic       ClassSub/Class296.cr4ckm3:Z
+        //     6: getstatic       ClassSub/Class211.cr4ckm3:Z
         //     9: ifeq            50
-        //    12: getstatic       ClassSub/Class296.If:Z
+        //    12: getstatic       ClassSub/Class211.If:Z
         //    15: ifeq            50
-        //    18: getstatic       ClassSub/Class296.y0u:Z
+        //    18: getstatic       ClassSub/Class211.y0u:Z
         //    21: ifeq            50
         //    24: invokestatic    java/lang/management/ManagementFactory.getRuntimeMXBean:()Ljava/lang/management/RuntimeMXBean;
         //    27: invokeinterface java/lang/management/RuntimeMXBean.getBootClassPath:()Ljava/lang/String;
@@ -173,7 +171,7 @@ public abstract class Mod
         //    44: ifeq            50
         //    47: goto            59
         //    50: ldc             "\u4f60\u5988\u6b7b\u4e86 \u60f3\u7834\u89e3\u4f60\u7239\u7684\u4e1c\u897f\u7b49\u4e24\u5e74\u518d\u67658 \u50bb\u903c"
-        //    52: invokestatic    ClassSub/Class213.showMessageBox:(Ljava/lang/String;)V
+        //    52: invokestatic    ClassSub/Class64.showMessageBox:(Ljava/lang/String;)V
         //    55: iconst_0       
         //    56: invokestatic    java/lang/System.exit:(I)V
         //    59: invokestatic    java/lang/management/ManagementFactory.getRuntimeMXBean:()Ljava/lang/management/RuntimeMXBean;
@@ -202,11 +200,11 @@ public abstract class Mod
         //   112: ldc             "\u64cd\u4f60\u5988\u554a5555555"
         //   114: iconst_0       
         //   115: invokestatic    javax/swing/JOptionPane.showMessageDialog:(Ljava/awt/Component;Ljava/lang/Object;Ljava/lang/String;I)V
-        //   118: new             LClassSub/Class281;
+        //   118: new             LClassSub/Class17;
         //   121: dup            
         //   122: aload_0         /* this */
-        //   123: invokespecial   ClassSub/Class281.<init>:(Lcn/Hanabi/modules/Mod;)V
-        //   126: invokevirtual   ClassSub/Class281.start:()V
+        //   123: invokespecial   ClassSub/Class17.<init>:(Lcn/Hanabi/modules/Mod;)V
+        //   126: invokevirtual   ClassSub/Class17.start:()V
         //   129: invokestatic    java/lang/Thread.currentThread:()Ljava/lang/Thread;
         //   132: pop            
         //   133: ldc2_w          10000000
@@ -219,17 +217,17 @@ public abstract class Mod
         //   152: iload_2         /* save */
         //   153: ifeq            192
         //   156: getstatic       cn/Hanabi/modules/Mod.mc:Lnet/minecraft/client/Minecraft;
-        //   159: getfield        net/minecraft/client/Minecraft.field_71439_g:Lnet/minecraft/client/entity/EntityPlayerSP;
+        //   159: getfield        net/minecraft/client/Minecraft.thePlayer:Lnet/minecraft/client/entity/EntityPlayerSP;
         //   162: ifnull          192
-        //   165: getstatic       cn/Hanabi/modules/Mod.saveTimer:LClassSub/Class191;
+        //   165: getstatic       cn/Hanabi/modules/Mod.saveTimer:LClassSub/Class205;
         //   168: ldc2_w          10000
-        //   171: invokevirtual   ClassSub/Class191.isDelayComplete:(J)Z
+        //   171: invokevirtual   ClassSub/Class205.isDelayComplete:(J)Z
         //   174: ifeq            192
         //   177: getstatic       cn/Hanabi/Hanabi.INSTANCE:Lcn/Hanabi/Hanabi;
-        //   180: getfield        cn/Hanabi/Hanabi.fileManager:LClassSub/Class28;
-        //   183: invokevirtual   ClassSub/Class28.save:()V
-        //   186: getstatic       cn/Hanabi/modules/Mod.saveTimer:LClassSub/Class191;
-        //   189: invokevirtual   ClassSub/Class191.reset:()V
+        //   180: getfield        cn/Hanabi/Hanabi.fileManager:LClassSub/Class150;
+        //   183: invokevirtual   ClassSub/Class150.save:()V
+        //   186: getstatic       cn/Hanabi/modules/Mod.saveTimer:LClassSub/Class205;
+        //   189: invokevirtual   ClassSub/Class205.reset:()V
         //   192: goto            200
         //   195: astore_3        /* e */
         //   196: aload_3         /* e */
@@ -240,7 +238,7 @@ public abstract class Mod
         //   205: iconst_1       
         //   206: putfield        cn/Hanabi/modules/Mod.state:Z
         //   209: getstatic       cn/Hanabi/modules/Mod.mc:Lnet/minecraft/client/Minecraft;
-        //   212: getfield        net/minecraft/client/Minecraft.field_71439_g:Lnet/minecraft/client/entity/EntityPlayerSP;
+        //   212: getfield        net/minecraft/client/Minecraft.thePlayer:Lnet/minecraft/client/entity/EntityPlayerSP;
         //   215: ifnull          222
         //   218: aload_0         /* this */
         //   219: invokevirtual   cn/Hanabi/modules/Mod.onEnable:()V
@@ -255,14 +253,14 @@ public abstract class Mod
         //   242: invokevirtual   java/lang/String.equals:(Ljava/lang/Object;)Z
         //   245: ifne            304
         //   248: getstatic       cn/Hanabi/modules/Mod.mc:Lnet/minecraft/client/Minecraft;
-        //   251: getfield        net/minecraft/client/Minecraft.field_71439_g:Lnet/minecraft/client/entity/EntityPlayerSP;
+        //   251: getfield        net/minecraft/client/Minecraft.thePlayer:Lnet/minecraft/client/entity/EntityPlayerSP;
         //   254: ifnull          275
         //   257: getstatic       cn/Hanabi/modules/Mod.mc:Lnet/minecraft/client/Minecraft;
-        //   260: getfield        net/minecraft/client/Minecraft.field_71439_g:Lnet/minecraft/client/entity/EntityPlayerSP;
+        //   260: getfield        net/minecraft/client/Minecraft.thePlayer:Lnet/minecraft/client/entity/EntityPlayerSP;
         //   263: ldc_w           "random.click"
         //   266: ldc_w           0.2
         //   269: ldc_w           0.6
-        //   272: invokevirtual   net/minecraft/client/entity/EntityPlayerSP.func_85030_a:(Ljava/lang/String;FF)V
+        //   272: invokevirtual   net/minecraft/client/entity/EntityPlayerSP.playSound:(Ljava/lang/String;FF)V
         //   275: new             Ljava/lang/StringBuilder;
         //   278: dup            
         //   279: invokespecial   java/lang/StringBuilder.<init>:()V
@@ -272,8 +270,8 @@ public abstract class Mod
         //   289: ldc_w           " Enabled"
         //   292: invokevirtual   java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
         //   295: invokevirtual   java/lang/StringBuilder.toString:()Ljava/lang/String;
-        //   298: getstatic       ClassSub/Class124.SUCCESS:LClassSub/Class124;
-        //   301: invokestatic    ClassSub/Class128.sendClientMessage:(Ljava/lang/String;LClassSub/Class124;)V
+        //   298: getstatic       ClassSub/Class307.SUCCESS:LClassSub/Class307;
+        //   301: invokestatic    ClassSub/Class120.sendClientMessage:(Ljava/lang/String;LClassSub/Class307;)V
         //   304: aload_0         /* this */
         //   305: getfield        cn/Hanabi/modules/Mod.isReg:Z
         //   308: ifne            446
@@ -287,7 +285,7 @@ public abstract class Mod
         //   324: iconst_0       
         //   325: putfield        cn/Hanabi/modules/Mod.state:Z
         //   328: getstatic       cn/Hanabi/modules/Mod.mc:Lnet/minecraft/client/Minecraft;
-        //   331: getfield        net/minecraft/client/Minecraft.field_71439_g:Lnet/minecraft/client/entity/EntityPlayerSP;
+        //   331: getfield        net/minecraft/client/Minecraft.thePlayer:Lnet/minecraft/client/entity/EntityPlayerSP;
         //   334: ifnull          341
         //   337: aload_0         /* this */
         //   338: invokevirtual   cn/Hanabi/modules/Mod.onDisable:()V
@@ -302,14 +300,14 @@ public abstract class Mod
         //   361: invokevirtual   java/lang/String.equals:(Ljava/lang/Object;)Z
         //   364: ifne            423
         //   367: getstatic       cn/Hanabi/modules/Mod.mc:Lnet/minecraft/client/Minecraft;
-        //   370: getfield        net/minecraft/client/Minecraft.field_71439_g:Lnet/minecraft/client/entity/EntityPlayerSP;
+        //   370: getfield        net/minecraft/client/Minecraft.thePlayer:Lnet/minecraft/client/entity/EntityPlayerSP;
         //   373: ifnull          394
         //   376: getstatic       cn/Hanabi/modules/Mod.mc:Lnet/minecraft/client/Minecraft;
-        //   379: getfield        net/minecraft/client/Minecraft.field_71439_g:Lnet/minecraft/client/entity/EntityPlayerSP;
+        //   379: getfield        net/minecraft/client/Minecraft.thePlayer:Lnet/minecraft/client/entity/EntityPlayerSP;
         //   382: ldc_w           "random.click"
         //   385: ldc_w           0.2
         //   388: ldc_w           0.5
-        //   391: invokevirtual   net/minecraft/client/entity/EntityPlayerSP.func_85030_a:(Ljava/lang/String;FF)V
+        //   391: invokevirtual   net/minecraft/client/entity/EntityPlayerSP.playSound:(Ljava/lang/String;FF)V
         //   394: new             Ljava/lang/StringBuilder;
         //   397: dup            
         //   398: invokespecial   java/lang/StringBuilder.<init>:()V
@@ -319,8 +317,8 @@ public abstract class Mod
         //   408: ldc_w           " Disabled"
         //   411: invokevirtual   java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
         //   414: invokevirtual   java/lang/StringBuilder.toString:()Ljava/lang/String;
-        //   417: getstatic       ClassSub/Class124.ERROR:LClassSub/Class124;
-        //   420: invokestatic    ClassSub/Class128.sendClientMessage:(Ljava/lang/String;LClassSub/Class124;)V
+        //   417: getstatic       ClassSub/Class307.ERROR:LClassSub/Class307;
+        //   420: invokestatic    ClassSub/Class120.sendClientMessage:(Ljava/lang/String;LClassSub/Class307;)V
         //   423: aload_0         /* this */
         //   424: getfield        cn/Hanabi/modules/Mod.keepReg:Z
         //   427: ifne            446
@@ -343,35 +341,6 @@ public abstract class Mod
         // The error that occurred was:
         // 
         // java.lang.NullPointerException
-        //     at com.strobel.decompiler.languages.java.ast.AstBuilder.convertType(AstBuilder.java:324)
-        //     at com.strobel.decompiler.languages.java.ast.AstBuilder.convertType(AstBuilder.java:153)
-        //     at com.strobel.decompiler.languages.java.ast.AstMethodBodyBuilder.transformCall(AstMethodBodyBuilder.java:1120)
-        //     at com.strobel.decompiler.languages.java.ast.AstMethodBodyBuilder.transformByteCode(AstMethodBodyBuilder.java:1010)
-        //     at com.strobel.decompiler.languages.java.ast.AstMethodBodyBuilder.transformExpression(AstMethodBodyBuilder.java:540)
-        //     at com.strobel.decompiler.languages.java.ast.AstMethodBodyBuilder.transformByteCode(AstMethodBodyBuilder.java:554)
-        //     at com.strobel.decompiler.languages.java.ast.AstMethodBodyBuilder.transformExpression(AstMethodBodyBuilder.java:540)
-        //     at com.strobel.decompiler.languages.java.ast.AstMethodBodyBuilder.transformNode(AstMethodBodyBuilder.java:392)
-        //     at com.strobel.decompiler.languages.java.ast.AstMethodBodyBuilder.transformBlock(AstMethodBodyBuilder.java:333)
-        //     at com.strobel.decompiler.languages.java.ast.AstMethodBodyBuilder.transformNode(AstMethodBodyBuilder.java:425)
-        //     at com.strobel.decompiler.languages.java.ast.AstMethodBodyBuilder.transformBlock(AstMethodBodyBuilder.java:333)
-        //     at com.strobel.decompiler.languages.java.ast.AstMethodBodyBuilder.transformNode(AstMethodBodyBuilder.java:494)
-        //     at com.strobel.decompiler.languages.java.ast.AstMethodBodyBuilder.transformBlock(AstMethodBodyBuilder.java:333)
-        //     at com.strobel.decompiler.languages.java.ast.AstMethodBodyBuilder.transformNode(AstMethodBodyBuilder.java:425)
-        //     at com.strobel.decompiler.languages.java.ast.AstMethodBodyBuilder.transformBlock(AstMethodBodyBuilder.java:333)
-        //     at com.strobel.decompiler.languages.java.ast.AstMethodBodyBuilder.createMethodBody(AstMethodBodyBuilder.java:294)
-        //     at com.strobel.decompiler.languages.java.ast.AstMethodBodyBuilder.createMethodBody(AstMethodBodyBuilder.java:99)
-        //     at com.strobel.decompiler.languages.java.ast.AstBuilder.createMethodBody(AstBuilder.java:757)
-        //     at com.strobel.decompiler.languages.java.ast.AstBuilder.createMethod(AstBuilder.java:655)
-        //     at com.strobel.decompiler.languages.java.ast.AstBuilder.addTypeMembers(AstBuilder.java:532)
-        //     at com.strobel.decompiler.languages.java.ast.AstBuilder.createTypeCore(AstBuilder.java:499)
-        //     at com.strobel.decompiler.languages.java.ast.AstBuilder.createTypeNoCache(AstBuilder.java:141)
-        //     at com.strobel.decompiler.languages.java.ast.AstBuilder.createType(AstBuilder.java:130)
-        //     at com.strobel.decompiler.languages.java.ast.AstBuilder.addType(AstBuilder.java:105)
-        //     at com.strobel.decompiler.languages.java.JavaLanguage.buildAst(JavaLanguage.java:71)
-        //     at com.strobel.decompiler.languages.java.JavaLanguage.decompileType(JavaLanguage.java:59)
-        //     at us.deathmarine.luyten.FileSaver.doSaveForgeJarDecompiled(FileSaver.java:228)
-        //     at us.deathmarine.luyten.FileSaver.lambda$saveAllForgeDir$0(FileSaver.java:142)
-        //     at java.lang.Thread.run(Unknown Source)
         // 
         throw new IllegalStateException("An error occurred while decompiling this method.");
     }
@@ -383,26 +352,20 @@ public abstract class Mod
     }
     
     public void setDisplayName(final String displayName) {
-        if (Mod.mc.field_71462_r == Class61.clickGui) {
+        if (Mod.mc.currentScreen == Class135.clickGui) {
             return;
         }
         if (this.displayName == null) {
             this.displayName = displayName;
-            this.displaywidth = Hanabi.INSTANCE.fontManager.raleway17.func_78256_a(displayName);
-            this.namewidth = Hanabi.INSTANCE.fontManager.raleway17.func_78256_a(this.name);
-            if (!Hanabi.instance) {
-                System.exit(0);
-            }
+            this.displaywidth = Hanabi.INSTANCE.fontManager.raleway17.getStringWidth(displayName);
+            this.namewidth = Hanabi.INSTANCE.fontManager.raleway17.getStringWidth(this.name);
             this.posX = 0.0f;
             ModManager.needsort = true;
         }
         if (!this.displayName.equals(displayName)) {
-            if (!Hanabi.instance) {
-                System.exit(0);
-            }
             this.displayName = displayName;
-            this.displaywidth = Hanabi.INSTANCE.fontManager.raleway17.func_78256_a(displayName);
-            this.namewidth = Hanabi.INSTANCE.fontManager.raleway17.func_78256_a(this.name);
+            this.displaywidth = Hanabi.INSTANCE.fontManager.raleway17.getStringWidth(displayName);
+            this.namewidth = Hanabi.INSTANCE.fontManager.raleway17.getStringWidth(this.name);
             this.posX = 0.0f;
             ModManager.needsort = true;
         }
@@ -413,7 +376,7 @@ public abstract class Mod
     }
     
     static {
-        mc = Minecraft.func_71410_x();
-        Mod.saveTimer = new Class191();
+        mc = Minecraft.getMinecraft();
+        Mod.saveTimer = new Class205();
     }
 }

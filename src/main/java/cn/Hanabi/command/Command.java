@@ -9,7 +9,6 @@ public abstract class Command
     private String[] aliases;
     
     protected Command(final String name, final String... aliases) {
-        super();
         this.name = name;
         this.aliases = aliases;
     }

@@ -1,12 +1,58 @@
 package ClassSub;
 
-public interface Class126
+import org.lwjgl.opengl.*;
+
+public abstract class Class126
 {
-    public static final boolean 因为那里的人皮都厚你知道么我看你就像一个三岁的儿童孩子不要羡慕嫉妒你爹爹的境界你不要怄气好吗你是脸皮厚不是吗别在那里恬不知耻了好吗NMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSL   ‍;
+    private static Class282 lastUsed;
+    private static boolean inSafe;
+    public static final boolean Cracked_By_Somebody_Dumped_BY_Ganga_SupportedbySucen;
     
-    void pointExcluded(final float p0, final float p1);
+    public static void enterSafeBlock() {
+        if (Class126.inSafe) {
+            return;
+        }
+        Class197.get().flush();
+        Class126.lastUsed = Class237.getLastBind();
+        Class237.bindNone();
+        GL11.glPushAttrib(1048575);
+        GL11.glPushClientAttrib(-1);
+        GL11.glMatrixMode(5888);
+        GL11.glPushMatrix();
+        GL11.glMatrixMode(5889);
+        GL11.glPushMatrix();
+        GL11.glMatrixMode(5888);
+        Class126.inSafe = true;
+    }
     
-    void pointIntersected(final float p0, final float p1);
+    public static void leaveSafeBlock() {
+        if (!Class126.inSafe) {
+            return;
+        }
+        GL11.glMatrixMode(5889);
+        GL11.glPopMatrix();
+        GL11.glMatrixMode(5888);
+        GL11.glPopMatrix();
+        GL11.glPopClientAttrib();
+        GL11.glPopAttrib();
+        if (Class126.lastUsed != null) {
+            Class126.lastUsed.bind();
+        }
+        else {
+            Class237.bindNone();
+        }
+        Class126.inSafe = false;
+    }
     
-    void pointUsed(final float p0, final float p1);
+    public final void call() throws Class341 {
+        enterSafeBlock();
+        this.performGLOperations();
+        leaveSafeBlock();
+    }
+    
+    protected abstract void performGLOperations() throws Class341;
+    
+    static {
+        Class126.inSafe = false;
+    }
 }

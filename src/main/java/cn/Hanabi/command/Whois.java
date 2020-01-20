@@ -2,7 +2,6 @@ package cn.Hanabi.command;
 
 import org.jetbrains.annotations.*;
 import ClassSub.*;
-import cn.Hanabi.modules.World.*;
 import java.util.*;
 
 public class Whois extends Command
@@ -15,13 +14,9 @@ public class Whois extends Command
     
     @Override
     public void run(final String s, @NotNull final String[] array) {
-        if ((Class69.isDebugMode || Class69.isMod) && array.length == 1) {
-            Class295.tellPlayer("§c[Whois]Trying to search §e" + array[0] + "§c...");
-            for (final Map.Entry<String, String> entry : IRC.UserMap.entrySet()) {
-                if (entry.getKey().toString().contains(array[0]) || entry.getValue().toString().contains(array[0])) {
-                    Class295.tellPlayer("§c[Whois]§aIGN:§e" + entry.getKey().toString() + " §aUsername:§e" + (Object)entry.getValue());
-                }
-            }
+        if ((Class334.isDebugMode || Class334.isMod) && array.length == 1) {
+            Class200.tellPlayer("§c[Whois]Trying to search §e" + array[0] + "§c...");
+            new Class178(array[0]).sendPacketToServer(Class203.socket.writer);
         }
     }
     

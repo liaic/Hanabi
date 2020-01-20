@@ -24,27 +24,27 @@ public class NoSlow extends Mod
     
     @EventTarget
     public void onPre(final EventPreMotion eventPreMotion) {
-        if (NoSlow.mc.field_71439_g.func_71039_bw() && Class295.isMoving() && Class206.isOnGround(0.42) && KillAura.target == null && (this.mode.isCurrentMode("AAC") || this.mode.isCurrentMode("NCP"))) {
+        if (NoSlow.mc.thePlayer.isUsingItem() && Class200.isMoving() && Class180.isOnGround(0.42) && KillAura.target == null && (this.mode.isCurrentMode("AAC") || this.mode.isCurrentMode("NCP"))) {
             if (this.mode.isCurrentMode("AAC")) {
-                Class296.getTimer().field_74278_d = 0.7f;
+                Class211.getTimer().timerSpeed = 0.7f;
             }
-            final double field_70165_t = NoSlow.mc.field_71439_g.field_70165_t;
-            final double field_70163_u = NoSlow.mc.field_71439_g.field_70163_u;
-            final double field_70161_v = NoSlow.mc.field_71439_g.field_70161_v;
-            NoSlow.mc.field_71439_g.field_71174_a.func_147297_a((Packet)new C07PacketPlayerDigging(C07PacketPlayerDigging.Action.RELEASE_USE_ITEM, BlockPos.field_177992_a, EnumFacing.DOWN));
+            final double posX = NoSlow.mc.thePlayer.posX;
+            final double posY = NoSlow.mc.thePlayer.posY;
+            final double posZ = NoSlow.mc.thePlayer.posZ;
+            NoSlow.mc.thePlayer.sendQueue.addToSendQueue((Packet)new C07PacketPlayerDigging(C07PacketPlayerDigging.Action.RELEASE_USE_ITEM, BlockPos.ORIGIN, EnumFacing.DOWN));
         }
-        if (!NoSlow.mc.field_71439_g.func_71039_bw() && this.mode.isCurrentMode("AAC")) {
-            Class296.getTimer().field_74278_d = 1.0f;
+        if (!NoSlow.mc.thePlayer.isUsingItem() && this.mode.isCurrentMode("AAC")) {
+            Class211.getTimer().timerSpeed = 1.0f;
         }
     }
     
     @EventTarget
     public void onPost(final EventPostMotion eventPostMotion) {
-        if (NoSlow.mc.field_71439_g.func_71039_bw() && Class295.isMoving() && Class206.isOnGround(0.42) && KillAura.target == null && (this.mode.isCurrentMode("AAC") || this.mode.isCurrentMode("NCP"))) {
-            final double field_70165_t = NoSlow.mc.field_71439_g.field_70165_t;
-            final double field_70163_u = NoSlow.mc.field_71439_g.field_70163_u;
-            final double field_70161_v = NoSlow.mc.field_71439_g.field_70161_v;
-            NoSlow.mc.field_71439_g.field_71174_a.func_147297_a((Packet)new C08PacketPlayerBlockPlacement(NoSlow.mc.field_71439_g.field_71071_by.func_70448_g()));
+        if (NoSlow.mc.thePlayer.isUsingItem() && Class200.isMoving() && Class180.isOnGround(0.42) && KillAura.target == null && (this.mode.isCurrentMode("AAC") || this.mode.isCurrentMode("NCP"))) {
+            final double posX = NoSlow.mc.thePlayer.posX;
+            final double posY = NoSlow.mc.thePlayer.posY;
+            final double posZ = NoSlow.mc.thePlayer.posZ;
+            NoSlow.mc.thePlayer.sendQueue.addToSendQueue((Packet)new C08PacketPlayerBlockPlacement(NoSlow.mc.thePlayer.inventory.getCurrentItem()));
         }
     }
 }

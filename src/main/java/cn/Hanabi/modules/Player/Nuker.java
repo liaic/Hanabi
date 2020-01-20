@@ -14,8 +14,8 @@ import net.minecraft.network.*;
 public class Nuker extends Mod
 {
     ArrayList positions;
-    private Class191 timer2;
-    private Class191 timer;
+    private Class205 timer2;
+    private Class205 timer;
     private Value mode;
     private Value<Double> reach;
     private Value<Double> delay;
@@ -24,8 +24,8 @@ public class Nuker extends Mod
     public Nuker() {
         super("Nuker", Category.PLAYER);
         this.positions = null;
-        this.timer2 = new Class191();
-        this.timer = new Class191();
+        this.timer2 = new Class205();
+        this.timer = new Class205();
         this.mode = new Value("Nuker", "Mode", 0);
         this.reach = new Value<Double>("Nuker_Reach", 6.0, 1.0, 6.0, 0.1);
         this.delay = new Value<Double>("Nuker_Delay", 120.0, 0.0, 1000.0, 10.0);
@@ -41,8 +41,8 @@ public class Nuker extends Mod
     
     private void standartDestroyer(final EventPreMotion eventPreMotion) {
         BlockPos blockPos;
-        while ((blockPos = BlockPos.func_177980_a(Nuker.mc.field_71439_g.func_180425_c().func_177973_b(new Vec3i((double)this.reach.getValueState(), (double)this.reach.getValueState(), (double)this.reach.getValueState())), Nuker.mc.field_71439_g.func_180425_c().func_177971_a(new Vec3i((double)this.reach.getValueState(), (double)this.reach.getValueState(), (double)this.reach.getValueState()))).iterator().next()) != null && (!(Nuker.mc.field_71441_e.func_180495_p(blockPos).func_177230_c() instanceof BlockBed) || !this.mode.isCurrentMode("Bed")) && (!(Nuker.mc.field_71441_e.func_180495_p(blockPos).func_177230_c() instanceof BlockDragonEgg) || !this.mode.isCurrentMode("Egg"))) {
-            if (Nuker.mc.field_71441_e.func_180495_p(blockPos).func_177230_c() instanceof BlockCake) {
+        while ((blockPos = BlockPos.getAllInBox(Nuker.mc.thePlayer.getPosition().subtract(new Vec3i((double)this.reach.getValueState(), (double)this.reach.getValueState(), (double)this.reach.getValueState())), Nuker.mc.thePlayer.getPosition().add(new Vec3i((double)this.reach.getValueState(), (double)this.reach.getValueState(), (double)this.reach.getValueState()))).iterator().next()) != null && (!(Nuker.mc.theWorld.getBlockState(blockPos).getBlock() instanceof BlockBed) || !this.mode.isCurrentMode("Bed")) && (!(Nuker.mc.theWorld.getBlockState(blockPos).getBlock() instanceof BlockDragonEgg) || !this.mode.isCurrentMode("Egg"))) {
+            if (Nuker.mc.theWorld.getBlockState(blockPos).getBlock() instanceof BlockCake) {
                 if (!this.mode.isCurrentMode("Cake")) {
                     continue;
                 }
@@ -50,14 +50,14 @@ public class Nuker extends Mod
             }
         }
         if (blockPos instanceof BlockPos) {
-            final float[] array = (float[])Class229.getRotationsNeededBlock(blockPos.func_177958_n(), blockPos.func_177956_o(), blockPos.func_177952_p());
+            final float[] array = Class339.getRotationsNeededBlock(blockPos.getX(), blockPos.getY(), blockPos.getZ());
             eventPreMotion.yaw = array[0];
             eventPreMotion.pitch = array[1];
             if (this.timer.isDelayComplete(this.delay.getValueState())) {
-                Nuker.mc.field_71439_g.field_71174_a.func_147297_a((Packet)new C07PacketPlayerDigging(C07PacketPlayerDigging.Action.START_DESTROY_BLOCK, blockPos, EnumFacing.DOWN));
-                Nuker.mc.field_71439_g.field_71174_a.func_147297_a((Packet)new C07PacketPlayerDigging(C07PacketPlayerDigging.Action.STOP_DESTROY_BLOCK, blockPos, EnumFacing.DOWN));
-                Nuker.mc.field_71439_g.field_71174_a.func_147297_a((Packet)new C07PacketPlayerDigging(C07PacketPlayerDigging.Action.START_DESTROY_BLOCK, blockPos, EnumFacing.DOWN));
-                Nuker.mc.field_71439_g.func_71038_i();
+                Nuker.mc.thePlayer.sendQueue.addToSendQueue((Packet)new C07PacketPlayerDigging(C07PacketPlayerDigging.Action.START_DESTROY_BLOCK, blockPos, EnumFacing.DOWN));
+                Nuker.mc.thePlayer.sendQueue.addToSendQueue((Packet)new C07PacketPlayerDigging(C07PacketPlayerDigging.Action.STOP_DESTROY_BLOCK, blockPos, EnumFacing.DOWN));
+                Nuker.mc.thePlayer.sendQueue.addToSendQueue((Packet)new C07PacketPlayerDigging(C07PacketPlayerDigging.Action.START_DESTROY_BLOCK, blockPos, EnumFacing.DOWN));
+                Nuker.mc.thePlayer.swingItem();
                 this.timer.reset();
             }
         }

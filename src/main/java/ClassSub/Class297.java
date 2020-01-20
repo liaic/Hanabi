@@ -1,33 +1,18 @@
 package ClassSub;
 
-import net.minecraft.client.*;
-import cn.Hanabi.events.*;
-import net.minecraft.client.entity.*;
-
-public class Class297
+public interface Class297
 {
-    Minecraft mc;
-    public static final boolean Cracked_By_Somebody_Dumped_BY_Ganga_SupportedbySucen;
+    public static final boolean 心跳加快畏惧你爹爹了是不是你这个不肖子孙啊垃圾狗篮子啊你在你大哥我面前是永远抬不起头的你知道不我真的不知道要能拿�?么词语来跟你说我草你麻痹的大�?不惭的吹嘘是不是啊NMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSL�?;
     
-    public Class297() {
-        super();
-        this.mc = Minecraft.func_71410_x();
-    }
+    int getWidth(final String p0);
     
-    public void onPre(final EventPreMotion eventPreMotion) {
-        if (this.mc.field_71439_g.field_70122_E && Class295.MovementInput() && !this.mc.field_71439_g.func_70090_H()) {
-            Class296.getTimer().field_74278_d = 1.0f;
-            this.mc.field_71439_g.func_70664_aZ();
-        }
-        else if (Class295.MovementInput() && !this.mc.field_71439_g.func_70090_H()) {
-            Class295.setSpeed(0.8);
-        }
-        if (!Class295.MovementInput()) {
-            final EntityPlayerSP field_71439_g = this.mc.field_71439_g;
-            final EntityPlayerSP field_71439_g2 = this.mc.field_71439_g;
-            final double n = 0.0;
-            field_71439_g2.field_70179_y = n;
-            field_71439_g.field_70159_w = n;
-        }
-    }
+    int getHeight(final String p0);
+    
+    int getLineHeight();
+    
+    void drawString(final float p0, final float p1, final String p2);
+    
+    void drawString(final float p0, final float p1, final String p2, final Class26 p3);
+    
+    void drawString(final float p0, final float p1, final String p2, final Class26 p3, final int p4, final int p5);
 }

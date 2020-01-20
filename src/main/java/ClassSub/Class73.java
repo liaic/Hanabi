@@ -1,36 +1,26 @@
-package cn.Hanabi.modules.World;
+package ClassSub;
 
-import java.net.*;
-import ClassSub.*;
-import java.io.*;
+import java.awt.event.*;
+import net.minecraftforge.fml.common.*;
 
-class Class73 extends Thread
+class Class73 implements ActionListener
 {
-    final IRC this$0;
+    final String val$notice;
+    final Class98 this$0;
     public static final boolean Cracked_By_Somebody_Dumped_BY_Ganga_SupportedbySucen;
     
-    Class73(final IRC this$0) {
-        ((Class73)this).this$0 = this$0;
-        super();
+    Class73(final Class98 this$0, final String val$notice) {
+        this.this$0 = this$0;
+        this.val$notice = val$notice;
     }
     
     @Override
-    public void run() {
-        this.setName("Connect");
-        try {
-            cn.Hanabi.modules.World.IRC.access$002(((Class73)this).this$0, false);
-            ((Class73)this).this$0.socket = new Socket("47.244.128.222", 8687);
-            (cn.Hanabi.modules.World.IRC.pw = new PrintWriter(((Class73)this).this$0.socket.getOutputStream(), true)).println(Class69.username + "|" + Class69.password + "|Hanabi");
-            ((Class73)this).this$0.br = new BufferedReader(new InputStreamReader(((Class73)this).this$0.socket.getInputStream(), "UTF-8"));
-            Thread.sleep(3000L);
-            cn.Hanabi.modules.World.IRC.access$002(((Class73)this).this$0, true);
-            ((Class73)this).this$0.new Class145().start();
-            if (Class69.password.length() < 32) {
-                System.exit(0);
-            }
+    public void actionPerformed(final ActionEvent actionEvent) {
+        if (this.val$notice.contains("你妈" + "JAVA.SYSTEM".replaceAll("...........", "�?") + "TEST".replaceAll("....", "�?")) || this.val$notice.contains("失败")) {
+            FMLCommonHandler.instance().exitJava(0, true);
         }
-        catch (Throwable t) {
-            t.printStackTrace();
+        else {
+            this.this$0.setVisible(false);
         }
     }
 }

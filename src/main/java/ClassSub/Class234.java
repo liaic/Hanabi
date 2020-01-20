@@ -1,31 +1,81 @@
 package ClassSub;
 
-private class Class234
+public class Class234 implements Class92
 {
-    public Class140 image;
-    public int duration;
-    public int x;
-    public int y;
-    final Class173 this$0;
+    private float[][] triangles;
     public static final boolean Cracked_By_Somebody_Dumped_BY_Ganga_SupportedbySucen;
     
-    public Class234(final Class173 this$0, final Class140 image, final int duration) {
-        this.this$0 = this$0;
-        super();
-        this.x = -1;
-        this.y = -1;
-        this.image = image;
-        this.duration = duration;
+    public Class234(final Class92 class92) {
+        this.triangles = new float[class92.getTriangleCount() * 6 * 3][2];
+        int n = 0;
+        for (int i = 0; i < class92.getTriangleCount(); ++i) {
+            float n2 = 0.0f;
+            float n3 = 0.0f;
+            for (int j = 0; j < 3; ++j) {
+                final float[] array = class92.getTrianglePoint(i, j);
+                n2 += array[0];
+                n3 += array[1];
+            }
+            final float n4 = n2 / 3.0f;
+            final float n5 = n3 / 3.0f;
+            for (int k = 0; k < 3; ++k) {
+                int n6 = k + 1;
+                if (n6 > 2) {
+                    n6 = 0;
+                }
+                final float[] array2 = class92.getTrianglePoint(i, k);
+                final float[] array3 = class92.getTrianglePoint(i, n6);
+                array2[0] = (array2[0] + array3[0]) / 2.0f;
+                array2[1] = (array2[1] + array3[1]) / 2.0f;
+                this.triangles[n * 3 + 0][0] = n4;
+                this.triangles[n * 3 + 0][1] = n5;
+                this.triangles[n * 3 + 1][0] = array2[0];
+                this.triangles[n * 3 + 1][1] = array2[1];
+                this.triangles[n * 3 + 2][0] = array3[0];
+                this.triangles[n * 3 + 2][1] = array3[1];
+                ++n;
+            }
+            for (int l = 0; l < 3; ++l) {
+                int n7 = l + 1;
+                if (n7 > 2) {
+                    n7 = 0;
+                }
+                final float[] array4 = class92.getTrianglePoint(i, l);
+                final float[] array5 = class92.getTrianglePoint(i, n7);
+                array5[0] = (array4[0] + array5[0]) / 2.0f;
+                array5[1] = (array4[1] + array5[1]) / 2.0f;
+                this.triangles[n * 3 + 0][0] = n4;
+                this.triangles[n * 3 + 0][1] = n5;
+                this.triangles[n * 3 + 1][0] = array4[0];
+                this.triangles[n * 3 + 1][1] = array4[1];
+                this.triangles[n * 3 + 2][0] = array5[0];
+                this.triangles[n * 3 + 2][1] = array5[1];
+                ++n;
+            }
+        }
     }
     
-    public Class234(final Class173 this$0, final int duration, final int x, final int y) {
-        this.this$0 = this$0;
-        super();
-        this.x = -1;
-        this.y = -1;
-        this.image = Class173.access$000(this$0).getSubImage(x, y);
-        this.duration = duration;
-        this.x = x;
-        this.y = y;
+    @Override
+    public void addPolyPoint(final float n, final float n2) {
+    }
+    
+    @Override
+    public int getTriangleCount() {
+        return this.triangles.length / 3;
+    }
+    
+    @Override
+    public float[] getTrianglePoint(final int n, final int n2) {
+        final float[] array = this.triangles[n * 3 + n2];
+        return new float[] { array[0], array[1] };
+    }
+    
+    @Override
+    public void startHole() {
+    }
+    
+    @Override
+    public boolean triangulate() {
+        return true;
     }
 }

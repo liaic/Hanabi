@@ -1,20 +1,51 @@
 package ClassSub;
 
-import java.awt.event.*;
-
-class Class209 implements ActionListener
+class Class209
 {
-    final Class321.Class180 this$0;
+    private float yaw;
+    private float pitch;
     public static final boolean Cracked_By_Somebody_Dumped_BY_Ganga_SupportedbySucen;
     
-    Class209(final Class321.Class180 this$0) {
-        this.this$0 = this$0;
-        super();
+    public Class209(final float yaw, final float pitch) {
+        this.yaw = yaw;
+        this.pitch = pitch;
     }
     
-    @Override
-    public void actionPerformed(final ActionEvent actionEvent) {
-        this.this$0.okPressed = true;
-        this.this$0.setVisible(false);
+    public Class209() {
+        this(0.0f, 0.0f);
+    }
+    
+    public float getYaw() {
+        return this.yaw;
+    }
+    
+    public float getPitch() {
+        return this.pitch;
+    }
+    
+    public void setYaw(final float yaw) {
+        this.yaw = yaw;
+    }
+    
+    public void setPitch(final float pitch) {
+        this.pitch = pitch;
+    }
+    
+    public Class209 constrantAngle() {
+        this.setYaw(this.getYaw() % 360.0f);
+        this.setPitch(this.getPitch() % 360.0f);
+        while (this.getYaw() <= -180.0f) {
+            this.setYaw(this.getYaw() + 360.0f);
+        }
+        while (this.getPitch() <= -180.0f) {
+            this.setPitch(this.getPitch() + 360.0f);
+        }
+        while (this.getYaw() > 180.0f) {
+            this.setYaw(this.getYaw() - 360.0f);
+        }
+        while (this.getPitch() > 180.0f) {
+            this.setPitch(this.getPitch() - 360.0f);
+        }
+        return this;
     }
 }

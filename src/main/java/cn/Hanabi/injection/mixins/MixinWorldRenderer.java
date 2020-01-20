@@ -8,14 +8,10 @@ import java.nio.*;
 public abstract class MixinWorldRenderer
 {
     @Shadow
-    private boolean field_78939_q;
+    private boolean noColor;
     @Shadow
-    private IntBuffer field_178999_b;
-    
-    public MixinWorldRenderer() {
-        super();
-    }
+    private IntBuffer rawIntBuffer;
     
     @Shadow
-    public abstract int func_78909_a(final int p0);
+    public abstract int getColorIndex(final int p0);
 }

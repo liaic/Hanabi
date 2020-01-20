@@ -1,59 +1,37 @@
 package ClassSub;
 
-public class Class320
+public enum Class320
 {
-    private float opacity;
-    private long lastMS;
+    TURKIS(-15024996), 
+    GREEN(-13710223), 
+    BLUE(-13330213), 
+    PURPLE(-6596170), 
+    ASPHALT(-13350562), 
+    YELLOW(-932849), 
+    ORANGE(-812014), 
+    RED(-1618884), 
+    WHITE(-1249039), 
+    SILVER(-4340793), 
+    DARK_BLUE(-14057287), 
+    DARK_GREEN(-14176672), 
+    DARK_TURKIS(-15294331), 
+    DARK_PURPLE(-7453523), 
+    DARK_ASPHALT(-13877680), 
+    DARK_ORANGE_ONE(-1671646), 
+    DARK_ORANGE_TWO(-2927616), 
+    GREY(-6969946), 
+    DARK_RED(-4179669), 
+    DARK_GREY(-8418163);
+    
+    public int c;
+    private static final Class320[] $VALUES;
     public static final boolean Cracked_By_Somebody_Dumped_BY_Ganga_SupportedbySucen;
     
-    public Class320(final int n) {
-        super();
-        this.opacity = n;
-        this.lastMS = System.currentTimeMillis();
+    private Class320(final int c) {
+        this.c = c;
     }
     
-    public void interpolate(final float n) {
-        final long currentTimeMillis = System.currentTimeMillis();
-        final long n2 = currentTimeMillis - this.lastMS;
-        this.lastMS = currentTimeMillis;
-        this.opacity = this.calculateCompensation(n, this.opacity, n2, 20);
-    }
-    
-    public void interp(final float n, final int n2) {
-        final long currentTimeMillis = System.currentTimeMillis();
-        final long n3 = currentTimeMillis - this.lastMS;
-        this.lastMS = currentTimeMillis;
-        this.opacity = this.calculateCompensation(n, this.opacity, n3, n2);
-    }
-    
-    public float getOpacity() {
-        return (int)this.opacity;
-    }
-    
-    public void setOpacity(final float opacity) {
-        this.opacity = opacity;
-    }
-    
-    public float calculateCompensation(final float n, float n2, long n3, final int n4) {
-        final float n5 = n2 - n;
-        if (n3 < 1L) {
-            n3 = 1L;
-        }
-        if (n5 > n4) {
-            n2 -= ((n4 * n3 / 16L < 0.25) ? 0.5 : ((double)(n4 * n3 / 16L)));
-            if (n2 < n) {
-                n2 = n;
-            }
-        }
-        else if (n5 < -n4) {
-            n2 += ((n4 * n3 / 16L < 0.25) ? 0.5 : ((double)(n4 * n3 / 16L)));
-            if (n2 > n) {
-                n2 = n;
-            }
-        }
-        else {
-            n2 = n;
-        }
-        return n2;
+    static {
+        $VALUES = new Class320[] { Class320.TURKIS, Class320.GREEN, Class320.BLUE, Class320.PURPLE, Class320.ASPHALT, Class320.YELLOW, Class320.ORANGE, Class320.RED, Class320.WHITE, Class320.SILVER, Class320.DARK_BLUE, Class320.DARK_GREEN, Class320.DARK_TURKIS, Class320.DARK_PURPLE, Class320.DARK_ASPHALT, Class320.DARK_ORANGE_ONE, Class320.DARK_ORANGE_TWO, Class320.GREY, Class320.DARK_RED, Class320.DARK_GREY };
     }
 }

@@ -19,7 +19,7 @@ public class Strafe extends Mod
     @EventTarget
     public void onPreMotion(final EventPreMotion eventPreMotion) {
         if (!Strafe.mc.field_71439_g.field_70122_E && ((IKeyBinding)Strafe.mc.field_71474_y.field_74314_A).getPress()) {
-            Class295.setSpeed(Class295.getSpeed());
+            Class200.setSpeed(Class200.getSpeed());
         }
     }
 }

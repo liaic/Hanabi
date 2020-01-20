@@ -7,7 +7,6 @@ public class EventKey implements Event
     private int key;
     
     public EventKey(final int key) {
-        super();
         this.key = key;
     }
     

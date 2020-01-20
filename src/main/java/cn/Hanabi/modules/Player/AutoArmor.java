@@ -15,9 +15,9 @@ import net.minecraft.enchantment.*;
 
 public class AutoArmor extends Mod
 {
-    private Class191 timeHelper;
-    public Class191 timer;
-    public Class191 droptimer;
+    private Class205 timeHelper;
+    public Class205 timer;
+    public Class205 droptimer;
     private Value<Boolean> openInv;
     private Value<Double> delay;
     private Value inventoryKeepTimeVal;
@@ -35,9 +35,9 @@ public class AutoArmor extends Mod
     
     public AutoArmor() {
         super("AutoArmor", Category.PLAYER);
-        this.timeHelper = new Class191();
-        this.timer = new Class191();
-        this.droptimer = new Class191();
+        this.timeHelper = new Class205();
+        this.timer = new Class205();
+        this.droptimer = new Class205();
         this.openInv = new Value<Boolean>("AutoArmor_SortInInv", true);
         this.delay = new Value<Double>("AutoArmor_Delay", 60.0, 0.0, 1000.0, 10.0);
         this.inventoryKeepTimeVal = new Value("AutoArmor_TimeInInv", (T)1000.0, (T)0.0, (T)10000.0, 100.0);
@@ -53,18 +53,18 @@ public class AutoArmor extends Mod
     
     @EventTarget
     public void onEvent(final EventUpdate eventUpdate) {
-        if (AutoArmor.mc.field_71439_g == null) {
-            AutoArmor.mc.field_71439_g.field_71174_a.func_147297_a((Packet)new C0DPacketCloseWindow(AutoArmor.mc.field_71439_g.field_71069_bz.field_75152_c));
+        if (AutoArmor.mc.thePlayer == null) {
+            AutoArmor.mc.thePlayer.sendQueue.addToSendQueue((Packet)new C0DPacketCloseWindow(AutoArmor.mc.thePlayer.inventoryContainer.windowId));
             return;
         }
-        if (AutoArmor.mc.field_71462_r != null && !(AutoArmor.mc.field_71462_r instanceof GuiInventory)) {
+        if (AutoArmor.mc.currentScreen != null && !(AutoArmor.mc.currentScreen instanceof GuiInventory)) {
             if (AutoArmor.openedInventory) {
-                AutoArmor.mc.field_71439_g.field_71174_a.func_147297_a((Packet)new C0DPacketCloseWindow(AutoArmor.mc.field_71439_g.field_71069_bz.field_75152_c));
+                AutoArmor.mc.thePlayer.sendQueue.addToSendQueue((Packet)new C0DPacketCloseWindow(AutoArmor.mc.thePlayer.inventoryContainer.windowId));
                 AutoArmor.openedInventory = false;
             }
             return;
         }
-        final boolean b = (this.openInv.getValueState() && AutoArmor.mc.field_71462_r != null && AutoArmor.mc.field_71462_r instanceof GuiInventory) || !(boolean)this.openInv.getValueState();
+        final boolean b = (this.openInv.getValueState() && AutoArmor.mc.currentScreen != null && AutoArmor.mc.currentScreen instanceof GuiInventory) || !this.openInv.getValueState();
         boolean b2 = true;
         for (final String s : this.getArmors()) {
             b2 = false;
@@ -72,26 +72,24 @@ public class AutoArmor extends Mod
             int bestInInventory = this.getBestInInventory(s);
             boolean b3 = true;
             if (bestInInventory != -1) {
-                b3 = (this.getValence(AutoArmor.mc.field_71439_g.field_71069_bz.func_75139_a(bestInInventory).func_75211_c()) > this.getValence(AutoArmor.mc.field_71439_g.field_71069_bz.func_75139_a(slotByName).func_75211_c()));
+                b3 = (this.getValence(AutoArmor.mc.thePlayer.inventoryContainer.getSlot(bestInInventory).getStack()) > this.getValence(AutoArmor.mc.thePlayer.inventoryContainer.getSlot(slotByName).getStack()));
             }
-            if (b3 && bestInInventory != -1 && !this.armorContains.containsKey(AutoArmor.mc.field_71439_g.field_71069_bz.func_75139_a(bestInInventory).func_75211_c())) {
-                this.armorContains.put(AutoArmor.mc.field_71439_g.field_71069_bz.func_75139_a(bestInInventory).func_75211_c(), System.currentTimeMillis());
+            if (b3 && bestInInventory != -1 && !this.armorContains.containsKey(AutoArmor.mc.thePlayer.inventoryContainer.getSlot(bestInInventory).getStack())) {
+                this.armorContains.put(AutoArmor.mc.thePlayer.inventoryContainer.getSlot(bestInInventory).getStack(), System.currentTimeMillis());
             }
             if (b) {
-                if (bestInInventory != -1 && AutoArmor.mc.field_71439_g.field_71069_bz.func_75139_a(slotByName).func_75216_d() && this.getValence(AutoArmor.mc.field_71439_g.field_71069_bz.func_75139_a(bestInInventory).func_75211_c()) < this.getValence(AutoArmor.mc.field_71439_g.field_71069_bz.func_75139_a(slotByName).func_75211_c())) {
+                if (bestInInventory != -1 && AutoArmor.mc.thePlayer.inventoryContainer.getSlot(slotByName).getHasStack() && this.getValence(AutoArmor.mc.thePlayer.inventoryContainer.getSlot(bestInInventory).getStack()) < this.getValence(AutoArmor.mc.thePlayer.inventoryContainer.getSlot(slotByName).getStack())) {
                     bestInInventory = -1;
                 }
-                if (this.timer.isDelayComplete((long)(Object)this.delay.getValueState()) && bestInInventory != -1 && this.armorContains.containsKey(AutoArmor.mc.field_71439_g.field_71069_bz.func_75139_a(bestInInventory).func_75211_c()) && System.currentTimeMillis() - this.armorContains.get(AutoArmor.mc.field_71439_g.field_71069_bz.func_75139_a(bestInInventory).func_75211_c()) >= 200L) {
+                if (this.timer.isDelayComplete((long)(Object)this.delay.getValueState()) && bestInInventory != -1 && this.armorContains.containsKey(AutoArmor.mc.thePlayer.inventoryContainer.getSlot(bestInInventory).getStack()) && System.currentTimeMillis() - this.armorContains.get(AutoArmor.mc.thePlayer.inventoryContainer.getSlot(bestInInventory).getStack()) >= 200L) {
                     this.putOnItem(slotByName, bestInInventory);
-                    this.armorContains.remove(AutoArmor.mc.field_71439_g.field_71069_bz.func_75139_a(bestInInventory).func_75211_c());
+                    this.armorContains.remove(AutoArmor.mc.thePlayer.inventoryContainer.getSlot(bestInInventory).getStack());
                     this.timer.reset();
                 }
-                final Iterator<Integer> iterator2 = this.findArmor(s).iterator();
-                while (iterator2.hasNext()) {
-                    final int intValue = (int)iterator2.next();
+                for (final int intValue : this.findArmor(s)) {
                     int n = 0;
                     if (slotByName != -1) {
-                        n = ((this.getValence(AutoArmor.mc.field_71439_g.field_71069_bz.func_75139_a(slotByName).func_75211_c()) >= this.getValence(AutoArmor.mc.field_71439_g.field_71069_bz.func_75139_a(intValue).func_75211_c())) ? 1 : 0);
+                        n = ((this.getValence(AutoArmor.mc.thePlayer.inventoryContainer.getSlot(slotByName).getStack()) >= this.getValence(AutoArmor.mc.thePlayer.inventoryContainer.getSlot(intValue).getStack())) ? 1 : 0);
                     }
                     if (n != 0) {
                         b2 = false;
@@ -104,7 +102,7 @@ public class AutoArmor extends Mod
             }
         }
         if (b2) {
-            AutoArmor.mc.field_71439_g.field_71174_a.func_147297_a((Packet)new C0DPacketCloseWindow(AutoArmor.mc.field_71439_g.field_71069_bz.field_75152_c));
+            AutoArmor.mc.thePlayer.sendQueue.addToSendQueue((Packet)new C0DPacketCloseWindow(AutoArmor.mc.thePlayer.inventoryContainer.windowId));
             AutoArmor.openedInventory = false;
         }
     }
@@ -116,12 +114,12 @@ public class AutoArmor extends Mod
                 final int bestArmor = this.getBestArmor(array[i]);
                 if (bestArmor != -1) {
                     AutoArmor.complete = false;
-                    if (AutoArmor.mc.field_71439_g.field_71071_by.field_70460_b[i] == null) {
-                        AutoArmor.mc.field_71442_b.func_78753_a(0, bestArmor, 0, 1, (EntityPlayer)AutoArmor.mc.field_71439_g);
+                    if (AutoArmor.mc.thePlayer.inventory.armorInventory[i] == null) {
+                        AutoArmor.mc.playerController.windowClick(0, bestArmor, 0, 1, (EntityPlayer)AutoArmor.mc.thePlayer);
                         this.timeHelper.reset();
                     }
-                    else if (isBetter(this.getInventoryItem(bestArmor), AutoArmor.mc.field_71439_g.field_71071_by.field_70460_b[i].func_77973_b())) {
-                        AutoArmor.mc.field_71442_b.func_78753_a(0, 8 - i, 0, 1, (EntityPlayer)AutoArmor.mc.field_71439_g);
+                    else if (isBetter(this.getInventoryItem(bestArmor), AutoArmor.mc.thePlayer.inventory.armorInventory[i].getItem())) {
+                        AutoArmor.mc.playerController.windowClick(0, 8 - i, 0, 1, (EntityPlayer)AutoArmor.mc.thePlayer);
                         this.timeHelper.reset();
                     }
                 }
@@ -137,20 +135,20 @@ public class AutoArmor extends Mod
     }
     
     public static boolean isBetter(final Item item, final Item item2) {
-        return item instanceof ItemArmor && item2 instanceof ItemArmor && ((ItemArmor)item).field_77879_b > ((ItemArmor)item2).field_77879_b;
+        return item instanceof ItemArmor && item2 instanceof ItemArmor && ((ItemArmor)item).damageReduceAmount > ((ItemArmor)item2).damageReduceAmount;
     }
     
     private Item getInventoryItem(final int n) {
-        return (AutoArmor.mc.field_71439_g.field_71069_bz.func_75139_a(n).func_75211_c() == null) ? null : AutoArmor.mc.field_71439_g.field_71069_bz.func_75139_a(n).func_75211_c().func_77973_b();
+        return (AutoArmor.mc.thePlayer.inventoryContainer.getSlot(n).getStack() == null) ? null : AutoArmor.mc.thePlayer.inventoryContainer.getSlot(n).getStack().getItem();
     }
     
     private void clearLists() {
         for (final ItemStack itemStack : this.closeList) {
             ItemStack itemStack2 = null;
-            final InventoryPlayer field_71071_by = AutoArmor.mc.field_71439_g.field_71071_by;
+            final InventoryPlayer inventory = AutoArmor.mc.thePlayer.inventory;
             for (int i = 0; i < 45; ++i) {
-                final ItemStack func_75211_c = AutoArmor.mc.field_71439_g.field_71069_bz.func_75139_a(i).func_75211_c();
-                if (func_75211_c != null && itemStack == func_75211_c) {
+                final ItemStack getStack = AutoArmor.mc.thePlayer.inventoryContainer.getSlot(i).getStack();
+                if (getStack != null && itemStack == getStack) {
                     itemStack2 = itemStack;
                 }
             }
@@ -161,23 +159,23 @@ public class AutoArmor extends Mod
     }
     
     private void putOnItem(final int n, final int n2) {
-        if (Class21.abuses < 0) {
+        if (Class346.abuses < 0) {
             this.dropOldArmor(n2);
             return;
         }
-        if (n != -1 && AutoArmor.mc.field_71439_g.field_71069_bz.func_75139_a(n).func_75211_c() != null) {
+        if (n != -1 && AutoArmor.mc.thePlayer.inventoryContainer.getSlot(n).getStack() != null) {
             this.dropOldArmor(n);
         }
         this.inventoryAction(n2);
     }
     
     private void dropOldArmor(final int n) {
-        AutoArmor.mc.field_71439_g.field_71069_bz.func_75144_a(n, 0, 4, (EntityPlayer)AutoArmor.mc.field_71439_g);
-        AutoArmor.mc.field_71442_b.func_78753_a(AutoArmor.mc.field_71439_g.field_71069_bz.field_75152_c, n, 1, 4, (EntityPlayer)AutoArmor.mc.field_71439_g);
+        AutoArmor.mc.thePlayer.inventoryContainer.slotClick(n, 0, 4, (EntityPlayer)AutoArmor.mc.thePlayer);
+        AutoArmor.mc.playerController.windowClick(AutoArmor.mc.thePlayer.inventoryContainer.windowId, n, 1, 4, (EntityPlayer)AutoArmor.mc.thePlayer);
     }
     
     private void inventoryAction(final int n) {
-        AutoArmor.mc.field_71442_b.func_78753_a(AutoArmor.mc.field_71439_g.field_71069_bz.field_75152_c, n, 1, 1, (EntityPlayer)AutoArmor.mc.field_71439_g);
+        AutoArmor.mc.playerController.windowClick(AutoArmor.mc.thePlayer.inventoryContainer.windowId, n, 1, 1, (EntityPlayer)AutoArmor.mc.thePlayer);
     }
     
     private List<String> getArmors() {
@@ -185,48 +183,17 @@ public class AutoArmor extends Mod
     }
     
     private int[] getIdsByName(final String s) {
-        int n = -1;
-        switch (s.hashCode()) {
-            case -1220934547: {
-                if (s.equals("helmet")) {
-                    n = 0;
-                    break;
-                }
-                break;
-            }
-            case 93922241: {
-                if (s.equals("boots")) {
-                    n = 1;
-                    break;
-                }
-                break;
-            }
-            case 1069952181: {
-                if (s.equals("chestplate")) {
-                    n = 2;
-                    break;
-                }
-                break;
-            }
-            case 1735676010: {
-                if (s.equals("leggings")) {
-                    n = 3;
-                    break;
-                }
-                break;
-            }
-        }
-        switch (n) {
-            case 0: {
+        switch (s) {
+            case "helmet": {
                 return this.itemHelmet;
             }
-            case 1: {
+            case "boots": {
                 return this.itemBoots;
             }
-            case 2: {
+            case "chestplate": {
                 return this.itemChestplate;
             }
-            case 3: {
+            case "leggings": {
                 return this.itemLeggings;
             }
             default: {
@@ -236,15 +203,15 @@ public class AutoArmor extends Mod
     }
     
     private List<Integer> findArmor(final String s) {
-        final int[] array = (int[])this.getIdsByName(s);
+        final int[] array = this.getIdsByName(s);
         final ArrayList<Integer> list = new ArrayList<Integer>();
-        for (int i = 9; i < AutoArmor.mc.field_71439_g.field_71069_bz.func_75138_a().size(); ++i) {
-            final ItemStack func_75211_c = AutoArmor.mc.field_71439_g.field_71069_bz.func_75139_a(i).func_75211_c();
-            if (func_75211_c != null) {
-                final int func_150891_b = Item.func_150891_b(func_75211_c.func_77973_b());
+        for (int i = 9; i < AutoArmor.mc.thePlayer.inventoryContainer.getInventory().size(); ++i) {
+            final ItemStack getStack = AutoArmor.mc.thePlayer.inventoryContainer.getSlot(i).getStack();
+            if (getStack != null) {
+                final int getIdFromItem = Item.getIdFromItem(getStack.getItem());
                 int[] array2;
                 for (int length = (array2 = array).length, j = 0; j < length; ++j) {
-                    if (func_150891_b == array2[j]) {
+                    if (getIdFromItem == array2[j]) {
                         list.add(i);
                     }
                 }
@@ -255,17 +222,15 @@ public class AutoArmor extends Mod
     
     private int getBestInInventory(final String s) {
         int n = -1;
-        final Iterator<Integer> iterator = this.findArmor(s).iterator();
-        while (iterator.hasNext()) {
-            final int intValue = (int)iterator.next();
+        for (final int intValue : this.findArmor(s)) {
             if (n == -1) {
                 n = intValue;
             }
-            if (AutoArmor.mc.field_71439_g.field_71069_bz.func_75139_a(intValue) != null) {
-                if (!(AutoArmor.mc.field_71439_g.field_71069_bz.func_75139_a(intValue).func_75211_c().func_77973_b() instanceof ItemArmor)) {
+            if (AutoArmor.mc.thePlayer.inventoryContainer.getSlot(intValue) != null) {
+                if (!(AutoArmor.mc.thePlayer.inventoryContainer.getSlot(intValue).getStack().getItem() instanceof ItemArmor)) {
                     continue;
                 }
-                if (this.getValence(AutoArmor.mc.field_71439_g.field_71069_bz.func_75139_a(intValue).func_75211_c()) <= this.getValence(AutoArmor.mc.field_71439_g.field_71069_bz.func_75139_a(n).func_75211_c())) {
+                if (this.getValence(AutoArmor.mc.thePlayer.inventoryContainer.getSlot(intValue).getStack()) <= this.getValence(AutoArmor.mc.thePlayer.inventoryContainer.getSlot(n).getStack())) {
                     continue;
                 }
                 n = intValue;
@@ -276,51 +241,20 @@ public class AutoArmor extends Mod
     
     private int getSlotByName(final String s) {
         int n = -1;
-        int n2 = -1;
-        switch (s.hashCode()) {
-            case -1220934547: {
-                if (s.equals("helmet")) {
-                    n2 = 0;
-                    break;
-                }
-                break;
-            }
-            case 93922241: {
-                if (s.equals("boots")) {
-                    n2 = 1;
-                    break;
-                }
-                break;
-            }
-            case 1069952181: {
-                if (s.equals("chestplate")) {
-                    n2 = 2;
-                    break;
-                }
-                break;
-            }
-            case 1735676010: {
-                if (s.equals("leggings")) {
-                    n2 = 3;
-                    break;
-                }
-                break;
-            }
-        }
-        switch (n2) {
-            case 0: {
+        switch (s) {
+            case "helmet": {
                 n = 5;
                 break;
             }
-            case 1: {
+            case "boots": {
                 n = 8;
                 break;
             }
-            case 2: {
+            case "chestplate": {
                 n = 6;
                 break;
             }
-            case 3: {
+            case "leggings": {
                 n = 7;
                 break;
             }
@@ -329,10 +263,10 @@ public class AutoArmor extends Mod
     }
     
     private double getProtectionValue(final ItemStack itemStack) {
-        if (!(itemStack.func_77973_b() instanceof ItemArmor)) {
+        if (!(itemStack.getItem() instanceof ItemArmor)) {
             return 0.0;
         }
-        return ((ItemArmor)itemStack.func_77973_b()).field_77879_b + (100 - ((ItemArmor)itemStack.func_77973_b()).field_77879_b * 4) * EnchantmentHelper.func_77506_a(Enchantment.field_180310_c.field_77352_x, itemStack) * 4 * 0.0075 + EnchantmentHelper.func_77506_a(Enchantment.field_77329_d.field_77352_x, itemStack) + EnchantmentHelper.func_77506_a(Enchantment.field_180309_e.field_77352_x, itemStack) + EnchantmentHelper.func_77506_a(Enchantment.field_77327_f.field_77352_x, itemStack) + EnchantmentHelper.func_77506_a(Enchantment.field_180308_g.field_77352_x, itemStack) + EnchantmentHelper.func_77506_a(Enchantment.field_180317_h.field_77352_x, itemStack) + EnchantmentHelper.func_77506_a(Enchantment.field_180308_g.field_77352_x, itemStack);
+        return ((ItemArmor)itemStack.getItem()).damageReduceAmount + (100 - ((ItemArmor)itemStack.getItem()).damageReduceAmount * 4) * EnchantmentHelper.getEnchantmentLevel(Enchantment.protection.effectId, itemStack) * 4 * 0.0075 + EnchantmentHelper.getEnchantmentLevel(Enchantment.fireProtection.effectId, itemStack) + EnchantmentHelper.getEnchantmentLevel(Enchantment.featherFalling.effectId, itemStack) + EnchantmentHelper.getEnchantmentLevel(Enchantment.blastProtection.effectId, itemStack) + EnchantmentHelper.getEnchantmentLevel(Enchantment.projectileProtection.effectId, itemStack) + EnchantmentHelper.getEnchantmentLevel(Enchantment.respiration.effectId, itemStack) + EnchantmentHelper.getEnchantmentLevel(Enchantment.projectileProtection.effectId, itemStack);
     }
     
     private int getValence(final ItemStack itemStack) {
@@ -340,12 +274,12 @@ public class AutoArmor extends Mod
         if (itemStack == null) {
             return 0;
         }
-        if (itemStack.func_77973_b() instanceof ItemArmor) {
-            n += ((ItemArmor)itemStack.func_77973_b()).field_77879_b;
+        if (itemStack.getItem() instanceof ItemArmor) {
+            n += ((ItemArmor)itemStack.getItem()).damageReduceAmount;
         }
-        if (itemStack != null && itemStack.func_77942_o()) {
-            n = n + (int)itemStack.func_77986_q().func_150305_b(0).func_74769_h("lvl") + (int)itemStack.func_77986_q().func_150305_b(1).func_74769_h("lvl") + (int)itemStack.func_77986_q().func_150305_b(2).func_74769_h("lvl") + (int)itemStack.func_77986_q().func_150305_b(3).func_74769_h("lvl") + (int)itemStack.func_77986_q().func_150305_b(4).func_74769_h("lvl") + (int)itemStack.func_77986_q().func_150305_b(5).func_74769_h("lvl") + (int)itemStack.func_77986_q().func_150305_b(6).func_74769_h("lvl") + (int)itemStack.func_77986_q().func_150305_b(7).func_74769_h("lvl") + (int)itemStack.func_77986_q().func_150305_b(8).func_74769_h("lvl") + (int)itemStack.func_77986_q().func_150305_b(9).func_74769_h("lvl") + (int)itemStack.func_77986_q().func_150305_b(34).func_74769_h("lvl");
+        if (itemStack != null && itemStack.hasTagCompound()) {
+            n = n + (int)itemStack.getEnchantmentTagList().getCompoundTagAt(0).getDouble("lvl") + (int)itemStack.getEnchantmentTagList().getCompoundTagAt(1).getDouble("lvl") + (int)itemStack.getEnchantmentTagList().getCompoundTagAt(2).getDouble("lvl") + (int)itemStack.getEnchantmentTagList().getCompoundTagAt(3).getDouble("lvl") + (int)itemStack.getEnchantmentTagList().getCompoundTagAt(4).getDouble("lvl") + (int)itemStack.getEnchantmentTagList().getCompoundTagAt(5).getDouble("lvl") + (int)itemStack.getEnchantmentTagList().getCompoundTagAt(6).getDouble("lvl") + (int)itemStack.getEnchantmentTagList().getCompoundTagAt(7).getDouble("lvl") + (int)itemStack.getEnchantmentTagList().getCompoundTagAt(8).getDouble("lvl") + (int)itemStack.getEnchantmentTagList().getCompoundTagAt(9).getDouble("lvl") + (int)itemStack.getEnchantmentTagList().getCompoundTagAt(34).getDouble("lvl");
         }
-        return n + (int)this.getProtectionValue(itemStack) + (itemStack.func_77958_k() - itemStack.func_77952_i());
+        return n + (int)this.getProtectionValue(itemStack) + (itemStack.getMaxDamage() - itemStack.getItemDamage());
     }
 }

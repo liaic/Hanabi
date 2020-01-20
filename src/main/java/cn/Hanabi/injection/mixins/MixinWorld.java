@@ -10,10 +10,6 @@ import org.spongepowered.asm.mixin.injection.*;
 @Mixin({ World.class })
 public class MixinWorld
 {
-    public MixinWorld() {
-        super();
-    }
-    
     @Inject(at = { @At("HEAD") }, method = { "playSoundAtEntity" }, cancellable = true)
     public void playSoundAtEntity(final Entity entityIn, final String name, final float volume, final float pitch, final CallbackInfo ci) {
         final EventSoundPlay e = new EventSoundPlay(entityIn, name);

@@ -11,7 +11,7 @@ import com.darkmagician6.eventapi.*;
 public class AutoAbuse extends Mod
 {
     public static String prefix;
-    Class191 delay;
+    Class205 delay;
     double state;
     private Value<Double> spammerdelay;
     int num;
@@ -19,14 +19,14 @@ public class AutoAbuse extends Mod
     
     public AutoAbuse() {
         super("AutoAbuse", Category.PLAYER);
-        this.delay = new Class191();
+        this.delay = new Class205();
         this.state = 0.0;
         this.spammerdelay = new Value<Double>("AutoAbuse_Delay", 2000.0, 500.0, 10000.0, 100.0);
     }
     
     @EventTarget
     public void onUpdate(final EventUpdate eventUpdate) {
-        this.setDisplayName("Delay:" + (double)(Double)this.spammerdelay.getValueState() + " Times:" + this.num);
+        this.setDisplayName("Delay:" + (double)this.spammerdelay.getValueState() + " Times:" + this.num);
         try {
             Prefix.loadText();
         }
@@ -36,7 +36,7 @@ public class AutoAbuse extends Mod
         if (this.delay.isDelayComplete((long)(Object)this.spammerdelay.getValueState())) {
             ++this.state;
             ++this.num;
-            AutoAbuse.mc.field_71439_g.func_71165_d(AutoAbuse.prefix + Class21.getAbuse());
+            AutoAbuse.mc.field_71439_g.func_71165_d(AutoAbuse.prefix + Class346.getAbuse());
             this.delay.reset();
         }
     }

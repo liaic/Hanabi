@@ -1,6 +1,0 @@
-package ClassSub;
-
-class Class71
-{
-    public static final boolean 小伙子你八仙过海的赶来狐假虎威的狗你爹爹我呢你开始死皮赖脸的咬着你亲爹我不放开企图无力回天的挽回局面呵呵一个复制机还这么不知道天高地厚爹爹我现在留你一个人在这语无伦次自我反省吧还逃跑呢你看你此时你一声不敢支了NMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSL ‏    ‎‍;
-}

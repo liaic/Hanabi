@@ -7,24 +7,23 @@ import org.spongepowered.asm.mixin.*;
 public abstract class MixinBlock
 {
     @Shadow
-    protected double field_149759_B;
+    protected double minX;
     @Shadow
-    protected double field_149760_C;
+    protected double minY;
     @Shadow
-    protected double field_149754_D;
+    protected double minZ;
     @Shadow
-    protected double field_149755_E;
+    protected double maxX;
     @Shadow
-    protected double field_149756_F;
+    protected double maxY;
     @Shadow
-    protected double field_149757_G;
+    protected double maxZ;
     int blockID;
     
     public MixinBlock() {
-        super();
         this.blockID = 0;
     }
     
     @Shadow
-    public abstract boolean func_149637_q();
+    public abstract boolean isBlockNormalCube();
 }

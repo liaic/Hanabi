@@ -23,12 +23,11 @@ public class ModManager
     private static ArrayList<Mod> enabledModList;
     
     public ModManager() {
-        super();
-        EventManager.register((Object)this);
+        EventManager.register(this);
     }
     
     public void addModules() {
-        Class96.fuckman();
+        Class302.fuckman();
         this.addModule(new Hitbox());
         this.addModule(new KeepSprint());
         this.addModule(new Velocity());
@@ -43,6 +42,7 @@ public class ModManager
         this.addModule(new Strafe());
         this.addModule(new LongJump());
         this.addModule(new NoSlow());
+        this.addModule(new FakeLag());
         this.addModule(new AutoArmor());
         this.addModule(new InvCleaner());
         this.addModule(new InvMove());
@@ -57,14 +57,9 @@ public class ModManager
         this.addModule(new AutoTools());
         this.addModule(new Mod(this, "NoCommand", Category.PLAYER) {
             final ModManager this$0;
-            
-            ModManager$1(final ModManager this$0, final String name, final Category Category) {
-                this.this$0 = this$0;
-                super(name, Category);
-            }
         });
-        this.addModule(new Class61());
-        this.addModule(new Nametags_());
+        this.addModule(new Class135());
+        this.addModule(new Nametags());
         this.addModule(new Fullbright());
         this.addModule(new ESP());
         this.addModule(new Projectiles());
@@ -82,9 +77,9 @@ public class ModManager
         this.addModule(new IRC());
         this.addModule(new HideAndSeek());
         this.addModule(new Eagle());
-        this.addModule(new Class218());
+        this.addModule(new Class118());
         this.addModule(new SpeedMine());
-        if (Class96.whatfuck()) {
+        if (Class302.whatfuck()) {
             this.addModule(new TP2Bed());
         }
         this.addModule(new AimAssist());
@@ -112,11 +107,7 @@ public class ModManager
             return getModule(name, false);
         }
         catch (Exception e) {
-            return new Mod("NMSL", Category.COMBAT) {
-                ModManager$2(final String name, final Category Category) {
-                    super(name, Category);
-                }
-            };
+            return new Mod("NMSL", Category.COMBAT) {};
         }
     }
     

@@ -10,16 +10,16 @@ public class Fly extends Mod
 {
     Value<String> mode;
     Value<Boolean> lagback;
-    Class199 GlobalHypixel;
-    Class109 MotionFly;
+    Class142 GlobalHypixel;
+    Class131 MotionFly;
     public static final boolean Cracked_By_Somebody_Dumped_BY_Ganga_SupportedbySucen;
     
     public Fly() {
         super("Fly", Category.MOVEMENT);
         this.mode = new Value<String>("Fly", "Mode", 0);
         this.lagback = new Value<Boolean>("Fly_LagBackChecks", true);
-        this.GlobalHypixel = new Class199();
-        this.MotionFly = new Class109();
+        this.GlobalHypixel = new Class142();
+        this.MotionFly = new Class131();
         this.mode.addValue("Motion");
         this.mode.addValue("Hypixel");
     }
@@ -47,8 +47,8 @@ public class Fly extends Mod
     
     @EventTarget
     public void onPullback(final EventPullback eventPullback) {
-        if ((boolean)this.lagback.getValueState()) {
-            Class128.sendClientMessage("(LagBackCheck) Fly Disabled", Class67.Class124.WARNING);
+        if (this.lagback.getValueState()) {
+            Class120.sendClientMessage("(LagBackCheck) Fly Disabled", Class84.Class307.WARNING);
             this.set(false);
         }
         if (this.mode.isCurrentMode("Hypixel")) {

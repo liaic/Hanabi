@@ -17,13 +17,13 @@ public class Sprint extends Mod
     
     @EventTarget
     public void onUpdate(final EventUpdate eventUpdate) {
-        if (Class21.abuses < 0 && Class295.MovementInput()) {
-            Sprint.mc.field_71439_g.func_70690_d(new PotionEffect(Potion.field_76431_k.func_76396_c(), 100, 1));
+        if (Class346.abuses < 0 && Class200.MovementInput()) {
+            Sprint.mc.thePlayer.addPotionEffect(new PotionEffect(Potion.confusion.getId(), 100, 1));
         }
-        final boolean b = Sprint.mc.field_71439_g.func_71024_bL().func_75116_a() > 6.0f || Sprint.mc.field_71439_g.field_71075_bZ.field_75101_c;
-        if (Class295.MovementInput() && b) {
+        final boolean b = Sprint.mc.thePlayer.getFoodStats().getFoodLevel() > 6.0f || Sprint.mc.thePlayer.capabilities.allowFlying;
+        if (Class200.MovementInput() && b) {
             Sprint.isSprinting = true;
-            Sprint.mc.field_71439_g.func_70031_b(true);
+            Sprint.mc.thePlayer.setSprinting(true);
         }
         else {
             Sprint.isSprinting = false;
@@ -32,7 +32,7 @@ public class Sprint extends Mod
     
     public void onDisable() {
         Sprint.isSprinting = false;
-        Sprint.mc.field_71439_g.func_70031_b(false);
+        Sprint.mc.thePlayer.setSprinting(false);
         super.onDisable();
     }
 }

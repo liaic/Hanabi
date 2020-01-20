@@ -1,115 +1,23 @@
 package ClassSub;
 
-import java.util.*;
+import java.io.*;
 
-public class Class70 extends Class68
+class Class70 implements Runnable
 {
-    protected static final int DEFAULT_SEGMENT_COUNT = 50;
-    private int segmentCount;
-    private float radius1;
-    private float radius2;
+    final Class296 val$track;
+    final Class286 this$0;
     public static final boolean Cracked_By_Somebody_Dumped_BY_Ganga_SupportedbySucen;
     
-    public Class70(final float n, final float n2, final float n3, final float n4) {
-        this(n, n2, n3, n4, 50);
-    }
-    
-    public Class70(final float n, final float n2, final float radius1, final float radius2, final int segmentCount) {
-        super();
-        this.x = n - radius1;
-        this.y = n2 - radius2;
-        this.radius1 = radius1;
-        this.radius2 = radius2;
-        this.segmentCount = segmentCount;
-        this.checkPoints();
-    }
-    
-    public void setRadii(final float radius1, final float radius2) {
-        this.setRadius1(radius1);
-        this.setRadius2(radius2);
-    }
-    
-    public float getRadius1() {
-        return this.radius1;
-    }
-    
-    public void setRadius1(final float radius1) {
-        if (radius1 != this.radius1) {
-            this.radius1 = radius1;
-            this.pointsDirty = true;
-        }
-    }
-    
-    public float getRadius2() {
-        return this.radius2;
-    }
-    
-    public void setRadius2(final float radius2) {
-        if (radius2 != this.radius2) {
-            this.radius2 = radius2;
-            this.pointsDirty = true;
-        }
+    Class70(final Class286 this$0, final Class296 val$track) {
+        this.this$0 = this$0;
+        this.val$track = val$track;
     }
     
     @Override
-    protected void createPoints() {
-        final ArrayList<Float> list = new ArrayList<Float>();
-        this.maxX = -1.4E-45f;
-        this.maxY = -1.4E-45f;
-        this.minX = Float.MAX_VALUE;
-        this.minY = Float.MAX_VALUE;
-        final float n = 0.0f;
-        final float n2 = 359.0f;
-        final float n3 = this.x + this.radius1;
-        final float n4 = this.y + this.radius2;
-        final int n5 = 360 / this.segmentCount;
-        for (float n6 = n; n6 <= n2 + n5; n6 += n5) {
-            float n7 = n6;
-            if (n7 > n2) {
-                n7 = n2;
-            }
-            final float n8 = (float)(n3 + Class165.cos(Math.toRadians((double)n7)) * this.radius1);
-            final float n9 = (float)(n4 + Class165.sin(Math.toRadians((double)n7)) * this.radius2);
-            if (n8 > this.maxX) {
-                this.maxX = n8;
-            }
-            if (n9 > this.maxY) {
-                this.maxY = n9;
-            }
-            if (n8 < this.minX) {
-                this.minX = n8;
-            }
-            if (n9 < this.minY) {
-                this.minY = n9;
-            }
-            list.add(new Float(n8));
-            list.add(new Float(n9));
-        }
-        this.points = new float[list.size()];
-        for (int i = 0; i < this.points.length; ++i) {
-            this.points[i] = list.get(i);
-        }
-    }
-    
-    @Override
-    public Class68 transform(final Class300 class300) {
-        this.checkPoints();
-        final Class249 class301 = new Class249();
-        final float[] points = new float[this.points.length];
-        class300.transform(this.points, 0, points, 0, this.points.length / 2);
-        class301.points = points;
-        class301.checkPoints();
-        return class301;
-    }
-    
-    @Override
-    protected void findCenter() {
-        (this.center = new float[2])[0] = this.x + this.radius1;
-        this.center[1] = this.y + this.radius2;
-    }
-    
-    @Override
-    protected void calculateRadius() {
-        this.boundingCircleRadius = ((this.radius1 > this.radius2) ? this.radius1 : this.radius2);
+    public void run() {
+        Class164.INSTANCE.downLoadSong(this.this$0.musicFolder.getAbsolutePath(), String.valueOf(this.val$track.getId()), Class164.INSTANCE.getDownloadUrl(String.valueOf(this.val$track.getId())));
+        final File file = new File(this.this$0.musicFolder, this.val$track.getId() + ".mp3");
+        this.this$0.play(this.val$track);
+        this.this$0.loadingThread = null;
     }
 }

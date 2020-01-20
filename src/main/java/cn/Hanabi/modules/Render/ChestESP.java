@@ -20,7 +20,7 @@ public class ChestESP extends Mod
     }
     
     public void onEnable() {
-        ChestESP.mc.field_71438_f.func_72712_a();
+        ChestESP.mc.renderGlobal.loadRenderers();
         this.list.clear();
     }
     
@@ -35,10 +35,10 @@ public class ChestESP extends Mod
     @EventTarget
     public void onRender(final EventRender eventRender) {
         for (final BlockPos blockPos : this.list) {
-            if (!(ChestESP.mc.field_71441_e.func_180495_p(blockPos).func_177230_c() instanceof BlockChest) && !(ChestESP.mc.field_71441_e.func_180495_p(blockPos).func_177230_c() instanceof BlockEnderChest)) {
+            if (!(ChestESP.mc.theWorld.getBlockState(blockPos).getBlock() instanceof BlockChest) && !(ChestESP.mc.theWorld.getBlockState(blockPos).getBlock() instanceof BlockEnderChest)) {
                 this.list.remove(blockPos);
             }
-            Class284.drawSolidBlockESP((double)blockPos.func_177958_n() - ((IRenderManager)ChestESP.mc.func_175598_ae()).getRenderPosX(), (double)blockPos.func_177956_o() - ((IRenderManager)ChestESP.mc.func_175598_ae()).getRenderPosY(), (double)blockPos.func_177952_p() - ((IRenderManager)ChestESP.mc.func_175598_ae()).getRenderPosZ(), 1.0f, 1.0f, 1.0f, 0.2f);
+            Class246.drawSolidBlockESP(blockPos.getX() - ((IRenderManager)ChestESP.mc.getRenderManager()).getRenderPosX(), blockPos.getY() - ((IRenderManager)ChestESP.mc.getRenderManager()).getRenderPosY(), blockPos.getZ() - ((IRenderManager)ChestESP.mc.getRenderManager()).getRenderPosZ(), 1.0f, 1.0f, 1.0f, 0.2f);
         }
     }
 }

@@ -1,20 +1,33 @@
 package ClassSub;
 
-import java.nio.*;
+import javax.swing.*;
 
-public interface Class106
+final class Class106 extends Class116.Class354
 {
-    public static final boolean 复制机似的反复那几句没有意义词语很有必要你的脸皮到底还剩多少了你为什么还要垂死挣扎呢你们这样只会复制到脑里面装不进你是不是想用你断断续续的言语证明NMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSL‎​‌ ‍ ;
+    final float val$currentValue;
+    final float val$min;
+    final float val$max;
+    final String val$description;
+    public static final boolean Cracked_By_Somebody_Dumped_BY_Ganga_SupportedbySucen;
     
-    int getDepth();
+    Class106(final String s, final String s2, final float val$currentValue, final float val$min, final float val$max, final String val$description) {
+        this.val$currentValue = val$currentValue;
+        this.val$min = val$min;
+        this.val$max = val$max;
+        this.val$description = val$description;
+        super(s, s2);
+    }
     
-    int getWidth();
+    @Override
+    public void showDialog() {
+        final JSpinner spinner = new JSpinner(new SpinnerNumberModel(this.val$currentValue, this.val$min, this.val$max, 0.10000000149011612));
+        if (this.showValueDialog(spinner, this.val$description)) {
+            this.value = String.valueOf((float)spinner.getValue());
+        }
+    }
     
-    int getHeight();
-    
-    int getTexWidth();
-    
-    int getTexHeight();
-    
-    ByteBuffer getImageBufferData();
+    @Override
+    public Object getObject() {
+        return Float.valueOf(this.value);
+    }
 }

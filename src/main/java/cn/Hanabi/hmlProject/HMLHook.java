@@ -12,7 +12,6 @@ public class HMLHook
     public String author;
     
     public HMLHook(final String name, final int version, final String author) {
-        super();
         this.name = name;
         this.version = version;
         this.author = author;

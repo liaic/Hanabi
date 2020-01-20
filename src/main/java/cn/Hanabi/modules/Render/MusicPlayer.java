@@ -13,11 +13,11 @@ public class MusicPlayer extends Mod
     }
     
     public void onEnable() {
-        if (MusicPlayer.mc.field_71462_r instanceof Class148) {
+        if (MusicPlayer.mc.currentScreen instanceof Class333) {
             this.setState(false);
             return;
         }
-        MusicPlayer.mc.func_147108_a((GuiScreen)new Class148(100, 100, 200, 300));
+        MusicPlayer.mc.displayGuiScreen((GuiScreen)new Class333(100, 100, 200, 300));
         this.setState(false);
     }
 }

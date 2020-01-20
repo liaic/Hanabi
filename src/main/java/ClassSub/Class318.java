@@ -1,128 +1,49 @@
 package ClassSub;
 
-import net.minecraft.client.*;
-import net.minecraft.potion.*;
-import cn.Hanabi.injection.interfaces.*;
-import net.minecraft.entity.*;
-import net.minecraft.client.entity.*;
-import cn.Hanabi.events.*;
+import java.util.*;
 
 public class Class318
 {
-    Minecraft mc;
-    private double nextMotionSpeed;
-    private double xMotionSpeed;
-    private double zDist;
-    private double moveSpeed;
-    int stage;
+    private float minYawSmoothing;
+    private float maxYawSmoothing;
+    private float minPitchSmoothing;
+    private float maxPitchSmoothing;
+    private Class266<Float> delta;
+    private Class274 smoothedAngle;
+    private final Random random;
+    private float height;
     public static final boolean Cracked_By_Somebody_Dumped_BY_Ganga_SupportedbySucen;
     
-    public Class318() {
-        super();
-        this.mc = Minecraft.func_71410_x();
-        this.stage = 0;
+    public Class318(final float minYawSmoothing, final float maxYawSmoothing, final float minPitchSmoothing, final float maxPitchSmoothing) {
+        this.height = Class262.getRandomInRange(1.1f, 1.8f);
+        this.minYawSmoothing = minYawSmoothing;
+        this.maxYawSmoothing = maxYawSmoothing;
+        this.minPitchSmoothing = minPitchSmoothing;
+        this.maxPitchSmoothing = maxPitchSmoothing;
+        this.random = new Random();
+        this.delta = new Class266<Float>(0.0f, 0.0f, 0.0f);
+        this.smoothedAngle = new Class274(Float.valueOf(0.0f), Float.valueOf(0.0f));
     }
     
-    public void onMove(final EventMove eventMove) {
-        this.moveSpeed = Class295.getBaseMoveSpeed();
-        if (this.stage < 1) {
-            ++this.stage;
-            this.nextMotionSpeed = 0.0;
-        }
-        if (this.stage == 2 && (this.mc.field_71439_g.field_70701_bs != 0.0f || this.mc.field_71439_g.field_70702_br != 0.0f) && this.mc.field_71439_g.field_70124_G && this.mc.field_71439_g.field_70122_E) {
-            this.xMotionSpeed = 0.4200123123131243;
-            if (this.mc.field_71439_g.func_70644_a(Potion.field_76430_j)) {
-                this.xMotionSpeed += (this.mc.field_71439_g.func_70660_b(Potion.field_76430_j).func_76458_c() + 1) * 0.1f;
-            }
-            eventMove.setY(this.mc.field_71439_g.field_70181_x = this.xMotionSpeed);
-            this.moveSpeed *= 2.1498624684;
-        }
-        else if (this.stage == 3) {
-            this.xMotionSpeed = ((this.stage % 3 == 0) ? 0.678994565156 : 0.719499495154) * (this.nextMotionSpeed - Class295.getBaseMoveSpeed());
-            this.moveSpeed = this.nextMotionSpeed - this.xMotionSpeed;
-        }
-        else {
-            if ((this.mc.field_71441_e.func_72945_a((Entity)this.mc.field_71439_g, ((IEntity)this.mc.field_71439_g).getBoundingBox().func_72317_d(0.0, this.mc.field_71439_g.field_70181_x, 0.0)).size() > 0 || this.mc.field_71439_g.field_70124_G) && this.stage > 0) {
-                this.stage = ((this.mc.field_71439_g.field_70701_bs != 0.0f || this.mc.field_71439_g.field_70702_br != 0.0f) ? 1 : 0);
-            }
-            this.moveSpeed = this.nextMotionSpeed - this.nextMotionSpeed / 159.0;
-        }
-        this.moveSpeed = Math.max(this.moveSpeed, Class295.getBaseMoveSpeed());
-        this.xMotionSpeed = this.mc.field_71439_g.field_71158_b.field_78900_b;
-        this.zDist = this.mc.field_71439_g.field_71158_b.field_78902_a;
-        float field_70177_z = this.mc.field_71439_g.field_70177_z;
-        if (this.xMotionSpeed == 0.0 && this.zDist == 0.0) {
-            this.mc.field_71439_g.func_70107_b(this.mc.field_71439_g.field_70165_t + 1.0, this.mc.field_71439_g.field_70163_u, this.mc.field_71439_g.field_70161_v + 1.0);
-            this.mc.field_71439_g.func_70107_b(this.mc.field_71439_g.field_70169_q, this.mc.field_71439_g.field_70163_u, this.mc.field_71439_g.field_70166_s);
-            eventMove.setX(0.0);
-            eventMove.setZ(0.0);
-        }
-        else if (this.xMotionSpeed != 0.0) {
-            if (this.zDist >= 1.0) {
-                field_70177_z += ((this.xMotionSpeed > 0.0) ? -45.0f : 45.0f);
-                this.zDist = 0.0;
-            }
-            else if (this.zDist <= -1.0) {
-                field_70177_z += ((this.xMotionSpeed > 0.0) ? 45.0f : -45.0f);
-                this.zDist = 0.0;
-            }
-            if (this.xMotionSpeed > 0.0) {
-                this.xMotionSpeed = 1.0;
-            }
-            else if (this.xMotionSpeed < 0.0) {
-                this.xMotionSpeed = -1.0;
-            }
-        }
-        final double cos = Math.cos(Math.toRadians((double)(field_70177_z + 90.0f)));
-        final double sin = Math.sin(Math.toRadians((double)(field_70177_z + 90.0f)));
-        final double x = (this.xMotionSpeed * this.moveSpeed * cos + this.zDist * this.moveSpeed * sin) * 0.987;
-        final double z = (this.xMotionSpeed * this.moveSpeed * sin - this.zDist * this.moveSpeed * cos) * 0.987;
-        if (Math.abs(x) < 1.0 && Math.abs(z) < 1.0) {
-            eventMove.setX(x);
-            eventMove.setZ(z);
-        }
-        this.mc.field_71439_g.field_70138_W = 0.6f;
-        if (this.xMotionSpeed == 0.0 && this.zDist == 0.0) {
-            eventMove.setX(0.0);
-            eventMove.setZ(0.0);
-            this.mc.field_71439_g.func_70107_b(this.mc.field_71439_g.field_70165_t + 1.0, this.mc.field_71439_g.field_70163_u, this.mc.field_71439_g.field_70161_v + 1.0);
-            this.mc.field_71439_g.func_70107_b(this.mc.field_71439_g.field_70169_q, this.mc.field_71439_g.field_70163_u, this.mc.field_71439_g.field_70166_s);
-        }
-        else if (this.xMotionSpeed != 0.0) {
-            if (this.zDist >= 1.0) {
-                final float n = field_70177_z + ((this.xMotionSpeed > 0.0) ? -45.0f : 45.0f);
-                this.zDist = 0.0;
-            }
-            else if (this.zDist <= -1.0) {
-                final float n2 = field_70177_z + ((this.xMotionSpeed > 0.0) ? 45.0f : -45.0f);
-                this.zDist = 0.0;
-            }
-            if (this.xMotionSpeed > 0.0) {
-                this.xMotionSpeed = 1.0;
-            }
-            else if (this.xMotionSpeed < 0.0) {
-                this.xMotionSpeed = -1.0;
-            }
-        }
-        ++this.stage;
+    public float randomFloat(final float n, final float n2) {
+        return n + this.random.nextFloat() * (n2 - n);
     }
     
-    public void onEnable() {
-        final EntityPlayerSP field_71439_g = this.mc.field_71439_g;
-        field_71439_g.field_70159_w *= 0.0;
-        final EntityPlayerSP field_71439_g2 = this.mc.field_71439_g;
-        field_71439_g2.field_70179_y *= 0.0;
-        if (this.mc.field_71439_g != null) {
-            this.moveSpeed = Class295.getBaseMoveSpeed();
-        }
-        this.nextMotionSpeed = 0.0;
-        this.stage = 2;
-        Class296.getTimer().field_74278_d = 1.0f;
+    public Class274 calculateAngle(final Class266<Double> class266, final Class266<Double> class267) {
+        final Class274 class268 = new Class274(Float.valueOf(0.0f), Float.valueOf(0.0f));
+        this.delta.setX(class266.getX().floatValue() - class267.getX().floatValue()).setY(class266.getY().floatValue() + this.height - (class267.getY().floatValue() + this.height)).setZ(class266.getZ().floatValue() - class267.getZ().floatValue());
+        final double hypot = Math.hypot(this.delta.getX().doubleValue(), this.delta.getZ().doubleValue());
+        final float n = (float)Math.atan2(this.delta.getZ().floatValue(), this.delta.getX().floatValue());
+        final float n2 = (float)Math.atan2(this.delta.getY().floatValue(), hypot);
+        final float n3 = 57.29578f;
+        return class268.setYaw(n * n3 - 90.0f).setPitch(-(n2 * n3)).constrantAngle();
     }
     
-    public void onPre(final EventPreMotion eventPreMotion) {
-        this.xMotionSpeed = this.mc.field_71439_g.field_70165_t - this.mc.field_71439_g.field_70169_q;
-        this.zDist = this.mc.field_71439_g.field_70161_v - this.mc.field_71439_g.field_70166_s;
-        this.nextMotionSpeed = Math.sqrt(this.xMotionSpeed * this.xMotionSpeed + this.zDist * this.zDist);
+    public void setHeight(final float height) {
+        this.height = height;
+    }
+    
+    public Class274 smoothAngle(final Class274 class274, final Class274 class275, final float n, final float n2) {
+        return this.smoothedAngle.setYaw(class275.getYaw() - class274.getYaw() - ((Math.abs(class275.getYaw() - class274.getYaw()) > 5.0f) ? (Math.abs(class275.getYaw() - class274.getYaw()) / Math.abs(class275.getYaw() - class274.getYaw()) * 2.0f / 2.0f) : 0.0f)).setPitch(class275.getPitch() - class274.getPitch()).constrantAngle().setYaw(class275.getYaw() - this.smoothedAngle.getYaw() / n2 * this.randomFloat(this.minYawSmoothing, this.maxYawSmoothing)).constrantAngle().setPitch(class275.getPitch() - this.smoothedAngle.getPitch() / n * this.randomFloat(this.minPitchSmoothing, this.maxPitchSmoothing)).constrantAngle();
     }
 }

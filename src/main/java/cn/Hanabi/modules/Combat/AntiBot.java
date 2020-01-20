@@ -28,9 +28,9 @@ public class AntiBot extends Mod
     @EventTarget
     public void onUpdate(final EventUpdate eventUpdate) {
         if (AntiBot.mode.isCurrentMode("Hypixel")) {
-            for (final EntityPlayer entityPlayer : AntiBot.mc.field_71441_e.field_73010_i) {
-                if (entityPlayer != AntiBot.mc.field_71439_g && entityPlayer != null && !getTabPlayerList().contains(entityPlayer) && !entityPlayer.func_145748_c_().func_150254_d().toLowerCase().contains("[npc") && entityPlayer.func_145748_c_().func_150254_d().startsWith("§") && entityPlayer.func_70089_S() && !isHypixelNPC(entityPlayer)) {
-                    AntiBot.mc.field_71441_e.func_72900_e((Entity)entityPlayer);
+            for (final EntityPlayer entityPlayer : AntiBot.mc.theWorld.playerEntities) {
+                if (entityPlayer != AntiBot.mc.thePlayer && entityPlayer != null && !getTabPlayerList().contains(entityPlayer) && !entityPlayer.getDisplayName().getFormattedText().toLowerCase().contains("[npc") && entityPlayer.getDisplayName().getFormattedText().startsWith("§") && entityPlayer.isEntityAlive() && !isHypixelNPC(entityPlayer)) {
+                    AntiBot.mc.theWorld.removeEntity((Entity)entityPlayer);
                     ++this.count;
                 }
             }
@@ -49,24 +49,24 @@ public class AntiBot extends Mod
         if (AntiBot.mode.isCurrentMode("Hypixel")) {
             return !getTabPlayerList().contains(entityPlayer) || isHypixelNPC(entityPlayer);
         }
-        return AntiBot.mode.isCurrentMode("Mineplex") && !Float.isNaN(entityPlayer.func_110143_aJ());
+        return AntiBot.mode.isCurrentMode("Mineplex") && !Float.isNaN(entityPlayer.getHealth());
     }
     
     public static List<EntityPlayer> getTabPlayerList() {
-        final NetHandlerPlayClient field_71174_a = Minecraft.func_71410_x().field_71439_g.field_71174_a;
+        final NetHandlerPlayClient sendQueue = Minecraft.getMinecraft().thePlayer.sendQueue;
         final ArrayList<EntityPlayer> list = new ArrayList<EntityPlayer>();
-        for (final NetworkPlayerInfo networkPlayerInfo : ((IGuiPlayerTabOverlay)new GuiPlayerTabOverlay(Minecraft.func_71410_x(), Minecraft.func_71410_x().field_71456_v)).getField().sortedCopy((Iterable)field_71174_a.func_175106_d())) {
+        for (final NetworkPlayerInfo networkPlayerInfo : ((IGuiPlayerTabOverlay)new GuiPlayerTabOverlay(Minecraft.getMinecraft(), Minecraft.getMinecraft().ingameGUI)).getField().sortedCopy((Iterable)sendQueue.getPlayerInfoMap())) {
             if (networkPlayerInfo == null) {
                 continue;
             }
-            list.add(Minecraft.func_71410_x().field_71441_e.func_72924_a(networkPlayerInfo.func_178845_a().getName()));
+            list.add(Minecraft.getMinecraft().theWorld.getPlayerEntityByName(networkPlayerInfo.getGameProfile().getName()));
         }
         return list;
     }
     
     public static boolean isHypixelNPC(final EntityPlayer entityPlayer) {
-        final String substring = entityPlayer.func_145748_c_().func_150254_d().substring(2);
-        entityPlayer.func_95999_t();
+        final String substring = entityPlayer.getDisplayName().getFormattedText().substring(2);
+        entityPlayer.getCustomNameTag();
         return (!substring.startsWith("§") && substring.endsWith("§r")) || substring.contains("[NPC]");
     }
     

@@ -3,7 +3,6 @@ package cn.Hanabi.command;
 import org.jetbrains.annotations.*;
 import cn.Hanabi.*;
 import cn.Hanabi.modules.*;
-import cn.Hanabi.modules.World.*;
 import ClassSub.*;
 import java.util.function.*;
 import java.util.stream.*;
@@ -15,17 +14,16 @@ public class CommandManager
     private List<Command> commands;
     
     public CommandManager() {
-        super();
         this.commands = new ArrayList<Command>();
     }
     
     public void addCommands() {
-        this.addCommand(new Class207());
+        this.addCommand(new Class271());
         this.addCommand(new Bind());
         this.addCommand(new Prefix());
         this.addCommand(new Spammer());
-        this.addCommand(new Class16());
-        this.addCommand(new Class303());
+        this.addCommand(new Class138());
+        this.addCommand(new Class267());
         this.addCommand(new Binds());
         this.addCommand(new Config());
         this.addCommand(new Fcmd());
@@ -46,14 +44,14 @@ public class CommandManager
             return false;
         }
         final String cmdName = split[0];
-        final Command command = (Command)this.commands.stream().filter(CommandManager::lambda$executeCommand$0).findFirst().orElse(null);
+        final Command command = this.commands.stream().filter(CommandManager::lambda$executeCommand$0).findFirst().orElse(null);
         try {
             if (command == null) {
                 if (ModManager.getModule("IRC").isEnabled()) {
-                    IRC.sendIRCMessage(raw, true);
+                    new Class199(Class203.type, Class194.getIRCUserByNameAndType(Class203.type, Class203.username), raw).sendPacketToServer(Class203.socket.writer);
                 }
                 else {
-                    Class128.sendClientMessage("Open your IRC first then you can send message!", Class67.Class124.ERROR);
+                    Class120.sendClientMessage("Open your IRC first then you can send message!", Class84.Class307.ERROR);
                 }
                 return true;
             }
@@ -62,8 +60,8 @@ public class CommandManager
             command.run(split[0], args);
             return true;
         }
-        catch (Class58 e) {
-            Class213.send("§c" + e.getMessage());
+        catch (Class226 e) {
+            Class64.send("§c" + e.getMessage());
             return true;
         }
     }
@@ -72,7 +70,7 @@ public class CommandManager
         final String raw = currCmd.substring(1);
         final String[] split = raw.split(" ");
         final List<String> ret = new ArrayList<String>();
-        final Command currentCommand = (split.length >= 1) ? ((Command)this.commands.stream().filter(CommandManager::lambda$autoComplete$1).findFirst().orElse(null)) : null;
+        final Command currentCommand = (split.length >= 1) ? this.commands.stream().filter(CommandManager::lambda$autoComplete$1).findFirst().orElse(null) : null;
         if (split.length >= 2 || (currentCommand != null && currCmd.endsWith(" "))) {
             if (currentCommand == null) {
                 return ret;

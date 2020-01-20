@@ -14,13 +14,9 @@ import org.spongepowered.asm.mixin.injection.*;
 @Mixin({ BlockRendererDispatcher.class })
 public class MixinBlockRendererDispatcher
 {
-    public MixinBlockRendererDispatcher() {
-        super();
-    }
-    
     @Inject(method = { "renderBlock" }, at = { @At("HEAD") })
     public void eventUpdate(final IBlockState state, final BlockPos pos, final IBlockAccess blockAccess, final WorldRenderer worldRendererIn, final CallbackInfoReturnable info) {
-        final EventRenderBlock event = new EventRenderBlock(pos.func_177958_n(), pos.func_177956_o(), pos.func_177952_p(), state.func_177230_c());
-        EventManager.call((Event)event);
+        final EventRenderBlock event = new EventRenderBlock(pos.getX(), pos.getY(), pos.getZ(), state.getBlock());
+        EventManager.call(event);
     }
 }

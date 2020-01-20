@@ -8,28 +8,24 @@ import org.spongepowered.asm.mixin.*;
 public class MixinRenderManager implements IRenderManager
 {
     @Shadow
-    private double field_78725_b;
+    private double renderPosX;
     @Shadow
-    private double field_78726_c;
+    private double renderPosY;
     @Shadow
-    private double field_78723_d;
-    
-    public MixinRenderManager() {
-        super();
-    }
+    private double renderPosZ;
     
     @Override
     public double getRenderPosX() {
-        return this.field_78725_b;
+        return this.renderPosX;
     }
     
     @Override
     public double getRenderPosY() {
-        return this.field_78726_c;
+        return this.renderPosY;
     }
     
     @Override
     public double getRenderPosZ() {
-        return this.field_78723_d;
+        return this.renderPosZ;
     }
 }

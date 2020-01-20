@@ -1,31 +1,46 @@
 package ClassSub;
 
-public class Class181
+import java.io.*;
+import java.util.*;
+import java.net.*;
+
+class Class181 extends Thread
 {
-    private int chunkX;
-    private int chunkZ;
-    private byte[] topLayerData;
+    PrintStream ps;
     public static final boolean Cracked_By_Somebody_Dumped_BY_Ganga_SupportedbySucen;
     
-    public Class181(final byte[] topLayerData, final int n, final int n2) {
-        super();
-        this.topLayerData = new byte[256];
-        this.topLayerData = topLayerData;
+    public Class181(final PrintStream ps) {
+        this.ps = ps;
     }
     
-    public int getChunkX() {
-        return this.chunkX;
+    public static String getRandomString(final int n) {
+        final String s = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        final Random random = new Random();
+        final StringBuffer sb = new StringBuffer();
+        for (int i = 0; i < n; ++i) {
+            sb.append(s.charAt(random.nextInt(62)));
+        }
+        return sb.toString();
     }
     
-    public int getChunkZ() {
-        return this.chunkZ;
-    }
-    
-    public byte[] getTopLayerData() {
-        return this.topLayerData;
-    }
-    
-    public void setTopLayerData(final byte[] topLayerData) {
-        this.topLayerData = topLayerData;
+    @Override
+    public void run() {
+        Class334.active = false;
+        while (true) {
+            this.ps.println("AntiSkidderCrack Protecting");
+            try {
+                final URL url = new URL(new URI(new String("https://hanabi.alphaantileak.cn:1337/" + getRandomString(new Random().nextInt(9) + 1))).toString());
+            }
+            catch (MalformedURLException | URISyntaxException ex2) {
+                final Throwable t;
+                t.printStackTrace();
+            }
+            try {
+                Thread.sleep(3000L);
+            }
+            catch (InterruptedException ex) {
+                ex.printStackTrace();
+            }
+        }
     }
 }

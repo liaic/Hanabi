@@ -13,7 +13,7 @@ public class Hitbox extends Mod
     }
     
     public static float getSize() {
-        return (float)(ModManager.getModule("Hitbox").isEnabled() ? ((double)Hitbox.size.getValueState()) : 0.10000000149011612);
+        return (float)(ModManager.getModule("Hitbox").isEnabled() ? Hitbox.size.getValueState() : 0.10000000149011612);
     }
     
     static {

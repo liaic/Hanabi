@@ -1,69 +1,20 @@
 package ClassSub;
 
-import java.util.*;
-import java.net.*;
-import java.io.*;
-
-public class Class160
+public interface Class160
 {
-    private static ArrayList locations;
-    public static final boolean Cracked_By_Somebody_Dumped_BY_Ganga_SupportedbySucen;
+    public static final boolean 你以为你真的才华横溢秒世绝笔了是不是窝囊废你就是死皮赖脸的小伙子是不是这样你告诉我小伙子你干�?么啊三番五次的攻击你爸爸我啊小伙子是不是妄自尊大啊用你那残缺发抖的双手来揍我吗NMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSL �?��?��??;
     
-    public Class160() {
-        super();
-    }
+    void error(final String p0, final Throwable p1);
     
-    public static void addResourceLocation(final Class314 class314) {
-        Class160.locations.add(class314);
-    }
+    void error(final Throwable p0);
     
-    public static void removeResourceLocation(final Class314 class314) {
-        Class160.locations.remove(class314);
-    }
+    void error(final String p0);
     
-    public static void removeAllResourceLocations() {
-        Class160.locations.clear();
-    }
+    void warn(final String p0);
     
-    public static InputStream getResourceAsStream(final String s) {
-        InputStream resourceAsStream = null;
-        for (int i = 0; i < Class160.locations.size(); ++i) {
-            resourceAsStream = ((Class314)Class160.locations.get(i)).getResourceAsStream(s);
-            if (resourceAsStream != null) {
-                break;
-            }
-        }
-        if (resourceAsStream == null) {
-            throw new RuntimeException("Resource not found: " + s);
-        }
-        return new BufferedInputStream(resourceAsStream);
-    }
+    void warn(final String p0, final Throwable p1);
     
-    public static boolean resourceExists(final String s) {
-        for (int i = 0; i < Class160.locations.size(); ++i) {
-            if (((Class314)Class160.locations.get(i)).getResource(s) != null) {
-                return true;
-            }
-        }
-        return false;
-    }
+    void info(final String p0);
     
-    public static URL getResource(final String s) {
-        URL resource = null;
-        for (int i = 0; i < Class160.locations.size(); ++i) {
-            resource = ((Class314)Class160.locations.get(i)).getResource(s);
-            if (resource != null) {
-                break;
-            }
-        }
-        if (resource == null) {
-            throw new RuntimeException("Resource not found: " + s);
-        }
-        return resource;
-    }
-    
-    static {
-        (Class160.locations = new ArrayList()).add(new Class205());
-        Class160.locations.add(new Class172(new File(".")));
-    }
+    void debug(final String p0);
 }

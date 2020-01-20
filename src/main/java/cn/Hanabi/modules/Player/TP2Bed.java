@@ -20,21 +20,21 @@ public class TP2Bed extends Mod
     public BlockPos playerBed;
     public BlockPos fuckingBed;
     public ArrayList<BlockPos> posList;
-    Class191 timer;
+    Class205 timer;
     public Value<Double> delay;
-    private ArrayList<Class235> path;
+    private ArrayList<Class148> path;
     public static final boolean Cracked_By_Somebody_Dumped_BY_Ganga_SupportedbySucen;
     
     public TP2Bed() {
         super("TP2Bed", Category.PLAYER);
-        this.timer = new Class191();
+        this.timer = new Class205();
         this.delay = new Value<Double>("TP2Bed_Delay", 600.0, 200.0, 3000.0, 100.0);
-        this.path = new ArrayList<Class235>();
+        this.path = new ArrayList<Class148>();
     }
     
     public void onEnable() {
         try {
-            (this.posList = new ArrayList<BlockPos>(Class34.list)).sort(this::lambda$onEnable$0);
+            (this.posList = new ArrayList<BlockPos>(Class190.list)).sort(this::lambda$onEnable$0);
             if (this.posList.size() < 3) {
                 this.set(false);
             }
@@ -47,14 +47,14 @@ public class TP2Bed extends Mod
             }
             this.playerBed = this.posList.get(0);
             this.posList.remove(0);
-            if (TP2Bed.mc.field_71439_g.field_70122_E && TP2Bed.mc.field_71439_g.field_70124_G && Class206.isOnGround(0.01)) {
+            if (TP2Bed.mc.thePlayer.onGround && TP2Bed.mc.thePlayer.isCollidedVertically && Class180.isOnGround(0.01)) {
                 for (int i = 0; i < 49; ++i) {
-                    TP2Bed.mc.field_71439_g.field_71174_a.func_147298_b().func_179290_a((Packet)new C03PacketPlayer.C04PacketPlayerPosition(TP2Bed.mc.field_71439_g.field_70165_t, TP2Bed.mc.field_71439_g.field_70163_u + 0.06249, TP2Bed.mc.field_71439_g.field_70161_v, false));
-                    TP2Bed.mc.field_71439_g.field_71174_a.func_147298_b().func_179290_a((Packet)new C03PacketPlayer.C04PacketPlayerPosition(TP2Bed.mc.field_71439_g.field_70165_t, TP2Bed.mc.field_71439_g.field_70163_u, TP2Bed.mc.field_71439_g.field_70161_v, false));
+                    TP2Bed.mc.thePlayer.sendQueue.getNetworkManager().sendPacket((Packet)new C03PacketPlayer.C04PacketPlayerPosition(TP2Bed.mc.thePlayer.posX, TP2Bed.mc.thePlayer.posY + 0.06249, TP2Bed.mc.thePlayer.posZ, false));
+                    TP2Bed.mc.thePlayer.sendQueue.getNetworkManager().sendPacket((Packet)new C03PacketPlayer.C04PacketPlayerPosition(TP2Bed.mc.thePlayer.posX, TP2Bed.mc.thePlayer.posY, TP2Bed.mc.thePlayer.posZ, false));
                 }
-                TP2Bed.mc.field_71439_g.field_70122_E = false;
-                Class206.setMotion(0.0);
-                TP2Bed.mc.field_71439_g.field_70747_aH = 0.0f;
+                TP2Bed.mc.thePlayer.onGround = false;
+                Class180.setMotion(0.0);
+                TP2Bed.mc.thePlayer.jumpMovementFactor = 0.0f;
             }
             this.fuckingBed = this.posList.get(0);
         }
@@ -71,13 +71,13 @@ public class TP2Bed extends Mod
     @EventTarget
     public void onRender(final EventRender eventRender) {
         try {
-            for (final Class235 class235 : this.path) {
-                TP2Bed.mc.func_175598_ae();
-                final double n = class235.getX() - ((IRenderManager)TP2Bed.mc.func_175598_ae()).getRenderPosX();
-                TP2Bed.mc.func_175598_ae();
-                final double n2 = class235.getY() - ((IRenderManager)TP2Bed.mc.func_175598_ae()).getRenderPosY();
-                TP2Bed.mc.func_175598_ae();
-                Class284.drawEntityESP(n, n2, class235.getZ() - ((IRenderManager)TP2Bed.mc.func_175598_ae()).getRenderPosZ(), TP2Bed.mc.field_71439_g.func_174813_aQ().field_72336_d - TP2Bed.mc.field_71439_g.func_174813_aQ().field_72340_a, TP2Bed.mc.field_71439_g.func_174813_aQ().field_72337_e - TP2Bed.mc.field_71439_g.func_174813_aQ().field_72338_b + 0.25, 0.0f, 1.0f, 0.0f, 0.2f, 0.0f, 0.0f, 0.0f, 1.0f, 2.0f);
+            for (final Class148 class148 : this.path) {
+                TP2Bed.mc.getRenderManager();
+                final double n = class148.getX() - ((IRenderManager)TP2Bed.mc.getRenderManager()).getRenderPosX();
+                TP2Bed.mc.getRenderManager();
+                final double n2 = class148.getY() - ((IRenderManager)TP2Bed.mc.getRenderManager()).getRenderPosY();
+                TP2Bed.mc.getRenderManager();
+                Class246.drawEntityESP(n, n2, class148.getZ() - ((IRenderManager)TP2Bed.mc.getRenderManager()).getRenderPosZ(), TP2Bed.mc.thePlayer.getEntityBoundingBox().maxX - TP2Bed.mc.thePlayer.getEntityBoundingBox().minX, TP2Bed.mc.thePlayer.getEntityBoundingBox().maxY - TP2Bed.mc.thePlayer.getEntityBoundingBox().minY + 0.25, 0.0f, 1.0f, 0.0f, 0.2f, 0.0f, 0.0f, 0.0f, 1.0f, 2.0f);
             }
         }
         catch (Exception ex) {}
@@ -85,32 +85,32 @@ public class TP2Bed extends Mod
     
     @Override
     protected void onDisable() {
-        Class296.canSendMotionPacket = true;
+        Class211.canSendMotionPacket = true;
         super.onDisable();
     }
     
     @EventTarget
     public void onUpdate(final EventUpdate eventUpdate) {
         for (final BlockPos blockPos : this.posList) {
-            if (!(TP2Bed.mc.field_71441_e.func_180495_p(blockPos).func_177230_c() instanceof BlockBed)) {
-                Class295.tellPlayer("§b[Hanabi]Destory!" + blockPos);
+            if (!(TP2Bed.mc.theWorld.getBlockState(blockPos).getBlock() instanceof BlockBed)) {
+                Class200.tellPlayer("§b[Hanabi]Destory!" + blockPos);
                 this.posList.remove(blockPos);
                 this.posList.sort(this::lambda$onUpdate$1);
                 this.fuckingBed = this.posList.get(0);
             }
         }
-        if (TP2Bed.mc.field_71439_g.func_70011_f((double)this.fuckingBed.func_177958_n(), (double)this.fuckingBed.func_177956_o(), (double)this.fuckingBed.func_177952_p()) < 4.0) {
-            Class296.canSendMotionPacket = true;
-            Class295.tellPlayer("§b[Hanabi]Teleported! :3");
+        if (TP2Bed.mc.thePlayer.getDistance((double)this.fuckingBed.getX(), (double)this.fuckingBed.getY(), (double)this.fuckingBed.getZ()) < 4.0) {
+            Class211.canSendMotionPacket = true;
+            Class200.tellPlayer("§b[Hanabi]Teleported! :3");
             this.set(false);
         }
         if (this.timer.isDelayComplete(this.delay.getValueState())) {
-            this.path = this.computePath(new Class235(TP2Bed.mc.field_71439_g.field_70165_t, TP2Bed.mc.field_71439_g.field_70163_u, TP2Bed.mc.field_71439_g.field_70161_v), new Class235((double)(this.fuckingBed.func_177958_n() + 1), (double)this.fuckingBed.func_177956_o(), (double)(this.fuckingBed.func_177952_p() + 1)));
-            if (TP2Bed.mc.field_71439_g.func_70011_f((double)this.fuckingBed.func_177958_n(), (double)this.fuckingBed.func_177956_o(), (double)this.fuckingBed.func_177952_p()) > 4.0) {
-                Class295.tellPlayer("§b[Hanabi]Trying to teleport...");
-                Class296.canSendMotionPacket = false;
-                for (final Class235 class235 : this.path) {
-                    TP2Bed.mc.field_71439_g.field_71174_a.func_147297_a((Packet)new C03PacketPlayer.C04PacketPlayerPosition(class235.getX(), class235.getY(), class235.getZ(), true));
+            this.path = this.computePath(new Class148(TP2Bed.mc.thePlayer.posX, TP2Bed.mc.thePlayer.posY, TP2Bed.mc.thePlayer.posZ), new Class148(this.fuckingBed.getX() + 1, this.fuckingBed.getY(), this.fuckingBed.getZ() + 1));
+            if (TP2Bed.mc.thePlayer.getDistance((double)this.fuckingBed.getX(), (double)this.fuckingBed.getY(), (double)this.fuckingBed.getZ()) > 4.0) {
+                Class200.tellPlayer("§b[Hanabi]Trying to teleport...");
+                Class211.canSendMotionPacket = false;
+                for (final Class148 class148 : this.path) {
+                    TP2Bed.mc.thePlayer.sendQueue.addToSendQueue((Packet)new C03PacketPlayer.C04PacketPlayerPosition(class148.getX(), class148.getY(), class148.getZ(), true));
                 }
             }
             this.timer.reset();
@@ -121,52 +121,52 @@ public class TP2Bed extends Mod
     }
     
     public double getDistanceToBlock(final BlockPos blockPos) {
-        return TP2Bed.mc.field_71439_g.func_70011_f((double)blockPos.func_177958_n(), (double)blockPos.func_177956_o(), (double)blockPos.func_177952_p());
+        return TP2Bed.mc.thePlayer.getDistance((double)blockPos.getX(), (double)blockPos.getY(), (double)blockPos.getZ());
     }
     
     private boolean canPassThrow(final BlockPos blockPos) {
-        final Block func_177230_c = Minecraft.func_71410_x().field_71441_e.func_180495_p(new BlockPos(blockPos.func_177958_n(), blockPos.func_177956_o(), blockPos.func_177952_p())).func_177230_c();
-        return func_177230_c.func_149688_o() == Material.field_151579_a || func_177230_c.func_149688_o() == Material.field_151585_k || func_177230_c.func_149688_o() == Material.field_151582_l || func_177230_c == Blocks.field_150468_ap || func_177230_c == Blocks.field_150355_j || func_177230_c == Blocks.field_150358_i || func_177230_c == Blocks.field_150444_as || func_177230_c == Blocks.field_150472_an;
+        final Block getBlock = Minecraft.getMinecraft().theWorld.getBlockState(new BlockPos(blockPos.getX(), blockPos.getY(), blockPos.getZ())).getBlock();
+        return getBlock.getMaterial() == Material.air || getBlock.getMaterial() == Material.plants || getBlock.getMaterial() == Material.vine || getBlock == Blocks.ladder || getBlock == Blocks.water || getBlock == Blocks.flowing_water || getBlock == Blocks.wall_sign || getBlock == Blocks.standing_sign;
     }
     
-    private ArrayList<Class235> computePath(Class235 addVector, final Class235 class235) {
+    private ArrayList<Class148> computePath(Class148 addVector, final Class148 class148) {
         if (!this.canPassThrow(new BlockPos(addVector.mc()))) {
             addVector = addVector.addVector(0.0, 1.0, 0.0);
         }
-        final Class101 class236 = new Class101(addVector, class235);
-        class236.compute();
+        final Class171 class149 = new Class171(addVector, class148);
+        class149.compute();
         int n = 0;
-        Class235 class237 = null;
-        Class235 class238 = null;
-        final ArrayList<Class235> list = new ArrayList<Class235>();
-        final ArrayList<Class235> path = class236.getPath();
-        for (final Class235 class239 : path) {
+        Class148 class150 = null;
+        Class148 class151 = null;
+        final ArrayList<Class148> list = new ArrayList<Class148>();
+        final ArrayList<Class148> path = class149.getPath();
+        for (final Class148 class152 : path) {
             if (n == 0 || n == path.size() - 1) {
-                if (class237 != null) {
-                    list.add(class237.addVector(0.5, 0.0, 0.5));
+                if (class150 != null) {
+                    list.add(class150.addVector(0.5, 0.0, 0.5));
                 }
-                list.add(class239.addVector(0.5, 0.0, 0.5));
-                class238 = class239;
+                list.add(class152.addVector(0.5, 0.0, 0.5));
+                class151 = class152;
             }
             else {
                 boolean b = true;
-                Label_0399: {
-                    if (class239.squareDistanceTo(class238) > 25.0) {
+                Label_0403: {
+                    if (class152.squareDistanceTo(class151) > 25.0) {
                         b = false;
                     }
                     else {
-                        final double min = Math.min(class238.getX(), class239.getX());
-                        final double min2 = Math.min(class238.getY(), class239.getY());
-                        final double min3 = Math.min(class238.getZ(), class239.getZ());
-                        final double max = Math.max(class238.getX(), class239.getX());
-                        final double max2 = Math.max(class238.getY(), class239.getY());
-                        final double max3 = Math.max(class238.getZ(), class239.getZ());
+                        final double min = Math.min(class151.getX(), class152.getX());
+                        final double min2 = Math.min(class151.getY(), class152.getY());
+                        final double min3 = Math.min(class151.getZ(), class152.getZ());
+                        final double max = Math.max(class151.getX(), class152.getX());
+                        final double max2 = Math.max(class151.getY(), class152.getY());
+                        final double max3 = Math.max(class151.getZ(), class152.getZ());
                         for (int n2 = (int)min; n2 <= max; ++n2) {
                             for (int n3 = (int)min2; n3 <= max2; ++n3) {
                                 for (int n4 = (int)min3; n4 <= max3; ++n4) {
-                                    if (!Class101.checkPositionValidity(n2, n3, n4, false)) {
+                                    if (!Class171.checkPositionValidity(n2, n3, n4, false)) {
                                         b = false;
-                                        break Label_0399;
+                                        break Label_0403;
                                     }
                                 }
                             }
@@ -174,11 +174,11 @@ public class TP2Bed extends Mod
                     }
                 }
                 if (!b) {
-                    list.add(class237.addVector(0.5, 0.0, 0.5));
-                    class238 = class237;
+                    list.add(class150.addVector(0.5, 0.0, 0.5));
+                    class151 = class150;
                 }
             }
-            class237 = class239;
+            class150 = class152;
             ++n;
         }
         return list;

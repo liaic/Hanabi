@@ -1,108 +1,81 @@
 package ClassSub;
 
-import java.util.*;
-import java.nio.*;
+import net.minecraft.util.*;
+import net.minecraft.client.gui.*;
 import java.io.*;
 
-public class Class189 implements Class232
+public class Class189 extends GuiScreen
 {
-    private ArrayList sources;
-    private Class232 picked;
+    private final Class7 manager;
+    private GuiTextField nameField;
+    private Class35 pwField;
+    private String status;
     public static final boolean Cracked_By_Somebody_Dumped_BY_Ganga_SupportedbySucen;
     
-    public Class189() {
-        super();
-        this.sources = new ArrayList();
+    public Class189(final Class7 manager) {
+        this.status = EnumChatFormatting.GRAY + "Waiting...";
+        this.manager = manager;
     }
     
-    public void add(final Class232 class232) {
-        this.sources.add(class232);
-    }
-    
-    @Override
-    public ByteBuffer loadImage(final InputStream inputStream) throws IOException {
-        return this.loadImage(inputStream, false, null);
-    }
-    
-    @Override
-    public ByteBuffer loadImage(final InputStream inputStream, final boolean b, final int[] array) throws IOException {
-        return this.loadImage(inputStream, b, false, array);
-    }
-    
-    @Override
-    public ByteBuffer loadImage(final InputStream inputStream, final boolean b, final boolean b2, final int[] array) throws IOException {
-        final Class64 class64 = new Class64();
-        ByteBuffer loadImage = null;
-        final BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream, inputStream.available());
-        bufferedInputStream.mark(inputStream.available());
-        int i = 0;
-        while (i < this.sources.size()) {
-            bufferedInputStream.reset();
-            try {
-                final Class232 picked = (Class232)this.sources.get(i);
-                loadImage = picked.loadImage(bufferedInputStream, b, b2, array);
-                this.picked = picked;
+    public void actionPerformed(final GuiButton guiButton) {
+        switch (guiButton.id) {
+            case 1: {
+                this.mc.displayGuiScreen((GuiScreen)this.manager);
+                break;
             }
-            catch (Exception ex) {
-                Class121.warn(this.sources.get(i).getClass() + " failed to read the data", ex);
-                class64.addException(ex);
-                ++i;
-                continue;
+            case 0: {
+                this.manager.selectedAlt.setMask(this.nameField.getText());
+                this.manager.selectedAlt.setPassword(this.pwField.getText());
+                this.status = "Edited!";
+                break;
             }
-            break;
-        }
-        if (this.picked == null) {
-            throw class64;
-        }
-        return loadImage;
-    }
-    
-    private void checkPicked() {
-        if (this.picked == null) {
-            throw new RuntimeException("Attempt to make use of uninitialised or invalid composite image data");
         }
     }
     
-    @Override
-    public int getDepth() {
-        this.checkPicked();
-        return this.picked.getDepth();
-    }
-    
-    @Override
-    public int getHeight() {
-        this.checkPicked();
-        return this.picked.getHeight();
-    }
-    
-    @Override
-    public ByteBuffer getImageBufferData() {
-        this.checkPicked();
-        return this.picked.getImageBufferData();
-    }
-    
-    @Override
-    public int getTexHeight() {
-        this.checkPicked();
-        return this.picked.getTexHeight();
-    }
-    
-    @Override
-    public int getTexWidth() {
-        this.checkPicked();
-        return this.picked.getTexWidth();
-    }
-    
-    @Override
-    public int getWidth() {
-        this.checkPicked();
-        return this.picked.getWidth();
-    }
-    
-    @Override
-    public void configureEdging(final boolean b) {
-        for (int i = 0; i < this.sources.size(); ++i) {
-            ((Class232)this.sources.get(i)).configureEdging(b);
+    public void drawScreen(final int n, final int n2, final float n3) {
+        this.drawDefaultBackground();
+        final ScaledResolution scaledResolution = new ScaledResolution(this.mc);
+        Class246.drawRect(0.0f, 0.0f, scaledResolution.getScaledWidth(), scaledResolution.getScaledHeight(), 0);
+        this.drawCenteredString(this.fontRendererObj, "Edit Alt", this.width / 2, 10, -1);
+        this.drawCenteredString(this.fontRendererObj, this.status, this.width / 2, 20, -1);
+        this.nameField.drawTextBox();
+        this.pwField.drawTextBox();
+        if (this.nameField.getText().isEmpty()) {
+            this.drawString(this.mc.fontRendererObj, "New name", this.width / 2 - 96, 66, -7829368);
         }
+        if (this.pwField.getText().isEmpty()) {
+            this.drawString(this.mc.fontRendererObj, "New password", this.width / 2 - 96, 106, -7829368);
+        }
+        super.drawScreen(n, n2, n3);
+    }
+    
+    public void initGui() {
+        this.buttonList.add(new GuiButton(0, this.width / 2 - 100, this.height / 4 + 92 + 12, "Edit"));
+        this.buttonList.add(new GuiButton(1, this.width / 2 - 100, this.height / 4 + 116 + 12, "Cancel"));
+        this.nameField = new GuiTextField(99997, this.mc.fontRendererObj, this.width / 2 - 100, 60, 200, 20);
+        this.pwField = new Class35(this.mc.fontRendererObj, this.width / 2 - 100, 100, 200, 20);
+    }
+    
+    protected void keyTyped(final char c, final int n) {
+        this.nameField.textboxKeyTyped(c, n);
+        this.pwField.textboxKeyTyped(c, n);
+        if (c == '\t' && (this.nameField.isFocused() || this.pwField.isFocused())) {
+            this.nameField.setFocused(!this.nameField.isFocused());
+            this.pwField.setFocused(!this.pwField.isFocused());
+        }
+        if (c == '\r') {
+            this.actionPerformed(this.buttonList.get(0));
+        }
+    }
+    
+    protected void mouseClicked(final int n, final int n2, final int n3) {
+        try {
+            super.mouseClicked(n, n2, n3);
+        }
+        catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        this.nameField.mouseClicked(n, n2, n3);
+        this.pwField.mouseClicked(n, n2, n3);
     }
 }

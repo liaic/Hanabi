@@ -12,14 +12,10 @@ import org.spongepowered.asm.mixin.injection.*;
 @Mixin({ GuiNewChat.class })
 public class MixinGuiNewChat
 {
-    public MixinGuiNewChat() {
-        super();
-    }
-    
     @Inject(method = { "printChatMessageWithOptionalDeletion" }, at = { @At("HEAD") }, cancellable = true)
-    private void eventchat(final IChatComponent p_146234_1_, final int p_146234_2_, final CallbackInfo ci) {
-        final EventChat event = new EventChat(p_146234_1_.func_150260_c());
-        EventManager.call((Event)event);
+    private void eventchat(final IChatComponent chatComponent, final int chatLineId, final CallbackInfo ci) {
+        final EventChat event = new EventChat(chatComponent.getUnformattedText());
+        EventManager.call(event);
         if (event.cancelled) {
             ci.cancel();
         }

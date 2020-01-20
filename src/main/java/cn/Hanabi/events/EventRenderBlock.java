@@ -11,7 +11,6 @@ public class EventRenderBlock implements Event
     public Block block;
     
     public EventRenderBlock(final int x, final int y, final int z, final Block block) {
-        super();
         this.x = x;
         this.y = y;
         this.z = z;

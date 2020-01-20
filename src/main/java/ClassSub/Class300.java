@@ -1,108 +1,145 @@
 package ClassSub;
 
-public class Class300
+import java.awt.*;
+import org.jetbrains.annotations.*;
+import net.minecraft.client.renderer.vertex.*;
+import net.minecraft.client.renderer.*;
+import org.lwjgl.opengl.*;
+import net.minecraft.client.*;
+import net.minecraft.client.gui.*;
+import java.util.*;
+
+public class Class300<T>
 {
-    private float[] matrixPosition;
+    static final int OFFSET = 3;
+    @NotNull
+    static Color BACKGROUND;
+    @NotNull
+    static Color BORDER;
+    @NotNull
+    static Color SELECTED;
+    static Color FOREGROUND;
+    @NotNull
+    private List<Class245<T>> tabs;
+    private int selectedTab;
+    private int selectedSubTab;
     public static final boolean Cracked_By_Somebody_Dumped_BY_Ganga_SupportedbySucen;
     
     public Class300() {
-        super();
-        this.matrixPosition = new float[] { 1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f };
+        this.tabs = new ArrayList<Class245<T>>();
+        this.selectedTab = 0;
+        this.selectedSubTab = -1;
     }
     
-    public Class300(final Class300 class300) {
-        super();
-        this.matrixPosition = new float[9];
-        for (int i = 0; i < 9; ++i) {
-            this.matrixPosition[i] = class300.matrixPosition[i];
+    public static void drawRect(final int n, int n2, int n3, int n4, int n5, final int n6) {
+        if (n2 < n4) {
+            final int n7 = n2;
+            n2 = n4;
+            n4 = n7;
         }
-    }
-    
-    public Class300(final Class300 class300, final Class300 class301) {
-        this(class300);
-        this.concatenate(class301);
-    }
-    
-    public Class300(final float[] array) {
-        super();
-        if (array.length != 6) {
-            throw new RuntimeException("The parameter must be a float array of length 6.");
+        if (n3 < n5) {
+            final int n8 = n3;
+            n3 = n5;
+            n5 = n8;
         }
-        this.matrixPosition = new float[] { array[0], array[1], array[2], array[3], array[4], array[5], 0.0f, 0.0f, 1.0f };
+        final float n9 = (n6 >> 24 & 0xFF) / 255.0f;
+        final float n10 = (n6 >> 16 & 0xFF) / 255.0f;
+        final float n11 = (n6 >> 8 & 0xFF) / 255.0f;
+        final float n12 = (n6 & 0xFF) / 255.0f;
+        final Tessellator getInstance = Tessellator.getInstance();
+        final WorldRenderer getWorldRenderer = getInstance.getWorldRenderer();
+        GlStateManager.enableBlend();
+        GlStateManager.disableTexture2D();
+        GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+        GlStateManager.color(n10, n11, n12, n9);
+        getWorldRenderer.begin(n, DefaultVertexFormats.POSITION);
+        getWorldRenderer.pos((double)n2, (double)n5, 0.0).endVertex();
+        getWorldRenderer.pos((double)n4, (double)n5, 0.0).endVertex();
+        getWorldRenderer.pos((double)n4, (double)n3, 0.0).endVertex();
+        getWorldRenderer.pos((double)n2, (double)n3, 0.0).endVertex();
+        getInstance.draw();
+        GlStateManager.enableTexture2D();
+        GlStateManager.disableBlend();
     }
     
-    public Class300(final float n, final float n2, final float n3, final float n4, final float n5, final float n6) {
-        super();
-        this.matrixPosition = new float[] { n, n2, n3, n4, n5, n6, 0.0f, 0.0f, 1.0f };
+    public void addTab(final Class245<T> class245) {
+        this.tabs.add(class245);
     }
     
-    public void transform(final float[] array, final int n, final float[] array2, final int n2, final int n3) {
-        final float[] array3 = (array == array2) ? new float[n3 * 2] : array2;
-        for (int i = 0; i < n3 * 2; i += 2) {
-            for (int j = 0; j < 6; j += 3) {
-                array3[i + j / 3] = array[i + n] * this.matrixPosition[j] + array[i + n + 1] * this.matrixPosition[j + 1] + 1.0f * this.matrixPosition[j + 2];
+    public void render(final int n, final int n2) {
+        GL11.glTranslated((double)n, (double)n2, 0.0);
+        final FontRenderer fontRendererObj = Minecraft.getMinecraft().fontRendererObj;
+        final int n3 = (fontRendererObj.FONT_HEIGHT + 3) * this.tabs.size();
+        int getStringWidth = 0;
+        for (final Class245<T> class245 : this.tabs) {
+            if (fontRendererObj.getStringWidth(class245.getText()) > getStringWidth) {
+                getStringWidth = fontRendererObj.getStringWidth(class245.getText());
             }
         }
-        if (array == array2) {
-            for (int k = 0; k < n3 * 2; k += 2) {
-                array2[k + n2] = array3[k];
-                array2[k + n2 + 1] = array3[k + 1];
+        getStringWidth += 4;
+        drawRect(7, 0, 0, getStringWidth, n3, Class300.BACKGROUND.getRGB());
+        int n4 = 2;
+        int n5 = 0;
+        for (final Class245<T> class246 : this.tabs) {
+            if (this.selectedTab == n5) {
+                drawRect(7, 0, n4 - 2, getStringWidth, n4 + fontRendererObj.FONT_HEIGHT + 3 - 2, Class300.SELECTED.getRGB());
+                if (this.selectedSubTab != -1) {
+                    class246.renderSubTabs(getStringWidth, n4 - 2, this.selectedSubTab);
+                }
             }
+            fontRendererObj.drawString(class246.getText(), 2, n4, Class300.FOREGROUND.getRGB());
+            n4 += fontRendererObj.FONT_HEIGHT + 3;
+            ++n5;
+        }
+        GL11.glLineWidth(1.0f);
+        drawRect(2, 0, 0, getStringWidth, n3, Class300.BORDER.getRGB());
+        GL11.glTranslated((double)(-n), (double)(-n2), 0.0);
+    }
+    
+    public void handleKey(final int n) {
+        if (n == 208) {
+            if (this.selectedSubTab == -1) {
+                ++this.selectedTab;
+                if (this.selectedTab >= this.tabs.size()) {
+                    this.selectedTab = 0;
+                }
+            }
+            else {
+                ++this.selectedSubTab;
+                if (this.selectedSubTab >= this.tabs.get(this.selectedTab).getSubTabs().size()) {
+                    this.selectedSubTab = 0;
+                }
+            }
+        }
+        else if (n == 200) {
+            if (this.selectedSubTab == -1) {
+                --this.selectedTab;
+                if (this.selectedTab < 0) {
+                    this.selectedTab = this.tabs.size() - 1;
+                }
+            }
+            else {
+                --this.selectedSubTab;
+                if (this.selectedSubTab < 0) {
+                    this.selectedSubTab = this.tabs.get(this.selectedTab).getSubTabs().size() - 1;
+                }
+            }
+        }
+        else if (n == 203) {
+            this.selectedSubTab = -1;
+        }
+        else if (this.selectedSubTab == -1 && (n == 28 || n == 205)) {
+            this.selectedSubTab = 0;
+        }
+        else if (n == 28 || n == 205) {
+            this.tabs.get(this.selectedTab).getSubTabs().get(this.selectedSubTab).press();
         }
     }
     
-    public Class300 concatenate(final Class300 class300) {
-        final float[] matrixPosition = new float[9];
-        final float n = this.matrixPosition[0] * class300.matrixPosition[0] + this.matrixPosition[1] * class300.matrixPosition[3];
-        final float n2 = this.matrixPosition[0] * class300.matrixPosition[1] + this.matrixPosition[1] * class300.matrixPosition[4];
-        final float n3 = this.matrixPosition[0] * class300.matrixPosition[2] + this.matrixPosition[1] * class300.matrixPosition[5] + this.matrixPosition[2];
-        final float n4 = this.matrixPosition[3] * class300.matrixPosition[0] + this.matrixPosition[4] * class300.matrixPosition[3];
-        final float n5 = this.matrixPosition[3] * class300.matrixPosition[1] + this.matrixPosition[4] * class300.matrixPosition[4];
-        final float n6 = this.matrixPosition[3] * class300.matrixPosition[2] + this.matrixPosition[4] * class300.matrixPosition[5] + this.matrixPosition[5];
-        matrixPosition[0] = n;
-        matrixPosition[1] = n2;
-        matrixPosition[2] = n3;
-        matrixPosition[3] = n4;
-        matrixPosition[4] = n5;
-        matrixPosition[5] = n6;
-        this.matrixPosition = matrixPosition;
-        return this;
-    }
-    
-    @Override
-    public String toString() {
-        return ("Transform[[" + this.matrixPosition[0] + "," + this.matrixPosition[1] + "," + this.matrixPosition[2] + "][" + this.matrixPosition[3] + "," + this.matrixPosition[4] + "," + this.matrixPosition[5] + "][" + this.matrixPosition[6] + "," + this.matrixPosition[7] + "," + this.matrixPosition[8] + "]]").toString();
-    }
-    
-    public float[] getMatrixPosition() {
-        return this.matrixPosition;
-    }
-    
-    public static Class300 createRotateTransform(final float n) {
-        return new Class300((float)Class165.cos(n), -(float)Class165.sin(n), 0.0f, (float)Class165.sin(n), (float)Class165.cos(n), 0.0f);
-    }
-    
-    public static Class300 createRotateTransform(final float n, final float n2, final float n3) {
-        final Class300 rotateTransform = createRotateTransform(n);
-        final float n4 = rotateTransform.matrixPosition[3];
-        final float n5 = 1.0f - rotateTransform.matrixPosition[4];
-        rotateTransform.matrixPosition[2] = n2 * n5 + n3 * n4;
-        rotateTransform.matrixPosition[5] = n3 * n5 - n2 * n4;
-        return rotateTransform;
-    }
-    
-    public static Class300 createTranslateTransform(final float n, final float n2) {
-        return new Class300(1.0f, 0.0f, n, 0.0f, 1.0f, n2);
-    }
-    
-    public static Class300 createScaleTransform(final float n, final float n2) {
-        return new Class300(n, 0.0f, 0.0f, 0.0f, n2, 0.0f);
-    }
-    
-    public Class271 transform(final Class271 class271) {
-        final float[] array = { class271.x, class271.y };
-        final float[] array2 = new float[2];
-        this.transform(array, 0, array2, 0, 1);
-        return new Class271(array2[0], array2[1]);
+    static {
+        Class300.BACKGROUND = new Color(0, 0, 0, 175);
+        Class300.BORDER = new Color(0, 0, 0, 255);
+        Class300.SELECTED = new Color(38, 164, 78, 200);
+        Class300.FOREGROUND = Color.white;
     }
 }

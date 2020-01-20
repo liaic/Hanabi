@@ -18,8 +18,8 @@ public class BedESP extends Mod
     
     @EventTarget
     public void onRender(final EventRender eventRender) {
-        for (final BlockPos blockPos : Class34.list) {
-            Class284.drawSolidBlockESP((double)blockPos.func_177958_n() - ((IRenderManager)BedESP.mc.func_175598_ae()).getRenderPosX(), (double)blockPos.func_177956_o() - ((IRenderManager)BedESP.mc.func_175598_ae()).getRenderPosY(), (double)blockPos.func_177952_p() - ((IRenderManager)BedESP.mc.func_175598_ae()).getRenderPosZ(), 1.0f, 1.0f, 1.0f, 0.2f);
+        for (final BlockPos blockPos : Class190.list) {
+            Class246.drawSolidBlockESP(blockPos.getX() - ((IRenderManager)BedESP.mc.getRenderManager()).getRenderPosX(), blockPos.getY() - ((IRenderManager)BedESP.mc.getRenderManager()).getRenderPosY(), blockPos.getZ() - ((IRenderManager)BedESP.mc.getRenderManager()).getRenderPosZ(), 1.0f, 1.0f, 1.0f, 0.2f);
         }
     }
 }

@@ -12,57 +12,53 @@ import org.spongepowered.asm.mixin.*;
 public abstract class MixinEntity implements IEntity
 {
     @Shadow
-    public double field_70165_t;
+    public double posX;
     @Shadow
-    public double field_70163_u;
+    public double posY;
     @Shadow
-    public double field_70161_v;
+    public double posZ;
     @Shadow
-    public float field_70177_z;
+    public float rotationYaw;
     @Shadow
-    public float field_70125_A;
+    public float rotationPitch;
     @Shadow
-    public boolean field_70122_E;
+    public boolean onGround;
     @Shadow
-    private int field_70150_b;
+    private int nextStepDistance;
     @Shadow
-    private int field_70151_c;
+    private int fire;
     @Shadow
-    private AxisAlignedBB field_70121_D;
+    private AxisAlignedBB boundingBox;
     @Shadow
-    public World field_70170_p;
-    
-    public MixinEntity() {
-        super();
-    }
+    public World worldObj;
     
     @Override
     public int getNextStepDistance() {
-        return this.field_70150_b;
+        return this.nextStepDistance;
     }
     
     @Override
     public void setNextStepDistance(final int distance) {
-        this.field_70150_b = distance;
+        this.nextStepDistance = distance;
     }
     
     @Override
     public int getFire() {
-        return this.field_70151_c;
+        return this.fire;
     }
     
     @Override
     public void setFire(final int i) {
-        this.field_70151_c = i;
+        this.fire = i;
     }
     
     @Override
     public AxisAlignedBB getBoundingBox() {
-        return this.field_70121_D;
+        return this.boundingBox;
     }
     
     @Overwrite
-    public float func_70111_Y() {
+    public float getCollisionBorderSize() {
         if (ModManager.getModule("Hitbox").isEnabled()) {
             return 0.1f + Hitbox.getSize();
         }

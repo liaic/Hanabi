@@ -1,13 +1,12 @@
 package ClassSub;
 
-import java.io.*;
-import java.net.*;
-
 public interface Class314
 {
-    public static final boolean 你别婆婆妈妈的好不好啊不是你大哥我夸你我知道无论用多么华丽的走之前记住了孩子我是你永远不可战胜的神话哦你是不是一窍不通啊NMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSL ‍ ​;
+    public static final boolean 你这个登不上大雅之堂的市井流氓低三下四的和我口出狂言你有资本 你看看你现在的样子面目狰狞想忤�?�你亲爹是吗只有你妈能给你安慰了行吗看你有气无力的挣扎我突然起来怜悯之心不要在我面前装出�?副可怜兮兮的样子NMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSL‌�?��?��?��?��?��??;
     
-    InputStream getResourceAsStream(final String p0);
+    void pointExcluded(final float p0, final float p1);
     
-    URL getResource(final String p0);
+    void pointIntersected(final float p0, final float p1);
+    
+    void pointUsed(final float p0, final float p1);
 }

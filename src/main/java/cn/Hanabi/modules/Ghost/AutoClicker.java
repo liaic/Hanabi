@@ -12,8 +12,8 @@ import net.minecraft.client.entity.*;
 
 public class AutoClicker extends Mod
 {
-    private Class191 left;
-    private Class191 right;
+    private Class205 left;
+    private Class205 right;
     Random random;
     public static boolean isClicking;
     public boolean isDone;
@@ -26,8 +26,8 @@ public class AutoClicker extends Mod
     
     public AutoClicker() {
         super("AutoClicker", Category.GHOST);
-        this.left = new Class191();
-        this.right = new Class191();
+        this.left = new Class205();
+        this.right = new Class205();
         this.random = new Random();
         this.isDone = true;
         this.maxCps = new Value<Double>("AutoClicker_MaxCPS", 12.0, 1.0, 20.0, 1.0);
@@ -53,16 +53,16 @@ public class AutoClicker extends Mod
     
     @EventTarget
     public void onUpdate(final EventUpdate eventUpdate) {
-        if (AutoClicker.mc.field_71439_g != null) {
+        if (AutoClicker.mc.thePlayer != null) {
             AutoClicker.isClicking = false;
             if ((int)(Object)this.minCps.getValueState() > (int)(Object)this.maxCps.getValueState()) {
-                this.minCps.setValueState((double)(Double)this.maxCps.getValueState());
+                this.minCps.setValueState((double)this.maxCps.getValueState());
             }
-            if (((IKeyBinding)AutoClicker.mc.field_71474_y.field_74312_F).getPress() && AutoClicker.mc.field_71439_g.func_71039_bw()) {
+            if (((IKeyBinding)AutoClicker.mc.gameSettings.keyBindAttack).getPress() && AutoClicker.mc.thePlayer.isUsingItem()) {
                 this.swingItemNoPacket();
             }
-            if (((IKeyBinding)AutoClicker.mc.field_71474_y.field_74312_F).getPress() && !AutoClicker.mc.field_71439_g.func_71039_bw() && this.left.isDelayComplete(Double.valueOf(1000.0 / (double)this.getDelay()))) {
-                if ((boolean)this.jitter.getValueState()) {
+            if (((IKeyBinding)AutoClicker.mc.gameSettings.keyBindAttack).getPress() && !AutoClicker.mc.thePlayer.isUsingItem() && this.left.isDelayComplete(Double.valueOf(1000.0 / this.getDelay()))) {
+                if (this.jitter.getValueState()) {
                     this.jitter(this.random);
                 }
                 ((IMinecraft)AutoClicker.mc).setClickCounter(0);
@@ -74,16 +74,16 @@ public class AutoClicker extends Mod
         if (!this.isDone) {
             switch (this.timer) {
                 case 0: {
-                    ((IKeyBinding)AutoClicker.mc.field_71474_y.field_74313_G).setPress(false);
+                    ((IKeyBinding)AutoClicker.mc.gameSettings.keyBindUseItem).setPress(false);
                     break;
                 }
                 case 1:
                 case 2: {
-                    ((IKeyBinding)AutoClicker.mc.field_71474_y.field_74313_G).setPress(true);
+                    ((IKeyBinding)AutoClicker.mc.gameSettings.keyBindUseItem).setPress(true);
                     break;
                 }
                 case 3: {
-                    ((IKeyBinding)AutoClicker.mc.field_71474_y.field_74313_G).setPress(false);
+                    ((IKeyBinding)AutoClicker.mc.gameSettings.keyBindUseItem).setPress(false);
                     this.isDone = true;
                     this.timer = -1;
                     break;
@@ -94,16 +94,16 @@ public class AutoClicker extends Mod
     }
     
     public void swingItemNoPacket() {
-        if (!AutoClicker.mc.field_71439_g.field_82175_bq || AutoClicker.mc.field_71439_g.field_110158_av >= ((IEntityLivingBase)AutoClicker.mc.field_71439_g).runGetArmSwingAnimationEnd() / 2 || AutoClicker.mc.field_71439_g.field_110158_av < 0) {
-            AutoClicker.mc.field_71439_g.field_110158_av = -1;
-            AutoClicker.mc.field_71439_g.field_82175_bq = true;
+        if (!AutoClicker.mc.thePlayer.isSwingInProgress || AutoClicker.mc.thePlayer.swingProgressInt >= ((IEntityLivingBase)AutoClicker.mc.thePlayer).runGetArmSwingAnimationEnd() / 2 || AutoClicker.mc.thePlayer.swingProgressInt < 0) {
+            AutoClicker.mc.thePlayer.swingProgressInt = -1;
+            AutoClicker.mc.thePlayer.isSwingInProgress = true;
         }
     }
     
     @EventTarget
     public void onCrink(final EventClickMouse eventClickMouse) {
-        final ItemStack func_71045_bC = AutoClicker.mc.field_71439_g.func_71045_bC();
-        if (func_71045_bC != null && this.blockHit.getValueState() && func_71045_bC.func_77973_b() instanceof ItemSword && !AutoClicker.mc.field_71439_g.func_71039_bw()) {
+        final ItemStack getCurrentEquippedItem = AutoClicker.mc.thePlayer.getCurrentEquippedItem();
+        if (getCurrentEquippedItem != null && this.blockHit.getValueState() && getCurrentEquippedItem.getItem() instanceof ItemSword && !AutoClicker.mc.thePlayer.isUsingItem()) {
             if (!this.isDone || this.timer > 0) {
                 return;
             }
@@ -114,21 +114,21 @@ public class AutoClicker extends Mod
     public void jitter(final Random random) {
         if (random.nextBoolean()) {
             if (random.nextBoolean()) {
-                final EntityPlayerSP field_71439_g = AutoClicker.mc.field_71439_g;
-                field_71439_g.field_70125_A -= (float)(random.nextFloat() * 0.6);
+                final EntityPlayerSP thePlayer = AutoClicker.mc.thePlayer;
+                thePlayer.rotationPitch -= (float)(random.nextFloat() * 0.6);
             }
             else {
-                final EntityPlayerSP field_71439_g2 = AutoClicker.mc.field_71439_g;
-                field_71439_g2.field_70125_A += (float)(random.nextFloat() * 0.6);
+                final EntityPlayerSP thePlayer2 = AutoClicker.mc.thePlayer;
+                thePlayer2.rotationPitch += (float)(random.nextFloat() * 0.6);
             }
         }
         else if (random.nextBoolean()) {
-            final EntityPlayerSP field_71439_g3 = AutoClicker.mc.field_71439_g;
-            field_71439_g3.field_70177_z -= (float)(random.nextFloat() * 0.6);
+            final EntityPlayerSP thePlayer3 = AutoClicker.mc.thePlayer;
+            thePlayer3.rotationYaw -= (float)(random.nextFloat() * 0.6);
         }
         else {
-            final EntityPlayerSP field_71439_g4 = AutoClicker.mc.field_71439_g;
-            field_71439_g4.field_70177_z += (float)(random.nextFloat() * 0.6);
+            final EntityPlayerSP thePlayer4 = AutoClicker.mc.thePlayer;
+            thePlayer4.rotationYaw += (float)(random.nextFloat() * 0.6);
         }
     }
     

@@ -1,16 +1,17 @@
 package ClassSub;
 
-public interface Class4
+import java.security.*;
+
+final class Class4 implements PrivilegedAction
 {
-    public static final boolean 你的智商已经完全可以回家跟你妈妈和你爸爸去玩传说中的排排坐了你那些流离失所的语言早就已经被我攻击的支离破碎因为我已经厌恶了可是你一直被大家蒙在谷里小伙子你干什么啊三番五次的攻击你爸爸我啊NMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSLNMSL‎​‎   ;
+    public static final boolean Cracked_By_Somebody_Dumped_BY_Ganga_SupportedbySucen;
     
-    String getName();
-    
-    void setString(final String p0);
-    
-    String getString();
-    
-    Object getObject();
-    
-    void showDialog();
+    @Override
+    public Object run() {
+        if ("false".equalsIgnoreCase(System.getProperty("org.newdawn.slick.pngloader"))) {
+            Class89.access$002(false);
+        }
+        Class301.info("Use Java PNG Loader = " + Class89.access$000());
+        return null;
+    }
 }

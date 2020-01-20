@@ -7,15 +7,11 @@ import org.spongepowered.asm.mixin.*;
 @Mixin({ EntityLivingBase.class })
 public abstract class MixinEntityLivingBase implements IEntityLivingBase
 {
-    public MixinEntityLivingBase() {
-        super();
-    }
-    
     @Shadow
-    protected abstract int func_82166_i();
+    protected abstract int getArmSwingAnimationEnd();
     
     @Override
     public int runGetArmSwingAnimationEnd() {
-        return this.func_82166_i();
+        return this.getArmSwingAnimationEnd();
     }
 }
