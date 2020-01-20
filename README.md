@@ -1,6 +1,6 @@
 # Hanabi
 A Deob-freed mixin-based injection hacked client for Minecraft using Minecraft Forge.
-Version : 1.5.1 (1.4.2 could be downloaded at OpenHanabi/Hanabi/Jars)
+Version : 1.5.1 <br>(1.4.2 could be downloaded at OpenHanabi/Hanabi/Jars)
 some methods in this source are missing try decomp yourself with fernflower/cfr insteaded with [1.4.1Remapped](https://github.com/OpenHanabi/Hanabi/releases/download/1.4.2/Original_Deobfued_jar_Unrunnable.jar)
 
 ### DOWNLOAD
