@@ -5,7 +5,7 @@ some methods in this source are missing try decomp yourself with fernflower/cfr 
 
 ### DOWNLOAD
 
-* Runnable Jar [Runnable`1.5.1`](https://github.com/OpenHanabi/Hanabi/releases/download/1.5.1/Hanabi_1.5.1_Freed_Fixed_Checked2.jar)
+* Runnable Jar(-noverify needed) [Runnable`1.5.1`](https://github.com/OpenHanabi/Hanabi/releases/download/1.5.1/Hanabi_1.5.1_Freed_Fixed_Checked2.jar)
 * Deob remapped Unrunnable jar [Mapped`1.5.1`](https://github.com/OpenHanabi/Hanabi/releases/download/1.5.1/Remapped1.5.1.jar)
 * History ([`1.4.1`](https://github.com/OpenHanabi/Hanabi/releases))
 ** Warnning !If you want to fix the method/field call form like `mc.field_xxxx` or `mc.func_xxxx` <br> Try use [McpMappingViewer](https://github.com/bspkrs/MCPMappingViewer)
