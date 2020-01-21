@@ -10,7 +10,7 @@ some methods in this source are missing try decomp yourself with fernflower/cfr 
 * History ([`1.4.1`](https://github.com/OpenHanabi/Hanabi/releases))
 ** Warnning !If you want to fix the method/field call form like `mc.field_xxxx` or `mc.func_xxxx` <br> Try use [McpMappingViewer](https://github.com/bspkrs/MCPMappingViewer)
 * Backup Link : [Here](https://gitee.com/theCooolmann/Hanabi/)<br>
-  Backup Link (Untrusted): [here](https://git.liquidbounce.net/Hanabi/hanabi_backup/tree/master)
+  Backup Link (Untrusted): [here](https://git.liquidbounce.net/Hanabi/hanabi/tree/master)
 * The downloads in the Backuplink are in (OpenHanabi/Hanabi/Jars)
 
 this project entirely or partially for free and even commercially. However, please consider the following:
